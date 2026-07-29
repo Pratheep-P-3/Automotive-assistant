@@ -14,10 +14,11 @@ logger = logging.getLogger(__name__)
 class CodeAgent:
     def __init__(self, data_path: str | None = None) -> None:
         root = Path(__file__).resolve().parents[2]
-        self.data_path = Path(
-            data_path
-            or os.getenv("OBD_DATA_PATH", str(root / "data" / "obd" / "obd_codes.csv"))
+        configured_path = data_path or os.getenv(
+            "OBD_DATA_PATH", str(root / "data" / "obd" / "obd_codes.csv")
         )
+        path_obj = Path(configured_path)
+        self.data_path = path_obj if path_obj.is_absolute() else (root / path_obj)
 
     @staticmethod
     def _parse_causes(raw: str) -> List[str]:

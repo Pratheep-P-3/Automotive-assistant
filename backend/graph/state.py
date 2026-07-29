@@ -7,6 +7,7 @@ ScenarioKey = Literal[
     "code_only",
     "symptom_only",
     "code_symptom",
+    "code_vehicle",
     "vehicle_mileage",
     "vehicle_symptom",
     "full_diagnosis",

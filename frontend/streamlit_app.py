@@ -71,7 +71,7 @@ with st.sidebar:
     make = st.text_input("Vehicle Make", placeholder="Toyota")
     model = st.text_input("Vehicle Model", placeholder="Corolla")
     year = st.number_input("Vehicle Year", min_value=1950, max_value=2100, value=2020)
-    mileage = st.number_input("Mileage", min_value=0, value=60000, step=1000)
+    mileage_input = st.text_input("Mileage (optional)", placeholder="60000")
 
 st.subheader("Diagnostic Inputs")
 col1, col2 = st.columns([1, 1])
@@ -108,11 +108,12 @@ def _render_list(items: List[str], empty_text: str) -> None:
 
 
 def diagnose() -> Dict[str, Any]:
+    mileage_value = int(mileage_input) if mileage_input.strip() else None
     payload = {
         "make": make or None,
         "model": model or None,
         "year": int(year) if year else None,
-        "mileage": int(mileage) if mileage is not None else None,
+        "mileage": mileage_value,
         "code": code or None,
         "symptoms": symptoms or None,
         "maintenance_query": maintenance_query or None,

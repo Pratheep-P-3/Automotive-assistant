@@ -34,6 +34,8 @@ def query_router(state: WorkflowState) -> WorkflowState:
         state["route"] = "symptom_only"
     elif has_code and has_symptoms and not state["need_maintenance"]:
         state["route"] = "code_symptom"
+    elif has_vehicle_or_mileage and has_code and not has_symptoms:
+        state["route"] = "code_vehicle"
     elif has_vehicle_or_mileage and not has_code and not has_symptoms:
         state["route"] = "vehicle_mileage"
     elif has_vehicle_or_mileage and has_symptoms and not has_code:
@@ -100,6 +102,7 @@ def build_workflow() -> StateGraph:
             "code_only": "code_agent",
             "symptom_only": "symptom_agent",
             "code_symptom": "code_agent",
+            "code_vehicle": "code_agent",
             "vehicle_mileage": "maintenance_agent",
             "vehicle_symptom": "symptom_agent",
             "full_diagnosis": "code_agent",

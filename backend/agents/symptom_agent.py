@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 class SymptomAgent:
     def __init__(self, retriever: RAGRetriever | None = None) -> None:
-        self.retriever = retriever or RAGRetriever()
+        self.retriever = retriever
 
     def _build_query(self, state: WorkflowState) -> str:
         parts = []
@@ -32,6 +32,18 @@ class SymptomAgent:
         symptoms = (state.get("symptoms") or "").strip()
         if not symptoms:
             return state
+
+        if self.retriever is None:
+            try:
+                self.retriever = RAGRetriever()
+            except Exception as exc:
+                logger.exception("Failed to initialize RAG retriever: %s", exc)
+                state["symptom_result"] = {
+                    "query": symptoms,
+                    "context": [],
+                    "troubleshooting_hints": [],
+                }
+                return state
 
         query = self._build_query(state)
         docs = self.retriever.retrieve(query=query, k=4)

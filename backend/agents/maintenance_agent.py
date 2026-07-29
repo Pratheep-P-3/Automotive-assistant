@@ -14,13 +14,12 @@ logger = logging.getLogger(__name__)
 class MaintenanceAgent:
     def __init__(self, data_path: str | None = None) -> None:
         root = Path(__file__).resolve().parents[2]
-        self.data_path = Path(
-            data_path
-            or os.getenv(
-                "MAINTENANCE_DATA_PATH",
-                str(root / "data" / "maintenance" / "maintenance.csv"),
-            )
+        configured_path = data_path or os.getenv(
+            "MAINTENANCE_DATA_PATH",
+            str(root / "data" / "maintenance" / "maintenance.csv"),
         )
+        path_obj = Path(configured_path)
+        self.data_path = path_obj if path_obj.is_absolute() else (root / path_obj)
 
     @staticmethod
     def _preventive_actions(mileage: int | None) -> List[str]:

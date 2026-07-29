@@ -2,13 +2,15 @@ from __future__ import annotations
 
 import logging
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 from fastapi import FastAPI
 
-from backend.routes.diagnose import router as diagnose_router
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+load_dotenv(PROJECT_ROOT / ".env")
 
-load_dotenv()
+from backend.routes.diagnose import router as diagnose_router
 
 logging.basicConfig(
     level=os.getenv("LOG_LEVEL", "INFO"),
