@@ -1,87 +1,87 @@
 # Automotive Vehicle Diagnostics and Service Recommendation Assistant
 
-A production-oriented GenAI assistant that diagnoses vehicle issues from DTC codes, symptoms, and vehicle context, then recommends repair and maintenance actions.
+A production-oriented GenAI assistant that diagnoses vehicle issues from DTC codes, symptoms, and vehicle context, then recommends repair and maintenance actions. Powered by Azure Foundry LLM (gpt-5.1) with intelligent confidence scoring.
 
 ## Architecture Diagram
 
 ```mermaid
 flowchart LR
-    U[User] --> S[Streamlit Frontend]
-    S --> F[FastAPI Backend]
-    F --> G[LangGraph Workflow]
+    U[User] --> S[Streamlit Frontend<br/>Port 8501]
+    S --> F[FastAPI Backend<br/>Port 8000]
+    F --> G[LangGraph Workflow<br/>9 Scenarios]
 
-    G --> R[Query Router]
-    R --> C[Code Agent]
-    R --> Y[Symptom Agent]
-    R --> M[Maintenance Agent]
+    G --> R[Query Router<br/>Route Detection]
+    R --> C[Code Agent<br/>DTC Lookup]
+    R --> Y[Symptom Agent<br/>RAG Retrieval]
+    R --> M[Maintenance Agent<br/>Service Schedule]
 
-    C --> P[Report Agent]
+    C --> P[LLM Report Generator<br/>Confidence Scoring]
     Y --> P
     M --> P
 
-    Y --> V[(ChromaDB)]
+    Y --> V[(ChromaDB<br/>Vector Store)]
     V --> D1[Manual PDFs]
     V --> D2[Troubleshooting PDFs]
 
     C --> O[(OBD Codes CSV)]
     M --> N[(Maintenance CSV)]
 
-    P --> A[Azure OpenAI GPT-4o]
+    P --> A[Azure Foundry<br/>gpt-5.1 OpenAI-compatible]
     A --> F
 ```
 
 ## Tech Stack
 
-- Frontend: Streamlit
-- Backend: FastAPI
-- Agent Framework: LangGraph
-- RAG Framework: LangChain
-- LLM: Azure OpenAI GPT-4o
-- Embeddings: sentence-transformers/all-MiniLM-L6-v2
-- Vector DB: ChromaDB
-- PDF Loader: PyPDFLoader
-- Containerization: Docker, Docker Compose
-- Python: 3.11
+- **Frontend**: Streamlit 1.48.0
+- **Backend**: FastAPI 0.116.1
+- **Agent Framework**: LangGraph 0.6.4
+- **RAG Framework**: LangChain 0.3.27
+- **LLM**: Azure Foundry gpt-5.1 (OpenAI-compatible endpoint)
+- **Embeddings**: sentence-transformers/all-MiniLM-L6-v2
+- **Vector DB**: ChromaDB 1.0.20
+- **PDF Loader**: PyPDF 5.9.0
+- **Containerization**: Docker, Docker Compose
+- **Python**: 3.12 (Ubuntu), 3.13 (Windows)
+- **Testing**: pytest 8.4.1
 
 ## Project Structure
 
 ```text
 automotive-assistant/
   backend/
-    app.py
+    app.py                      # FastAPI entrypoint
     agents/
-      code_agent.py
-      symptom_agent.py
-      maintenance_agent.py
-      report_agent.py
+      code_agent.py             # DTC code lookup
+      symptom_agent.py          # Symptom RAG retrieval
+      maintenance_agent.py      # Service recommendations
     graph/
-      workflow.py
-      state.py
+      workflow.py               # LangGraph state machine (9 scenarios)
+      state.py                  # Pydantic models & state schema
     rag/
-      ingest.py
-      retriever.py
-      embedding.py
-    routes/
-      diagnose.py
+      ingest.py                 # PDF ingestion to ChromaDB
+      retriever.py              # Vector store queries
+      embedding.py              # Embedding factory
     services/
-      azure_openai_service.py
+      azure_openai_service.py   # LLM report generation & confidence scoring
   frontend/
-    streamlit_app.py
+    streamlit_app.py            # Streamlit UI (port 8501)
   data/
-    manuals/
-    troubleshooting/
+    manuals/                    # PDF manuals (for RAG ingestion)
+    troubleshooting/            # Troubleshooting PDFs (for RAG)
     maintenance/
-      maintenance.csv
+      maintenance.csv           # Make/Model/Mileage → Recommendations
     obd/
-      obd_codes.csv
+      obd_codes.csv             # DTC Code → Description/Severity/Causes
   tests/
-    test_api.py
-    test_retrieval.py
-  Dockerfile
-  docker-compose.yml
-  requirements.txt
-  .env.example
-  README.md
+    test_api.py                 # FastAPI endpoint tests
+    test_retrieval.py           # RAG retrieval tests
+  TEST_SCENARIOS.md             # Manual test guide (20+ scenarios)
+  requirements.txt              # Python dependencies (60+)
+  .env.example                  # Environment template
+  .env                          # (DO NOT COMMIT - sensitive credentials)
+  Dockerfile                    # Docker image
+  docker-compose.yml            # Multi-container setup
+  README.md                      # This file
 ```
 
 ## Setup Instructions
@@ -105,41 +105,89 @@ pip install -r requirements.txt
 
 ## Environment Variables
 
-- `AZURE_OPENAI_ENDPOINT`: Azure OpenAI endpoint URL
-- `AZURE_OPENAI_API_KEY`: Azure OpenAI API key
-- `AZURE_OPENAI_DEPLOYMENT`: deployment name for GPT-4o
-- `AZURE_OPENAI_API_VERSION`: API version (default `2024-10-21`)
-- `BACKEND_URL`: Frontend target for FastAPI
-- `CHROMA_PERSIST_DIR`: local ChromaDB directory
-- `CHROMA_COLLECTION_NAME`: Chroma collection name
-- `EMBEDDING_MODEL`: sentence-transformer model
-- `OBD_DATA_PATH`: path to `obd_codes.csv`
-- `MAINTENANCE_DATA_PATH`: path to `maintenance.csv`
-- `LOG_LEVEL`: logging level
+**Required (Azure Foundry LLM)**:
+- `AZURE_OPENAI_ENDPOINT`: Azure Foundry endpoint with OpenAI-compatible format
+  - Format: `https://<resource>.services.ai.azure.com/openai/v1`
+  - Must end with `/openai/v1` (not `/openai/v1/responses`)
+- `AZURE_OPENAI_API_KEY`: API key for authentication
+- `AZURE_OPENAI_DEPLOYMENT`: Model deployment name (e.g., `gpt-5.1`)
+- `AZURE_OPENAI_API_VERSION`: API version (e.g., `2025-11-13`)
+
+**Optional (Data & Configuration)**:
+- `BACKEND_URL`: Backend URL for frontend (default: `http://localhost:8000`)
+- `CHROMA_PERSIST_DIR`: ChromaDB storage directory (default: `./data/chroma`)
+- `CHROMA_COLLECTION_NAME`: Collection name (default: `automotive_docs`)
+- `EMBEDDING_MODEL`: HuggingFace model for embeddings (default: `sentence-transformers/all-MiniLM-L6-v2`)
+- `OBD_DATA_PATH`: Path to OBD codes CSV (default: `./data/obd/obd_codes.csv`)
+- `MAINTENANCE_DATA_PATH`: Path to maintenance CSV (default: `./data/maintenance/maintenance.csv`)
+- `LOG_LEVEL`: Logging level (default: `INFO`)
+
+**Note**: Azure Foundry requires OpenAI-compatible format. The backend auto-detects `/openai/v1` in the endpoint and uses `ChatOpenAI` client instead of `AzureChatOpenAI`.
 
 ## Running Locally
 
-1. Ingest documents for retrieval:
+### 1. Setup Environment
 
 ```bash
+# Clone and navigate
+cd automotive-assistant
+
+# Create and activate virtual environment
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 2. Configure Azure Foundry
+
+```bash
+# Copy environment template
+cp .env.example .env  # Windows: copy .env.example .env
+
+# Edit .env with your Azure Foundry credentials:
+# AZURE_OPENAI_ENDPOINT=https://<resource>.services.ai.azure.com/openai/v1
+# AZURE_OPENAI_API_KEY=<your-api-key>
+# AZURE_OPENAI_DEPLOYMENT=gpt-5.1
+# AZURE_OPENAI_API_VERSION=2025-11-13
+```
+
+### 3. Ingest Documents (Optional - for RAG)
+
+```bash
+# Add PDF files to data/manuals/ and data/troubleshooting/
 python -m backend.rag.ingest
 ```
 
-2. Run backend:
+### 4. Run Backend
 
 ```bash
-uvicorn backend.app:app --host 0.0.0.0 --port 8000 --reload
+cd automotive-assistant
+python -m uvicorn backend.app:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-3. Run frontend:
+Server: http://localhost:8000
+API Docs: http://localhost:8000/docs
+
+### 5. Run Frontend (in separate terminal)
 
 ```bash
-streamlit run frontend/streamlit_app.py
+cd automotive-assistant/frontend
+streamlit run streamlit_app.py --server.port 8501 --server.address 0.0.0.0
 ```
 
-4. Open:
-- Streamlit: http://localhost:8501
-- FastAPI docs: http://localhost:8000/docs
+Frontend: http://localhost:8501
+
+### 6. Test Diagnosis
+
+Open Streamlit UI and enter:
+- Make: `Toyota`
+- Model: `Corolla`
+- Year: `2020`
+- Diagnostic Code: `P0171`
+
+Expected output: Confidence score 0.80-0.90 (with LLM enhancement)
 
 ## Docker Deployment
 
@@ -153,26 +201,27 @@ Services:
 
 ## API Usage
 
-### Health
+### Health Check
 
 ```http
 GET /health
 ```
 
 Response:
-
 ```json
-{"status": "ok"}
+{
+  "status": "ok"
+}
 ```
 
-### Diagnose
+### Diagnose Endpoint
 
 ```http
 POST /diagnose
 Content-Type: application/json
 ```
 
-Sample Input:
+**Sample Request** (Code + Vehicle - Confidence 0.80-0.90):
 
 ```json
 {
@@ -185,55 +234,125 @@ Sample Input:
 }
 ```
 
-Sample Output:
+**Sample Response**:
 
 ```json
 {
-  "diagnosis": "System Too Lean on Bank 1 with drivability symptoms indicating potential intake/fuel metering fault.",
+  "diagnosis": "System Too Lean (Bank 1) - Toyota Corolla 2020. Detected rich/lean condition indicating potential oxygen sensor malfunction, vacuum leak, or fuel system pressure issue specific to 2020 Corolla models.",
   "severity": "High",
   "possible_causes": [
-    "Vacuum leak",
-    "Dirty MAF sensor",
-    "Low fuel pressure"
+    "Faulty oxygen sensor (common in Corolla)",
+    "Vacuum leak in intake system",
+    "Low fuel pressure from pump/regulator",
+    "Dirty mass airflow sensor",
+    "Fuel injector leaking"
   ],
   "repair_steps": [
-    "Inspect intake hoses and PCV lines for leaks",
-    "Validate MAF signal and clean sensor",
-    "Measure fuel pressure and pump output"
+    "Scan and confirm active/pending DTCs with freeze-frame data",
+    "Inspect oxygen sensor connectors and wiring",
+    "Check fuel pressure (Toyota spec: 44-50 PSI)",
+    "Perform smoke test for vacuum leaks",
+    "Replace oxygen sensor if faulty, clear codes, and re-scan",
+    "Road test and verify lean condition resolved"
   ],
   "maintenance_recommendations": [
-    "Replace spark plugs (if applicable), inspect belts, flush brake fluid"
+    "Oil change and filter replacement",
+    "Air filter inspection and replacement if needed",
+    "Spark plug inspection (if over 30k miles since replacement)"
   ],
-  "confidence_score": 0.78,
+  "confidence_score": 0.87,
   "sources": [
     {
       "source": "data/obd/obd_codes.csv",
       "type": "obd_dataset",
       "code": "P0171"
+    },
+    {
+      "source": "data/maintenance/maintenance.csv",
+      "type": "maintenance_dataset",
+      "make": "Toyota",
+      "model": "Corolla"
     }
   ]
 }
 ```
 
+**Note**: Confidence score reflects diagnostic certainty:
+- **0.50-0.65**: Limited input data (code only, symptoms only)
+- **0.70-0.80**: Partial context (code + symptoms, vehicle only)
+- **0.80-0.95**: Rich context with LLM enhancement (code + vehicle, full diagnosis)
+
 ## Supported Input Scenarios
 
-1. Diagnostic Code only
-2. Symptoms only
-3. Diagnostic Code + Symptoms
-4. Vehicle + Mileage
-5. Vehicle + Symptoms
-6. Vehicle + Diagnostic Code + Symptoms + Mileage
-7. Maintenance query only
+The system uses intelligent query routing to determine the best diagnostic path. **9 scenarios** are supported:
+
+| # | Scenario | Input | Confidence Range | Route |
+|---|----------|-------|-----------------|-------|
+| 1 | Code Only | DTC code | 0.60-0.70 | `code_only` |
+| 2 | Symptoms Only | Symptoms | 0.50-0.65 | `symptom_only` |
+| 3 | Code + Symptoms | Both | 0.70-0.80 | `code_symptom` |
+| 4 | **Code + Vehicle** ⭐ | Code + Make/Model/Year | **0.80-0.90** | `code_vehicle` |
+| 5 | Vehicle + Mileage | Vehicle + Mileage | 0.55-0.65 | `vehicle_mileage` |
+| 6 | Vehicle + Symptoms | Vehicle + Symptoms | 0.65-0.75 | `vehicle_symptom` |
+| 7 | **Full Diagnosis** ⭐⭐ | All inputs | **0.85-0.95** | `full_diagnosis` |
+| 8 | Maintenance Query | Text query | 0.70-0.80 | `maintenance_only` |
+| 9 | Fallback | None/Invalid | 0.50 | `fallback` |
+
+**LLM Confidence Boost**: Code + Vehicle and Full Diagnosis scenarios achieve higher confidence (0.80+) due to Azure Foundry gpt-5.1 LLM enhancement.
+
+### Test Scenarios
+
+Refer to [TEST_SCENARIOS.md](TEST_SCENARIOS.md) for 20+ manual test cases covering all scenarios with expected outputs.
 
 ## Testing
 
 ```bash
-pytest -q
+# Run all tests
+pytest tests/ -v
+
+# Run specific test module
+pytest tests/test_api.py -v
+
+# Run with coverage report
+pytest --cov=backend tests/
 ```
 
-## Notes for Production
+## Production Deployment
 
-- Configure secret management for Azure keys.
-- Ingest validated OEM manuals for improved retrieval quality.
-- Add monitoring for low-confidence responses.
-- Extend dataset coverage for make/model/year-specific service schedules.
+### Before Deploying
+
+- [ ] Configure secret management for Azure Foundry credentials
+- [ ] Add validated OEM manuals to `data/manuals/` for improved RAG quality
+- [ ] Ingest troubleshooting PDFs to `data/troubleshooting/`
+- [ ] Test with production vehicle data (various make/model/year combinations)
+- [ ] Configure monitoring for low-confidence responses
+- [ ] Extend maintenance dataset for additional make/model/year combinations
+- [ ] Set up logging and error tracking (CloudWatch, Datadog, etc.)
+- [ ] Use environment variables from secure vault (not .env file)
+
+### Confidence Score Monitoring
+
+- **0.50-0.65**: Low confidence (limited input) - may need manual review
+- **0.65-0.80**: Medium confidence - acceptable for most scenarios
+- **0.80+**: High confidence - ready for customer use (LLM enhanced)
+
+## Known Limitations
+
+- RAG quality depends on PDF ingestion quality (manuals/troubleshooting docs)
+- Maintenance data limited to provided CSV (easily expandable)
+- OBD code coverage depends on CSV dataset
+- Corporate networks may block ChromaDB HuggingFace model downloads (fallback mode handles this)
+
+## Troubleshooting
+
+**LLM Connection Error**: Verify Azure Foundry endpoint format ends with `/openai/v1` (not `/responses`)
+
+**Module Import Error**: Ensure project structure intact and `conftest.py` exists in tests folder
+
+**ChromaDB Connection Error**: Check `CHROMA_PERSIST_DIR` path is writable, or RAG will gracefully skip
+
+**Low Confidence Scores**: Add more vehicle/diagnostic context. Code + Vehicle alone achieves 0.80+
+
+## Support
+
+For issues or questions, refer to [TEST_SCENARIOS.md](TEST_SCENARIOS.md) for test cases and expected outputs.
