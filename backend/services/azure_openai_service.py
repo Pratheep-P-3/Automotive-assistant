@@ -6,7 +6,7 @@ import os
 from typing import Any, Dict, List
 
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_openai import AzureChatOpenAI
+from langchain_openai import AzureChatOpenAI, ChatOpenAI
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +48,7 @@ Rules:
 
 class AzureOpenAIService:
     def __init__(self) -> None:
-        self.model: AzureChatOpenAI | None = None
+        self.model: AzureChatOpenAI | ChatOpenAI | None = None
         try:
             endpoint = os.getenv("AZURE_OPENAI_ENDPOINT", "")
             deployment = os.getenv("AZURE_OPENAI_DEPLOYMENT", "")
@@ -56,13 +56,26 @@ class AzureOpenAIService:
             api_version = os.getenv("AZURE_OPENAI_API_VERSION", "2024-10-21")
 
             if endpoint and deployment and api_key:
-                self.model = AzureChatOpenAI(
-                    azure_endpoint=endpoint,
-                    azure_deployment=deployment,
-                    api_key=api_key,
-                    api_version=api_version,
-                    temperature=0.2,
-                )
+                # Detect if this is an Azure Foundry endpoint (OpenAI-compatible format)
+                if "openai/v1" in endpoint:
+                    # Azure Foundry: Use OpenAI client with base_url
+                    logger.info("Detected Azure Foundry endpoint. Using OpenAI-compatible client.")
+                    self.model = ChatOpenAI(
+                        model=deployment,
+                        api_key=api_key,
+                        base_url=endpoint,
+                        temperature=0.2,
+                    )
+                else:
+                    # Standard Azure OpenAI: Use AzureChatOpenAI
+                    logger.info("Detected standard Azure OpenAI endpoint.")
+                    self.model = AzureChatOpenAI(
+                        azure_endpoint=endpoint,
+                        azure_deployment=deployment,
+                        api_key=api_key,
+                        api_version=api_version,
+                        temperature=0.2,
+                    )
             else:
                 logger.warning(
                     "Azure OpenAI not configured. Falling back to deterministic report generation."
