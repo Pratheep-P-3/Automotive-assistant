@@ -41,8 +41,14 @@ Return ONLY valid JSON with this exact top-level schema:
 Rules:
 1) Base conclusions only on provided evidence; do not invent unsupported facts.
 2) Confidence score must be between 0.0 and 1.0.
-3) If data is insufficient, explicitly say so and provide safe next diagnostic actions.
-4) Keep repair and maintenance steps actionable and workshop-friendly.
+3) Confidence scoring:
+   - If only diagnostic code provided (no vehicle/symptoms): 0.60-0.70
+   - If diagnostic code + vehicle make/model/year provided: 0.80-0.90
+   - If diagnostic code + vehicle + mileage/maintenance history: 0.85-0.95
+   - If only symptoms (no code): 0.50-0.65
+   - Always give higher confidence when multiple data sources correlate.
+4) If data is insufficient, explicitly say so and provide safe next diagnostic actions.
+5) Keep repair and maintenance steps actionable and workshop-friendly.
 """.strip()
 
 
