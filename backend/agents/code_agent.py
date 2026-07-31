@@ -34,11 +34,15 @@ class CodeAgent:
         try:
             # Query specifically for this OBD code
             query = f"OBD code {dtc_code} definition description severity causes"
+            logger.info(f"[RAG] Querying ChromaDB for {dtc_code}...")
             docs = self.rag_retriever.retrieve(query, k=5)  # Get more docs for better context
+            logger.info(f"[RAG] Retrieved {len(docs)} documents for {dtc_code}")
             
             if docs:
                 # Found relevant documents from PDFs
                 combined_text = " ".join([doc.page_content for doc in docs])
+                logger.info(f"[RAG] Combined text length: {len(combined_text)} chars")
+                logger.debug(f"[RAG] Combined text preview: {combined_text[:200]}...")
                 logger.info(f"✓ RAG retrieved data for {dtc_code} from PDFs")
                 
                 # Extract structured information from retrieved content
@@ -49,8 +53,11 @@ class CodeAgent:
                 causes = []
                 
                 # Find the line with this code and extract information
+                code_found = False
                 for i, line in enumerate(lines):
                     if dtc_code.upper() in line.upper():
+                        logger.info(f"[RAG] Found code in line {i}: {line[:100]}")
+                        code_found = True
                         # This line mentions the code, extract description
                         if ':' in line:
                             description = line.split(':', 1)[1].strip()
@@ -66,10 +73,13 @@ class CodeAgent:
                         break
                 
                 # If we didn't find specific details, use the whole text
-                if not description:
+                if not code_found:
+                    logger.warning(f"[RAG] Code {dtc_code} not found in lines, using full text extraction")
                     description = combined_text[:400]
                     severity = self._extract_severity(combined_text)
                     causes = self._extract_causes(combined_text)
+                
+                logger.info(f"[RAG] Extracted - Description: {description[:80]}... | Severity: {severity} | Causes: {len(causes)}")
                 
                 return {
                     "code": dtc_code.upper(),
@@ -79,11 +89,11 @@ class CodeAgent:
                     "source": "rag_pdf"
                 }
             else:
-                logger.warning(f"✗ RAG found no data for {dtc_code}")
+                logger.warning(f"✗ RAG found NO documents for {dtc_code}")
                 return None
                 
         except Exception as exc:
-            logger.exception(f"RAG retrieval failed for {dtc_code}: {exc}")
+            logger.exception(f"[RAG] Retrieval FAILED for {dtc_code}: {exc}")
             return None
 
     def _extract_severity(self, text: str) -> str:
