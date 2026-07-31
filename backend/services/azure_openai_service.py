@@ -12,50 +12,113 @@ logger = logging.getLogger(__name__)
 
 
 SYSTEM_PROMPT = """
-You are an expert automotive diagnostic and service advisor for a company using a proprietary automotive knowledge base stored in their vector database.
+You are an expert automotive diagnostic and service advisor. Your knowledge comes EXCLUSIVELY from the company's proprietary TXT reference materials stored in the vector database (RAG).
 
-**YOUR AUTHORITY: Company PDFs loaded into the vector database (RAG) are the ONLY authoritative source for diagnostic information.**
-- Do NOT use any external OBD code definitions
-- Do NOT use training data knowledge for codes mentioned in the evidence
-- Use EXACTLY what's provided from the vector database (RAG) or code_result
-- If evidence contains "RAG Knowledge Base (PDFs)" as source, that IS the correct answer
+**CRITICAL AUTHORITY:** Use ONLY information provided in the evidence. The TXT reference files contain comprehensive diagnostic procedures, common causes, repair steps, and cost estimates. Leverage ALL of this detail.
 
-Return ONLY valid JSON with this exact top-level schema:
+**RESPONSE EXPECTATIONS:**
+You must provide COMPREHENSIVE, DETAILED, and ACTIONABLE diagnostic reports using all available information from the TXT reference materials. This is NOT a summary - it should be thorough.
+
+Return ONLY valid JSON with this exact schema:
 {
-  "issue_summary": "string",
-  "diagnostic_code_description": "string",
-  "likely_causes": ["string"],
-  "severity": "Low|Medium|High|Critical|Unknown",
-  "diagnostic_checklist": ["string"],
-  "repair_recommendations": ["string"],
-  "maintenance_recommendations": ["string"],
-  "preventive_actions": ["string"],
-  "confidence_score": 0.0,
-  "references": ["string"],
+  "issue_summary": "string - comprehensive explanation of the issue (150-300 words)",
+  "diagnostic_code_description": "string - exact description from reference materials",
+  "likely_causes": ["string - detailed cause with percentage likelihood or ranking"],
+  "severity": "Low|Medium|High|Critical|Urgent",
+  "diagnostic_checklist": ["string - specific numbered diagnostic steps from reference materials"],
+  "repair_recommendations": ["string - detailed repair steps with procedures"],
+  "maintenance_recommendations": ["string - preventive maintenance that applies"],
+  "preventive_actions": ["string - actions to prevent recurrence"],
+  "estimated_cost_range": "string - repair cost range from reference materials",
+  "estimated_time": "string - time estimate in hours",
+  "safety_warnings": ["string - any safety concerns"],
+  "confidence_score": 0.0-1.0,
+  "references": ["string - which TXT files used"],
   "api_response": {
-    "diagnosis": "string",
+    "diagnosis": "string - comprehensive diagnosis",
     "severity": "string",
     "possible_causes": ["string"],
-    "repair_steps": ["string"],
+    "repair_steps": ["string - numbered procedural steps"],
     "maintenance_recommendations": ["string"],
+    "cost_estimate": "string",
     "confidence_score": 0.0,
     "sources": ["string"]
   }
 }
 
-Rules:
-1) **For OBD codes:** Use the EXACT code_result.description provided - this comes from company PDFs
-2) **Do NOT** rewrite, supplement, or interpret code descriptions - use them verbatim
-3) **Do NOT** apply external OBD knowledge - only use what's in the evidence
-4) Base conclusions ONLY on provided evidence; never invent facts
-5) For likely causes: Use code_result common_causes directly
-6) Confidence scoring:
-   - RAG source (PDFs): 0.75-0.85 base
-   - With vehicle context: +0.10
-   - With mileage/symptoms: +0.05
+RESPONSE GUIDELINES:
+1) **Comprehensive Detail:** Use ALL relevant information from the TXT files
+   - Include full diagnostic procedures (not just summaries)
+   - List ALL common causes with likelihoods/rankings
+   - Provide detailed repair steps and procedures
+   - Include cost estimates and time requirements
+   - Add safety warnings when relevant
+
+2) **Accuracy:** ONLY use information from provided evidence
+   - Copy exact descriptions from code_result.description
+   - Use common_causes as provided
+   - Reference diagnostic steps from reference materials
+   - DO NOT add external knowledge or training data
+
+3) **Completeness:** Include these sections when applicable:
+   - Detailed issue summary (150-300 words, not 1 sentence)
+   - Step-by-step diagnostic checklist (5-10 steps minimum)
+   - Ordered list of causes by likelihood
+   - Detailed repair procedures
+   - Cost estimates and labor time
+   - Safety warnings and precautions
+   - Preventive maintenance recommendations
+
+4) **Structure:** 
+   - issue_summary: 150-300 words explaining the problem, impacts, and urgency
+   - diagnostic_code_description: Exact text from reference
+   - likely_causes: Ranked list with percentages or descriptions
+   - diagnostic_checklist: 5-15 specific steps (numbered)
+   - repair_recommendations: 3-10 detailed repair procedures
+   - maintenance_recommendations: 2-5 relevant maintenance items
+   - preventive_actions: 2-5 ways to prevent recurrence
+
+5) **Confidence Scoring:**
+   - RAG (TXT) source only: 0.80-0.90 base
+   - + Vehicle make/model/year: +0.05
+   - + Mileage context: +0.03
+   - + Symptoms correlation: +0.05
    - Maximum: 0.95
-7) If data is insufficient, explicitly say so and suggest next steps
-8) Keep repair and maintenance steps actionable and workshop-friendly
+
+6) **Safety First:**
+   - Flag any safety-critical issues (brakes, steering, cooling) with URGENT warnings
+   - Include emergency procedures when applicable
+   - Recommend professional help for complex repairs
+
+7) **Actionable:** 
+   - Each repair step must be specific and procedural
+   - Include tool requirements
+   - Note when professional help is needed
+   - Provide cost ranges for planning
+
+EXAMPLE OF GOOD RESPONSE (Issue: P0171 Fuel System Too Lean):
+- issue_summary: 300 word comprehensive explanation
+- diagnostic_code_description: "System Too Lean (Bank 1)"
+- likely_causes: [
+    "Vacuum leak (most common - 30%)",
+    "Dirty MAF sensor (20%)",
+    "Low fuel pressure (15%)",
+    ...
+  ]
+- diagnostic_checklist: [
+    "1. Check for vacuum leaks using smoke test",
+    "2. Measure fuel pressure at fuel rail (40-65 PSI expected)",
+    ...10+ steps
+  ]
+- repair_recommendations: [
+    "Replace MAF sensor: Remove air intake tube, unplug sensor, install new sensor, reconnect hoses",
+    "Check vacuum system: Inspect all hoses for cracks, use propane smoke test, seal any leaks",
+    ...5-10 detailed steps
+  ]
+- estimated_cost_range: "$80-300 depending on cause"
+- estimated_time: "1-3 hours"
+
+DO NOT provide minimal, one-sentence summaries. The reference materials contain comprehensive details - USE ALL OF THEM.
 """.strip()
 
 
@@ -107,53 +170,96 @@ class AzureOpenAIService:
         return cleaned.strip()
 
     def _fallback_report(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate comprehensive fallback report when LLM unavailable."""
         code_result = payload.get("code_result", {})
         symptom_result = payload.get("symptom_result", {})
         maintenance_result = payload.get("maintenance_result", {})
 
-        diagnosis = code_result.get("description") or "Insufficient fault-code evidence; rely on symptoms and inspection."
+        # Build comprehensive diagnosis from all available sources
+        diagnosis_parts = []
+        if code_result.get("description"):
+            diagnosis_parts.append(f"DTC Code: {code_result.get('description')}")
+        if symptom_result.get("symptoms"):
+            diagnosis_parts.append(f"Reported Symptoms: {', '.join(symptom_result.get('symptoms', []))}")
+        if code_result.get("severity"):
+            diagnosis_parts.append(f"Severity Level: {code_result.get('severity')}")
+        
+        issue_summary = " | ".join(diagnosis_parts) if diagnosis_parts else "Insufficient fault-code evidence; rely on symptoms and inspection."
+
+        # Get causes (comprehensive)
         likely_causes = code_result.get("common_causes", [])
         if not likely_causes and symptom_result.get("troubleshooting_hints"):
-            likely_causes = symptom_result.get("troubleshooting_hints", [])[:3]
+            likely_causes = symptom_result.get("troubleshooting_hints", [])[:5]
 
-        repair_steps = [
-            "Scan and confirm active/pending DTCs with freeze-frame data.",
-            "Perform visual inspection of affected system and connectors.",
-            "Run component-level test according to OEM manual.",
-            "Repair/replace failed component and clear codes.",
-            "Road test and re-scan to verify fix.",
+        # Get comprehensive repair steps
+        repair_steps = code_result.get("repair_procedures", [])
+        if not repair_steps:
+            repair_steps = [
+                "1. Scan and confirm active/pending DTCs with freeze-frame data.",
+                "2. Perform visual inspection of affected system and connectors.",
+                "3. Run component-level test according to OEM manual.",
+                "4. Test each likely cause in order of probability.",
+                "5. Repair/replace failed component and clear codes.",
+                "6. Road test and re-scan to verify fix.",
+                "7. Document repair for service history.",
+            ]
+
+        # Get cost estimate if available
+        cost_estimate = code_result.get("estimated_cost", "Check with local service center for pricing")
+        repair_time = code_result.get("estimated_time", "1-4 hours depending on cause")
+
+        # Comprehensive diagnostic checklist
+        diagnostic_checklist = [
+            "1. Confirm customer complaint and try to reproduce condition.",
+            "2. Check all related fuses, relays, and harness connectors for corrosion.",
+            "3. Validate sensor and actuator live data with scan tool.",
+            "4. Cross-check with OEM troubleshooting flowchart.",
+            "5. Perform component resistance/voltage tests as indicated.",
+            "6. Identify root cause (not just symptom).",
         ]
 
-        maintenance_recommendations = maintenance_result.get(
-            "maintenance_recommendations", []
-        )
+        # Add symptom-specific diagnostic steps
+        if symptom_result.get("diagnostic_workflow"):
+            diagnostic_checklist.extend(symptom_result.get("diagnostic_workflow", [])[:3])
+
+        maintenance_recommendations = maintenance_result.get("maintenance_recommendations", [])
         preventive_actions = maintenance_result.get("preventive_actions", [])
 
+        # Build safety warnings
+        safety_warnings = []
+        severity = code_result.get("severity", "Unknown")
+        if severity in ["Critical", "Urgent", "High"]:
+            if "brake" in str(code_result).lower():
+                safety_warnings.append("⚠️ SAFETY CRITICAL: Brake system failure - Do not drive, arrange towing.")
+            elif "steering" in str(code_result).lower():
+                safety_warnings.append("⚠️ SAFETY CRITICAL: Steering system issue - Do not drive, arrange towing.")
+            elif "overheating" in str(code_result).lower():
+                safety_warnings.append("⚠️ ENGINE OVERHEATING: Stop immediately, turn off engine, check coolant after cooling.")
+
         references = [src.get("source", "unknown") for src in payload.get("sources", [])]
-        confidence = payload.get("confidence_score", 0.5)
+        confidence = payload.get("confidence_score", 0.65)
 
         return {
-            "issue_summary": diagnosis,
+            "issue_summary": issue_summary,
             "diagnostic_code_description": code_result.get("description", "No DTC description available."),
             "likely_causes": likely_causes,
-            "severity": code_result.get("severity", "Unknown"),
-            "diagnostic_checklist": [
-                "Confirm complaint and reproduce condition.",
-                "Check related fuses, harness, and connectors.",
-                "Validate sensor and actuator live data.",
-                "Cross-check with OEM troubleshooting flowchart.",
-            ],
+            "severity": severity,
+            "diagnostic_checklist": diagnostic_checklist,
             "repair_recommendations": repair_steps,
-            "maintenance_recommendations": maintenance_recommendations,
-            "preventive_actions": preventive_actions,
+            "maintenance_recommendations": maintenance_recommendations[:5],
+            "preventive_actions": preventive_actions[:3],
+            "estimated_cost_range": cost_estimate,
+            "estimated_time": repair_time,
+            "safety_warnings": safety_warnings,
             "confidence_score": confidence,
             "references": references,
             "api_response": {
-                "diagnosis": diagnosis,
-                "severity": code_result.get("severity", "Unknown"),
-                "possible_causes": likely_causes,
-                "repair_steps": repair_steps,
-                "maintenance_recommendations": maintenance_recommendations,
+                "diagnosis": issue_summary,
+                "severity": severity,
+                "possible_causes": likely_causes[:5],
+                "repair_steps": repair_steps[:8],
+                "maintenance_recommendations": maintenance_recommendations[:3],
+                "cost_estimate": cost_estimate,
                 "confidence_score": confidence,
                 "sources": references,
             },
