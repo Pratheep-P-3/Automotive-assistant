@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-import csv
 import logging
-import os
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -14,92 +12,16 @@ logger = logging.getLogger(__name__)
 
 class CodeAgent:
     def __init__(self, data_path: str | None = None) -> None:
-        root = Path(__file__).resolve().parents[2]
-        configured_path = data_path or os.getenv(
-            "OBD_DATA_PATH", str(root / "data" / "obd" / "obd_codes.csv")
-        )
-        path_obj = Path(configured_path)
-        self.data_path = path_obj if path_obj.is_absolute() else (root / path_obj)
-        self.rag_retriever = RAGRetriever()  # Initialize RAG for PDF lookups
+        # Data path is kept for compatibility but NOT USED
+        # All diagnostic data comes from TXT files via RAG/ChromaDB ONLY
+        self.rag_retriever = RAGRetriever()
+        logger.info("[CodeAgent] ✓ Initialized - Using TXT files via RAG ONLY (no PDFs, no CSVs)")
 
     @staticmethod
-    def _parse_causes(raw: str) -> List[str]:
-        for sep in ["|", ";"]:
-            if sep in raw:
-                return [item.strip() for item in raw.split(sep) if item.strip()]
-        return [item.strip() for item in raw.split(",") if item.strip()]
-
-    def _retrieve_from_rag(self, dtc_code: str) -> Dict[str, Any] | None:
-        """Retrieve OBD code definition from RAG (PDFs in vector DB). This is the authoritative source."""
-        try:
-            # Query specifically for this OBD code
-            query = f"OBD code {dtc_code} definition description severity causes"
-            logger.info(f"[RAG] Querying ChromaDB for {dtc_code}...")
-            docs = self.rag_retriever.retrieve(query, k=5)  # Get more docs for better context
-            logger.info(f"[RAG] Retrieved {len(docs)} documents for {dtc_code}")
-            
-            if docs:
-                # Found relevant documents from PDFs
-                combined_text = " ".join([doc.page_content for doc in docs])
-                logger.info(f"[RAG] Combined text length: {len(combined_text)} chars")
-                logger.debug(f"[RAG] Combined text preview: {combined_text[:200]}...")
-                logger.info(f"✓ RAG retrieved data for {dtc_code} from PDFs")
-                
-                # Extract structured information from retrieved content
-                # Look for the code definition in the text
-                lines = combined_text.split('\n')
-                description = ""
-                severity = "Unknown"
-                causes = []
-                
-                # Find the line with this code and extract information
-                code_found = False
-                for i, line in enumerate(lines):
-                    if dtc_code.upper() in line.upper():
-                        logger.info(f"[RAG] Found code in line {i}: {line[:100]}")
-                        code_found = True
-                        # This line mentions the code, extract description
-                        if ':' in line:
-                            description = line.split(':', 1)[1].strip()
-                        elif '=' in line:
-                            description = line.split('=', 1)[1].strip()
-                        else:
-                            description = line.replace(dtc_code, '').strip()
-                        
-                        # Look for severity indicators nearby
-                        context = '\n'.join(lines[max(0, i-2):min(len(lines), i+3)])
-                        severity = self._extract_severity(context)
-                        causes = self._extract_causes(context)
-                        break
-                
-                # If we didn't find specific details, use the whole text
-                if not code_found:
-                    logger.warning(f"[RAG] Code {dtc_code} not found in lines, using full text extraction")
-                    description = combined_text[:400]
-                    severity = self._extract_severity(combined_text)
-                    causes = self._extract_causes(combined_text)
-                
-                logger.info(f"[RAG] Extracted - Description: {description[:80]}... | Severity: {severity} | Causes: {len(causes)}")
-                
-                return {
-                    "code": dtc_code.upper(),
-                    "description": description.strip() if description else "Definition from company PDFs",
-                    "severity": severity,
-                    "common_causes": causes,
-                    "source": "rag_pdf"
-                }
-            else:
-                logger.warning(f"✗ RAG found NO documents for {dtc_code}")
-                return None
-                
-        except Exception as exc:
-            logger.exception(f"[RAG] Retrieval FAILED for {dtc_code}: {exc}")
-            return None
-
-    def _extract_severity(self, text: str) -> str:
+    def _extract_severity(text: str) -> str:
         """Extract severity level from text."""
         text_lower = text.lower()
-        if "critical" in text_lower or "severe" in text_lower:
+        if "critical" in text_lower or "severe" in text_lower or "urgent" in text_lower:
             return "Critical"
         elif "high" in text_lower or "major" in text_lower:
             return "High"
@@ -112,74 +34,114 @@ class CodeAgent:
     def _extract_causes(self, text: str) -> List[str]:
         """Extract common causes from RAG text."""
         causes = []
-        lines = text.split(".")
-        for line in lines:
+        # Look for structured cause lists
+        for line in text.split('\n'):
             line_clean = line.strip()
-            if len(line_clean) > 20 and len(line_clean) < 200:
-                causes.append(line_clean)
+            # Skip headers and empty lines
+            if line_clean and len(line_clean) > 15 and not any(x in line_clean.lower() for x in ['code:', 'severity:', 'system:', 'description:', '=']):
+                # Remove bullet points and numbering
+                clean = line_clean.lstrip('- •*123456789.) ')
+                if len(clean) > 10 and len(clean) < 200:
+                    causes.append(clean)
         return causes[:5]  # Return top 5 causes
 
-    def _lookup_code(self, dtc_code: str) -> Dict[str, Any]:
-        if not self.data_path.exists():
-            logger.warning("OBD dataset not found at %s", self.data_path)
-            return {
-                "code": dtc_code,
-                "description": "OBD dataset unavailable.",
-                "severity": "Unknown",
-                "common_causes": [],
-            }
-
-        with self.data_path.open("r", encoding="utf-8") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                code = (row.get("code") or "").strip().upper()
-                if code == dtc_code.upper().strip():
-                    return {
-                        "code": code,
-                        "description": (row.get("description") or "").strip(),
-                        "severity": (row.get("severity") or "Unknown").strip() or "Unknown",
-                        "common_causes": self._parse_causes(
-                            (row.get("common_causes") or "").strip()
-                        ),
-                    }
-
-        return {
-            "code": dtc_code,
-            "description": "Diagnostic code not found in local dataset.",
-            "severity": "Unknown",
-            "common_causes": [],
-        }
+    def _retrieve_from_rag(self, dtc_code: str) -> Dict[str, Any] | None:
+        """Retrieve OBD code definition from RAG (TXT files in ChromaDB). 
+        
+        THIS IS THE ONLY AUTHORITATIVE SOURCE - No PDFs, No CSVs
+        """
+        try:
+            query = f"OBD code {dtc_code} definition description severity causes"
+            logger.info(f"[RAG] Querying ChromaDB for {dtc_code}...")
+            docs = self.rag_retriever.retrieve(query, k=5)
+            logger.info(f"[RAG] Retrieved {len(docs)} documents for {dtc_code}")
+            
+            if docs:
+                combined_text = " ".join([doc.page_content for doc in docs])
+                logger.info(f"[RAG] ✓ Found data for {dtc_code} (text length: {len(combined_text)} chars)")
+                
+                lines = combined_text.split('\n')
+                description = ""
+                severity = "Unknown"
+                causes = []
+                
+                # Find line with this code and extract info
+                code_found = False
+                for i, line in enumerate(lines):
+                    if dtc_code.upper() in line.upper():
+                        logger.info(f"[RAG] Code found in text: {line[:80]}")
+                        code_found = True
+                        
+                        # Extract description from various formats
+                        if ':' in line:
+                            description = line.split(':', 1)[1].strip()
+                        elif '=' in line:
+                            description = line.split('=', 1)[1].strip()
+                        else:
+                            description = line.replace(dtc_code, '').strip()
+                        
+                        # Extract severity and causes from context
+                        context = '\n'.join(lines[max(0, i-2):min(len(lines), i+5)])
+                        severity = self._extract_severity(context)
+                        causes = self._extract_causes(context)
+                        break
+                
+                # Fallback: use full text if code not found in specific line
+                if not code_found:
+                    logger.info(f"[RAG] Code not found in specific line, extracting from full text")
+                    description = combined_text[:300]
+                    severity = self._extract_severity(combined_text)
+                    causes = self._extract_causes(combined_text)
+                
+                logger.info(f"[RAG] ✓ Extracted: severity={severity}, causes={len(causes)}")
+                
+                return {
+                    "code": dtc_code.upper(),
+                    "description": description.strip() if description else f"Code {dtc_code} from company TXT reference materials",
+                    "severity": severity,
+                    "common_causes": causes,
+                    "source": "rag_txt"
+                }
+            else:
+                logger.warning(f"[RAG] ✗ No matching documents found for {dtc_code}")
+                return None
+                
+        except Exception as exc:
+            logger.exception(f"[RAG] ✗ Retrieval FAILED for {dtc_code}: {exc}")
+            return None
 
     def run(self, state: WorkflowState) -> WorkflowState:
         code = (state.get("code") or "").strip()
         if not code:
             return state
 
-        # Try RAG retrieval FIRST (from PDFs in vector DB) - this is the authoritative source
-        logger.info(f"Looking up {code} in RAG vector database...")
-        rag_result = self._retrieve_from_rag(code)
+        # ONLY retrieve from RAG (TXT files in ChromaDB)
+        # NO FALLBACK TO CSV OR PDFS
+        logger.info(f"[CodeAgent] Looking up {code} in RAG knowledge base (TXT files only)...")
+        result = self._retrieve_from_rag(code)
         
-        if rag_result:
-            # SUCCESS: Found in PDFs
-            result = rag_result
-            source_type = "RAG Knowledge Base (PDFs)"
-            logger.info(f"✓ Using RAG data for {code}")
+        if result:
+            logger.info(f"[CodeAgent] ✓ Found {code} in TXT knowledge base")
+            source_type = "RAG Knowledge Base (TXT Files)"
         else:
-            # FALLBACK ONLY: CSV lookup (for codes not yet in PDFs)
-            logger.warning(f"No RAG data for {code}, falling back to CSV...")
-            result = self._lookup_code(code)
-            source_type = "CSV Fallback"
-            logger.warning(f"⚠ Using CSV fallback for {code}")
+            logger.warning(f"[CodeAgent] ✗ Code {code} NOT found in TXT knowledge base")
+            # Return "not found" result instead of fallback
+            result = {
+                "code": code.upper(),
+                "description": f"OBD code {code} not found in reference materials",
+                "severity": "Unknown",
+                "common_causes": [],
+                "source": "not_found"
+            }
+            source_type = "Code Not Found in Knowledge Base"
 
         state["code_result"] = result
 
         sources = state.get("sources", [])
-        sources.append(
-            {
-                "source": source_type,
-                "type": "obd_code",
-                "code": result.get("code", code),
-            }
-        )
+        sources.append({
+            "source": source_type,
+            "type": "obd_code",
+            "code": result.get("code", code),
+        })
         state["sources"] = sources
         return state
