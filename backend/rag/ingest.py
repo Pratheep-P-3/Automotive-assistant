@@ -36,13 +36,16 @@ def ingest_documents() -> int:
     root = Path(__file__).resolve().parents[2]
     manuals_dir = root / "data" / "manuals"
     troubleshooting_dir = root / "data" / "troubleshooting"
+    maintenance_dir = root / "data" / "maintenance"
+    obd_dir = root / "data" / "obd"
+    evaluation_dir = root / "data" / "evaluation"
 
     persist_dir = Path(
         os.getenv("CHROMA_PERSIST_DIR", str(root / "data" / "chroma"))
     )
     collection_name = os.getenv("CHROMA_COLLECTION_NAME", "automotive_docs")
 
-    raw_documents = _load_pdfs([manuals_dir, troubleshooting_dir])
+    raw_documents = _load_pdfs([manuals_dir, troubleshooting_dir, maintenance_dir, obd_dir, evaluation_dir])
     if not raw_documents:
         logger.warning(
             "No PDF documents found. Place PDFs under data/manuals or data/troubleshooting."
