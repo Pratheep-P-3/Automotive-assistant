@@ -49,6 +49,7 @@ class CodeAgent:
         """Retrieve OBD code definition from RAG (TXT files in ChromaDB). 
         
         THIS IS THE ONLY AUTHORITATIVE SOURCE - No PDFs, No CSVs
+        Extracts structured fields: Description, Severity, System Affected, Common Causes, etc.
         """
         try:
             query = f"OBD code {dtc_code} definition description severity causes"
@@ -61,53 +62,104 @@ class CodeAgent:
                 logger.info(f"[RAG] ✓ Found data for {dtc_code} (text length: {len(combined_text)} chars)")
                 
                 lines = combined_text.split('\n')
-                description = ""
-                severity = "Unknown"
-                causes = []
+                result = {
+                    "code": dtc_code.upper(),
+                    "description": "",
+                    "severity": "Unknown",
+                    "system_affected": "",
+                    "common_causes": [],
+                    "diagnostic_steps": [],
+                    "repair_recommendation": "",
+                    "estimated_cost": "",
+                }
                 
-                # Find line with this code and extract info
-                code_found = False
+                # Find the section for this code
+                code_start_idx = -1
                 for i, line in enumerate(lines):
-                    if dtc_code.upper() in line.upper():
-                        logger.info(f"[RAG] Code found in text: {line[:80]}")
-                        code_found = True
-                        
-                        # Extract description from various formats
-                        if ':' in line:
-                            description = line.split(':', 1)[1].strip()
-                        elif '=' in line:
-                            description = line.split('=', 1)[1].strip()
-                        else:
-                            description = line.replace(dtc_code, '').strip()
-                        
-                        # Extract severity and causes from context
-                        context = '\n'.join(lines[max(0, i-2):min(len(lines), i+5)])
-                        severity = self._extract_severity(context)
-                        causes = self._extract_causes(context)
+                    if dtc_code.upper() in line.upper() and ('OBD Code:' in line or 'OBD-II' in line or line.strip().startswith('P') or line.strip().startswith('U') or line.strip().startswith('C')):
+                        code_start_idx = i
+                        logger.info(f"[RAG] Code section found at line {i}: {line[:80]}")
                         break
                 
-                # Fallback: use full text if code not found in specific line
-                if not code_found:
-                    logger.info(f"[RAG] Code not found in specific line, extracting from full text")
-                    description = combined_text[:300]
-                    severity = self._extract_severity(combined_text)
-                    causes = self._extract_causes(combined_text)
+                if code_start_idx == -1:
+                    logger.warning(f"[RAG] Code {dtc_code} not found in structured format")
+                    return None
                 
-                logger.info(f"[RAG] ✓ Extracted: severity={severity}, causes={len(causes)}")
+                # Extract fields from this code section until next code or end
+                i = code_start_idx
+                while i < len(lines):
+                    line = lines[i]
+                    line_lower = line.lower()
+                    
+                    # Stop if we hit the next code
+                    if i > code_start_idx and ('OBD Code:' in line or 'OBD-II' in line) and dtc_code.upper() not in line.upper():
+                        break
+                    
+                    # Extract Description
+                    if 'description:' in line_lower:
+                        desc_parts = [lines[i].split(':', 1)[1].strip() if ':' in lines[i] else ""]
+                        i += 1
+                        # Capture multi-line description
+                        while i < len(lines) and lines[i].strip() and not ':' in lines[i]:
+                            desc_parts.append(lines[i].strip())
+                            i += 1
+                        result["description"] = " ".join(desc_parts).strip()
+                        continue
+                    
+                    # Extract Severity
+                    if 'severity:' in line_lower:
+                        result["severity"] = lines[i].split(':', 1)[1].strip() if ':' in lines[i] else "Unknown"
+                    
+                    # Extract System Affected
+                    if 'system affected:' in line_lower or 'system:' in line_lower:
+                        result["system_affected"] = lines[i].split(':', 1)[1].strip() if ':' in lines[i] else ""
+                    
+                    # Extract Common Causes
+                    if 'common causes:' in line_lower:
+                        i += 1
+                        while i < len(lines) and (lines[i].startswith('  -') or lines[i].startswith('  •') or lines[i].startswith('  *')):
+                            cause = lines[i].strip().lstrip('- •*').strip()
+                            if cause:
+                                result["common_causes"].append(cause)
+                            i += 1
+                        continue
+                    
+                    # Extract Diagnostic Steps
+                    if 'diagnostic steps:' in line_lower:
+                        i += 1
+                        while i < len(lines) and (lines[i].strip().startswith(tuple('0123456789')) or lines[i].startswith('  ')):
+                            step = lines[i].strip()
+                            if step and ':' in step:
+                                # Extract numbered step
+                                step_text = step.split('.', 1)[-1].strip() if '.' in step else step
+                                if step_text:
+                                    result["diagnostic_steps"].append(step_text)
+                                i += 1
+                            elif ':' not in lines[i] and 'diagnostic' not in lines[i].lower() and 'repair' not in lines[i].lower():
+                                i += 1
+                            else:
+                                break
+                        continue
+                    
+                    # Extract Repair Recommendation
+                    if 'repair recommendation:' in line_lower:
+                        result["repair_recommendation"] = lines[i].split(':', 1)[1].strip() if ':' in lines[i] else ""
+                    
+                    # Extract Cost
+                    if 'typical repair cost:' in line_lower or 'cost:' in line_lower:
+                        result["estimated_cost"] = lines[i].split(':', 1)[1].strip() if ':' in lines[i] else ""
+                    
+                    i += 1
                 
-                return {
-                    "code": dtc_code.upper(),
-                    "description": description.strip() if description else f"Code {dtc_code} from company TXT reference materials",
-                    "severity": severity,
-                    "common_causes": causes,
-                    "source": "rag_txt"
-                }
-            else:
-                logger.warning(f"[RAG] ✗ No matching documents found for {dtc_code}")
-                return None
+                logger.info(f"[RAG] ✓ Extracted complete data for {dtc_code}: desc_len={len(result['description'])}, causes={len(result['common_causes'])}, steps={len(result['diagnostic_steps'])}")
                 
+                return result
+            
+            logger.warning(f"[RAG] No documents found for {dtc_code}")
+            return None
+            
         except Exception as exc:
-            logger.exception(f"[RAG] ✗ Retrieval FAILED for {dtc_code}: {exc}")
+            logger.exception(f"[RAG] Error retrieving {dtc_code}: {exc}")
             return None
 
     def run(self, state: WorkflowState) -> WorkflowState:
@@ -120,9 +172,10 @@ class CodeAgent:
         logger.info(f"[CodeAgent] Looking up {code} in RAG knowledge base (TXT files only)...")
         result = self._retrieve_from_rag(code)
         
-        if result:
-            logger.info(f"[CodeAgent] ✓ Found {code} in TXT knowledge base")
+        if result and result.get("description"):
+            logger.info(f"[CodeAgent] ✓ Found {code} in TXT knowledge base with full data")
             source_type = "RAG Knowledge Base (TXT Files)"
+            result["source"] = "rag_txt"
         else:
             logger.warning(f"[CodeAgent] ✗ Code {code} NOT found in TXT knowledge base")
             # Return "not found" result instead of fallback
@@ -131,6 +184,10 @@ class CodeAgent:
                 "description": f"OBD code {code} not found in reference materials",
                 "severity": "Unknown",
                 "common_causes": [],
+                "system_affected": "",
+                "diagnostic_steps": [],
+                "repair_recommendation": "",
+                "estimated_cost": "",
                 "source": "not_found"
             }
             source_type = "Code Not Found in Knowledge Base"

@@ -81,8 +81,8 @@ def ingest_documents() -> int:
 
     logger.info("[INGESTION] Splitting %d documents into chunks...", len(raw_documents))
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=200,
+        chunk_size=1500,  # Increased to capture full OBD code entries with all fields
+        chunk_overlap=300,  # Increased overlap to preserve context
     )
     chunks = splitter.split_documents(raw_documents)
     
