@@ -1,4 +1,5 @@
 code,description,severity,common_causes
+P0120,Ignition and misfire detection synthetic monitor condition 6,Moderate,"Engine control module software adaptation;Fuel system calibration issue;Ignition timing sensor fault;Spark plug degradation"
 P0171,System Too Lean (Bank 1),High,"Vacuum leak;Dirty MAF sensor;Low fuel pressure;Exhaust leak upstream O2 sensor"
 P0300,Random/Multiple Cylinder Misfire Detected,Critical,"Worn spark plugs;Ignition coil failure;Fuel injector issue;Low compression"
 P0420,Catalyst System Efficiency Below Threshold (Bank 1),Medium,"Aging catalytic converter;Faulty oxygen sensors;Engine misfire;Exhaust leaks"
