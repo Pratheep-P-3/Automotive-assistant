@@ -1,0 +1,339 @@
+================================================================================
+SERVICE RECOMMENDATION GUIDE - DIAGNOSTIC TO REPAIR MAPPING
+================================================================================
+Document Version: 1.0
+Last Updated: 2026-07-31
+Purpose: Guide for translating symptoms and codes into service recommendations
+
+================================================================================
+SECTION 1: SERVICE RECOMMENDATION FRAMEWORK
+================================================================================
+
+General Principles:
+1. Diagnosis comes FIRST (identify root cause, not symptoms)
+2. Repairs target root cause (not just clearing codes)
+3. Multiple symptoms may indicate single root issue
+4. Always check simple things first (battery, connections, fluid levels)
+5. Use OBD codes as clues, not as definitive diagnosis
+6. Physical inspection confirms scanner codes
+7. Safety issues (brakes, steering) are HIGHEST priority
+
+Service Priority Matrix:
+  CRITICAL (Stop driving immediately):
+  - No brakes or soft pedal going to floor
+  - Steering not responsive or locked
+  - Engine overheating above 230°F
+  - Severe loss of power/no acceleration
+  - Transmission slipping (motor revving, no speed)
+  - Visible flames or heavy smoke from engine
+  - Severe fluid leaks
+
+  URGENT (Schedule repair within 1 week):
+  - Check engine light with misfire codes
+  - ABS warning light steady on
+  - Transmission hard shift or warning light
+  - Grinding noises when braking
+  - Steering feels loose or unresponsive
+  - Battery warning light on
+
+  IMPORTANT (Schedule within 1 month):
+  - Tire tread below 4/32"
+  - Alignment pulling to one side
+  - Suspension clunking noises
+  - Dim headlights
+  - Rough idle present
+  - Sluggish acceleration
+
+  MAINTENANCE (Schedule at next convenient service):
+  - Approaching scheduled service interval
+  - Air filter visibly dirty
+  - Wiper blade streaking
+  - Minor fluid leaks (not safety-critical)
+
+================================================================================
+SECTION 2: DIAGNOSTIC-TO-SERVICE MAPPING
+================================================================================
+
+OBD Code: P0171, P0174 (Fuel System Too Lean/Rich)
+Recommended Service Steps:
+  Step 1: Check fuel pressure
+    - Connect pressure gauge to fuel rail
+    - Idle: should be 40-65 PSI steady
+    - If low: Fuel pump weak or fuel filter clogged
+    - If high: Fuel pressure regulator faulty
+    Service: Fuel filter replacement ($30-50) or fuel pump replacement ($300-600)
+
+  Step 2: Test oxygen sensor
+    - Monitor O2 voltage cycling
+    - Should be 0.1-0.9V and respond to throttle
+    - If not responding: Sensor failure
+    Service: Replace O2 sensor ($150-300)
+
+  Step 3: Inspect fuel injectors
+    - Listen for clicking sound from injectors
+    - If not clicking: Injector electrical problem
+    Service: Clean injectors ($100-200) or replace injectors ($200-500)
+
+  Step 4: Check mass airflow sensor
+    - Visual inspection for contamination
+    - If clogged: Engine runs lean
+    Service: Clean MAF sensor ($50-100) or replace ($200-400)
+
+Recommended Repair (Most Likely): Replace O2 sensor or clean/replace fuel injectors
+
+---
+
+OBD Code: P0300, P0301-P0308 (Misfire Detected)
+Recommended Service Steps:
+  Step 1: Replace spark plugs
+    - Inspect plugs (should be tan/brown, not black)
+    - Check gap (typically 0.028-0.040")
+    - If worn: Most common cause of misfire
+    Service: Spark plug replacement ($30-100)
+
+  Step 2: Test ignition coils
+    - Check for cracks or burn marks
+    - Test resistance with multimeter
+    - If faulty: Coil pack replacement
+    Service: Replace ignition coil ($100-250 per coil)
+
+  Step 3: Check fuel injector(s)
+    - Measure resistance (should be 12-16 ohms)
+    - Listen for clicking
+    Service: Clean injectors ($100-200) or replace ($150-400)
+
+  Step 4: Verify fuel pressure
+    - Should be 40-65 PSI steady
+    Service: Fuel pump or regulator replacement if low
+
+  Step 5: Test cylinder compression
+    - Should be 150+ PSI all cylinders
+    - If low on specific cylinder: Ring wear or valve damage
+    Service: Internal engine repair ($500-2000+)
+
+Recommended Repair (Most Likely): Replace spark plugs (60% of cases)
+
+---
+
+OBD Code: P0420 (Catalytic Converter Efficiency Below Threshold)
+Recommended Service Steps:
+  Step 1: Check for exhaust leaks
+    - Inspect exhaust manifold for cracks
+    - Check gaskets for leaks
+    - If leak found: Restricts back pressure to catalyst
+    Service: Exhaust gasket/manifold repair ($200-500)
+
+  Step 2: Verify no misfire codes
+    - Scan for P0300-P0308 misfire codes
+    - If present: Unburned fuel damaging converter
+    Service: Fix underlying misfire first (plugs, coil, injectors)
+
+  Step 3: Test oxygen sensors
+    - Compare upstream vs. downstream voltages
+    - Downstream sensor should cycle slower than upstream
+    - If same cycle pattern: Converter not working
+    Service: Replace catalytic converter ($400-2000)
+
+  Step 4: Check exhaust back pressure
+    - If excessive restriction: Converter or muffler clogged
+    Service: Replace converter or remove/clear restriction
+
+Recommended Repair (Most Likely): Replace catalytic converter (expensive but necessary)
+
+---
+
+OBD Code: P0700 (Transmission Control System Malfunction)
+Recommended Service Steps:
+  Step 1: Check transmission fluid
+    - Level between MIN and MAX
+    - Color should be bright red (not brown)
+    - Smell for burnt odor
+    Service: Fluid flush and refill ($150-300) if dirty
+
+  Step 2: Scan for specific transmission codes
+    - Look for P07xx series codes (solenoid, speed sensor, pressure)
+    - Specific code narrows diagnosis
+    Service: Address specific code (see below)
+
+  Step 3: Test transmission shift solenoids
+    - Measure coil resistance
+    - Apply power, listen for click
+    Service: Replace faulty solenoid ($300-800)
+
+  Step 4: Verify input/output speed sensors
+    - Should see speed changes while driving
+    - Compare to tire rotation speed
+    Service: Replace faulty sensor ($150-400)
+
+Recommended Repair (Most Likely): Depends on specific code (solenoid most common)
+
+---
+
+OBD Code: P0128 (Coolant Thermostat Temperature Regulating Malfunction)
+Recommended Service Steps:
+  Step 1: Monitor engine warm-up time
+    - Should reach 190°F in 5-10 minutes from cold start
+    - If longer: Thermostat stuck open
+    - If rapid heat: Thermostat OK, sensor faulty
+    Service: Thermostat replacement ($150-300)
+
+  Step 2: Test coolant temperature sensor
+    - Measure resistance at different temperatures
+    - Should change proportionally
+    Service: Replace ECT sensor ($100-200)
+
+  Step 3: Verify cooling fan operation
+    - Should turn on when temp rises
+    - If won't engage: Temp sensor, relay, or motor issue
+    Service: Replace cooling fan motor or relay ($200-600)
+
+Recommended Repair (Most Likely): Replace thermostat (80% of cases)
+
+================================================================================
+SECTION 3: SYMPTOM-BASED SERVICE RECOMMENDATIONS
+================================================================================
+
+Customer Reports: "Engine won't start, battery good, hears clicking"
+
+Diagnostic Path:
+  1. Verify battery voltage (12.6V+ at rest)
+  2. Test starter motor (12V directly applied should crank engine)
+  3. Check battery cable connections
+  4. Test starter solenoid (clicking sound from solenoid)
+
+Likely Service (in priority order):
+  1. Clean battery terminals and connectors ($0-20)
+  2. Replace defective starter motor ($300-500)
+  3. Replace battery (if weak) ($100-250)
+  4. Repair loose/corroded battery cable ($50-150)
+
+---
+
+Customer Reports: "Transmission shifts hard, jerking when shifting"
+
+Diagnostic Path:
+  1. Check transmission fluid level
+  2. Scan for transmission codes
+  3. Test shift solenoids
+  4. Check transmission line pressure
+
+Likely Service (in priority order):
+  1. Flush and refill transmission fluid ($150-300)
+  2. Replace shift solenoid ($300-800)
+  3. Clean transmission cooler if clogged ($200-400)
+  4. Repair transmission (if internal damage) ($1500-3500)
+
+---
+
+Customer Reports: "Brakes feel soft, pedal goes to floor"
+
+Diagnostic Path:
+  1. Check brake fluid level
+  2. Scan for ABS codes
+  3. Inspect for brake fluid leaks
+  4. Bleed brakes if air present
+  5. Test master cylinder
+
+Likely Service (in priority order):
+  1. Bleed air from brake lines ($100-150)
+  2. Replace brake fluid (hydraulic flush) ($150-200)
+  3. Repair brake line leak ($100-400)
+  4. Replace master cylinder ($300-600)
+
+---
+
+Customer Reports: "Loss of power, poor acceleration, sluggish"
+
+Diagnostic Path:
+  1. Check air filter condition
+  2. Measure fuel pressure
+  3. Check engine load and fuel trim
+  4. Inspect exhaust restriction
+  5. Test ignition timing
+
+Likely Service (in priority order):
+  1. Replace air filter ($20-40)
+  2. Clean fuel injectors ($100-200)
+  3. Replace fuel filter ($30-60)
+  4. Replace catalytic converter if restricted ($400-2000)
+  5. Clean carbon from intake valves ($100-200)
+
+================================================================================
+SECTION 4: SERVICE INTERVAL RECOMMENDATIONS
+================================================================================
+
+Recommended Service Schedule by Mileage:
+
+Every 5,000 miles:
+  - Oil and filter change
+  - Tire rotation
+  - Visual inspection
+
+Every 15,000 miles:
+  - Replace air filter
+  - Inspect brakes
+  - Check all fluids
+
+Every 30,000 miles:
+  - Replace spark plugs (conventional)
+  - Flush coolant system
+  - Inspect suspension
+
+Every 50,000 miles:
+  - Check wheel alignment
+  - Inspect transmission fluid
+  - Inspect catalytic converter
+
+Every 60,000 miles:
+  - Replace spark plugs (long-life plugs)
+  - Flush brake fluid
+  - Inspect suspension bushings
+
+Every 100,000 miles:
+  - Replace timing belt (if applicable - some use chains)
+  - Major transmission service
+  - Differential fluid flush
+  - Full brake system inspection
+
+================================================================================
+SECTION 5: QUICK SERVICE COST ESTIMATES
+================================================================================
+
+Common Repairs and Typical Labor + Parts:
+
+Oil and Filter Change:           $40-80
+Air Filter Replacement:          $20-40
+Spark Plug Replacement:          $30-150
+Ignition Coil Replacement:       $150-400
+Fuel Filter Replacement:         $50-150
+Fuel Pump Replacement:           $300-600
+Fuel Injector Replacement:       $150-400
+Engine Water Pump:               $300-600
+Thermostat Replacement:          $150-300
+Alternator Replacement:          $300-500
+Starter Motor Replacement:       $300-500
+Battery Replacement:             $100-250
+Brake Pad Replacement (4 wheels):|$150-350
+Brake Rotor Replacement:         $250-400
+Brake Caliper Replacement:       $200-400
+Wheel Bearing Replacement:       $200-500
+Suspension Strut Replacement:    $300-600
+Control Arm Replacement:         $200-400
+Tie Rod Replacement:             $150-300
+Wheel Alignment (4-wheel):       $100-200
+Tire Rotation:                   $30-50
+Tire Replacement (4 tires):      $400-1400
+Transmission Fluid Flush:        $150-300
+Transmission Solenoid:           $300-800
+Transmission Rebuild:            $1500-3500
+Transmission Replacement:        $2500-5000+
+Coolant Flush:                   $100-200
+Radiator Replacement:            $400-1000
+Catalytic Converter Replacement: $400-2000
+Muffler Replacement:             $200-600
+Drive Belt Replacement:          $100-300
+Serpentine Belt Replacement:     $100-200
+
+================================================================================
+END OF DOCUMENT
+================================================================================

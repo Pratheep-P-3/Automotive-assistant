@@ -1,0 +1,286 @@
+================================================================================
+OBD CODES MANUAL A - POWERTRAIN DIAGNOSTIC CODES
+================================================================================
+Document Version: 1.0
+Last Updated: 2026-07-31
+Purpose: Comprehensive reference for OBD-II Powertrain diagnostic trouble codes
+
+================================================================================
+SECTION 1: FUEL SYSTEM CODES (P01xx)
+================================================================================
+
+---
+OBD Code: P0110
+Description: Intake Air Temperature (IAT) Sensor Circuit
+Severity: High
+System Affected: Air Intake System
+Common Causes:
+  - Faulty IAT sensor element
+  - Wiring harness corrosion or damage
+  - ECU connector issue
+  - Air intake leak causing false readings
+Diagnostic Steps:
+  1. Verify scanner confirms fault code
+  2. Check sensor resistance at idle (typical 2-7k ohms at 70°F)
+  3. Inspect wiring for breaks, corrosion
+  4. Test voltage output at ECU under load
+  5. Replace sensor if resistance outside specification
+Repair Recommendation: Replace IAT sensor or repair wiring
+Typical Repair Cost: $150-300
+
+---
+OBD Code: P0112
+Description: Fuel delivery and mixture control synthetic monitor condition 5
+Severity: Urgent
+System Affected: Fuel Delivery and Mixture Control
+Common Causes:
+  - Sensor drift in fuel system monitoring
+  - Loose connector at fuel system sensor
+  - Mechanical wear in fuel injector or pump
+  - ECU calibration issue
+Diagnostic Steps:
+  1. Check fuel system pressure (should be 50-60 PSI)
+  2. Inspect fuel injector resistance and spray pattern
+  3. Verify fuel filter condition
+  4. Test fuel pump operation
+  5. Check for fuel system leaks
+Repair Recommendation: Replace fuel injectors or recalibrate ECU
+Typical Repair Cost: $300-600
+
+---
+OBCode: P0113
+Description: Intake Air Temperature (IAT) Sensor Circuit High Input
+Severity: Medium
+System Affected: Air Intake System
+Common Causes:
+  - Open circuit in IAT sensor wiring
+  - IAT sensor connector disconnected
+  - Faulty sensor element
+  - ECU electrical malfunction
+Diagnostic Steps:
+  1. Verify fault with scanner
+  2. Inspect harness connections at sensor and ECU
+  3. Measure sensor resistance (should increase with temperature)
+  4. Check for engine vacuum leaks
+  5. Test ECU power and ground circuits
+Repair Recommendation: Repair wiring, connector, or replace IAT sensor
+Typical Repair Cost: $100-250
+
+---
+OBD Code: P0114
+Description: Intake Air Temperature (IAT) Sensor Circuit Intermittent
+Severity: Low
+System Affected: Air Intake System
+Common Causes:
+  - Corroded sensor connector contacts
+  - Loose connector causing intermittent connection
+  - Damaged wiring insulation
+  - Thermal stress on sensor element
+Diagnostic Steps:
+  1. Monitor live sensor data with scanner
+  2. Gently wiggle wiring harness while observing data
+  3. Inspect connector for moisture or corrosion
+  4. Clean contacts with electronic contact cleaner
+  5. Check for vibration-induced wire movement
+Repair Recommendation: Clean connector, repair wiring, or replace sensor
+Typical Repair Cost: $75-200
+
+---
+OBD Code: P0115
+Description: Engine Coolant Temperature (ECT) Sensor Circuit
+Severity: High
+System Affected: Cooling System Monitoring
+Common Causes:
+  - Faulty ECT sensor (most common)
+  - Wiring harness damage
+  - Connector corrosion
+  - ECU malfunction
+  - Thermostat stuck open (false reading)
+Diagnostic Steps:
+  1. Scan for confirmed fault code
+  2. Measure ECT sensor resistance (cold vs. hot)
+  3. Compare to manufacturer specification chart
+  4. Inspect wiring for damage or corrosion
+  5. Verify coolant level adequate
+Repair Recommendation: Replace ECT sensor or repair wiring
+Typical Repair Cost: $120-280
+
+================================================================================
+SECTION 2: AIR INTAKE CODES (P02xx)
+================================================================================
+
+---
+OBD Code: P0201
+Description: Injector Circuit Malfunction - Cylinder 1
+Severity: Critical
+System Affected: Fuel Injection
+Common Causes:
+  - Fuel injector electrical coil failure
+  - Injector driver circuit failure in ECU
+  - Wiring open circuit or short to ground
+  - Connector corrosion at injector or ECU
+  - Low fuel pressure preventing injection
+Diagnostic Steps:
+  1. Confirm fault with OBD scanner
+  2. Test fuel injector coil resistance (typical 12-16 ohms)
+  3. Verify fuel pressure at rail
+  4. Check for continuity in injector wiring
+  5. Test ECU injector driver circuit with oscilloscope
+Repair Recommendation: Replace fuel injector or repair ECU circuit
+Typical Repair Cost: $200-500
+
+---
+OBD Code: P0202
+Description: Injector Circuit Malfunction - Cylinder 2
+Severity: Critical
+System Affected: Fuel Injection
+Common Causes:
+  - Fuel injector electrical coil failure
+  - Injector driver circuit failure in ECU
+  - Wiring open circuit or short to ground
+  - Connector corrosion at injector or ECU
+Diagnostic Steps:
+  1. Confirm fault with OBD scanner
+  2. Test fuel injector coil resistance
+  3. Verify fuel pressure at rail
+  4. Check for continuity in injector wiring
+  5. Test ECU injector driver circuit
+Repair Recommendation: Replace fuel injector or repair ECU circuit
+Typical Repair Cost: $200-500
+
+================================================================================
+SECTION 3: IGNITION SYSTEM CODES (P03xx)
+================================================================================
+
+---
+OBD Code: P0300
+Description: Random/Multiple Cylinder Misfire Detected
+Severity: Critical
+System Affected: Ignition and Fuel System
+Common Causes:
+  - Worn or fouled spark plugs
+  - Ignition coil pack failure
+  - Fuel injector malfunction
+  - Low fuel pressure
+  - Vacuum leak
+  - Low engine compression
+  - Bad fuel quality
+Diagnostic Steps:
+  1. Confirm fault code with scanner
+  2. Inspect all spark plugs for wear, fouling, gap
+  3. Check spark plug wires/coil packs for damage
+  4. Measure fuel pressure (should be 40-65 PSI depending on engine)
+  5. Perform compression test on all cylinders
+  6. Check for vacuum leaks with smoke test
+Repair Recommendation: Replace spark plugs, ignition coils, or diagnose fuel/compression issues
+Typical Repair Cost: $150-800 depending on cause
+
+---
+OBD Code: P0301
+Description: Cylinder 1 Misfire Detected
+Severity: High
+System Affected: Ignition and Fuel System
+Common Causes:
+  - Spark plug failure in cylinder 1
+  - Ignition coil failure for cylinder 1
+  - Fuel injector malfunction for cylinder 1
+  - Low compression in cylinder 1
+  - Vacuum leak at cylinder 1 intake valve
+Diagnostic Steps:
+  1. Pull spark plug from cylinder 1 and inspect
+  2. Test ignition coil output with oscilloscope
+  3. Measure fuel injector pulse with multimeter
+  4. Check cylinder 1 compression
+  5. Inspect for vacuum leak in cylinder 1 intake
+Repair Recommendation: Replace spark plug, coil, or injector for cylinder 1
+Typical Repair Cost: $100-400
+
+================================================================================
+SECTION 4: OXYGEN SENSOR CODES (P04xx)
+================================================================================
+
+---
+OBD Code: P0420
+Description: Catalyst System Efficiency Below Threshold (Bank 1)
+Severity: Medium
+System Affected: Catalytic Converter / Oxygen Sensors
+Common Causes:
+  - Aging or deteriorating catalytic converter
+  - Faulty downstream oxygen sensor
+  - Exhaust leak upstream of catalyst
+  - Engine misfire (causes unburned fuel to reach catalyst)
+  - Air injection system malfunction
+Diagnostic Steps:
+  1. Scan for related misfire codes
+  2. Check upstream vs. downstream O2 sensor voltages
+  3. Compare oxygen sensor response times
+  4. Inspect exhaust for leaks
+  5. Perform converter temperature test
+Repair Recommendation: Replace catalytic converter or oxygen sensor
+Typical Repair Cost: $400-2000 (converters are expensive)
+
+---
+OBD Code: P0430
+Description: Catalyst System Efficiency Below Threshold (Bank 2)
+Severity: Medium
+System Affected: Catalytic Converter / Oxygen Sensors (Bank 2)
+Common Causes:
+  - Aging or deteriorating catalytic converter (bank 2)
+  - Faulty downstream oxygen sensor (bank 2)
+  - Exhaust leak on bank 2 side
+  - Engine misfire on bank 2 cylinders
+Diagnostic Steps:
+  1. Scan for related misfire codes on bank 2 cylinders
+  2. Check upstream vs. downstream O2 sensor voltages on bank 2
+  3. Verify timing and fuel trim on bank 2
+  4. Inspect exhaust for leaks on bank 2
+  5. Test converter operation with infrared thermometer
+Repair Recommendation: Replace catalytic converter or oxygen sensor
+Typical Repair Cost: $400-2000
+
+================================================================================
+SECTION 5: COOLANT SYSTEM CODES (P05xx)
+================================================================================
+
+---
+OBD Code: P0500
+Description: Vehicle Speed Sensor Malfunction
+Severity: Medium
+System Affected: Transmission Control / ABS System
+Common Causes:
+  - Faulty vehicle speed sensor
+  - Wiring damage or corrosion
+  - Sensor alignment issue
+  - Transmission speed ring damaged
+Diagnostic Steps:
+  1. Scan for speed sensor data from ECU
+  2. Verify sensor mounting and alignment
+  3. Test sensor resistance (typical 200-900 ohms)
+  4. Check for AC voltage output while driving
+  5. Inspect wiring for damage
+Repair Recommendation: Replace vehicle speed sensor or repair wiring
+Typical Repair Cost: $150-400
+
+---
+OBD Code: P0505
+Description: Idle Air Control System Malfunction
+Severity: Medium
+System Affected: Idle Control System
+Common Causes:
+  - Faulty Idle Air Control (IAC) valve
+  - Carbon buildup in throttle body
+  - Vacuum leak
+  - ECU malfunction
+  - Faulty throttle position sensor
+Diagnostic Steps:
+  1. Scan for idle control data
+  2. Inspect throttle body for carbon deposit
+  3. Check for vacuum leaks
+  4. Test IAC valve movement
+  5. Verify throttle position sensor calibration
+Repair Recommendation: Clean throttle body, replace IAC valve, or repair vacuum leak
+Typical Repair Cost: $100-300
+
+================================================================================
+END OF DOCUMENT
+================================================================================

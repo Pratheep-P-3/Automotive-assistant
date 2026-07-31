@@ -1,0 +1,276 @@
+================================================================================
+TROUBLESHOOTING MANUAL B - ADVANCED DIAGNOSTIC WORKFLOWS
+================================================================================
+Document Version: 1.0
+Last Updated: 2026-07-31
+Purpose: Complex multi-system diagnostic workflows
+
+================================================================================
+WORKFLOW 6: NO POWER WHEN ACCELERATING / BOGGING DOWN
+================================================================================
+
+Symptom: Vehicle hesitates when pushing accelerator, lack of response
+
+Step 1: Preliminary Diagnostics
+  - Scan for all codes (especially fuel trim, misfire, oxygen sensor codes)
+  - Monitor real-time fuel pressure under acceleration
+  - Check for check engine light
+  - Note driving conditions when symptom occurs (cold start, warm, highway)
+
+Step 2: Fuel System Pressure Testing
+  - Connect fuel pressure gauge to fuel rail
+  - Idle pressure: should be 40-65 PSI steady
+  - Under acceleration: should maintain pressure (slight drop acceptable)
+  - Pressure oscillation (pulsing): indicates fuel pump cavitation
+  
+Fuel Pump Performance Grades:
+  - Excellent: Steady 45-65 PSI, no ripple
+  - Good: 40-60 PSI, < 2 PSI ripple
+  - Fair: 35-50 PSI, 2-5 PSI ripple
+  - Poor: < 35 PSI or > 5 PSI ripple (replace pump)
+
+Step 3: Fuel Injector Analysis
+  - Check injector pulse width with oscilloscope
+  - At full throttle: pulse width should increase significantly
+  - Short pulse width at full throttle = too lean (hesitation)
+  - Long pulse width at full throttle = too rich (sluggish)
+  - Measure actual fuel flow rate if possible
+
+Step 4: Air Intake System
+  - Verify mass airflow sensor (MAF) reading under acceleration
+  - Should increase proportionally to throttle position
+  - Restricted MAF sensor causes leanness and hesitation
+  - Check for vacuum leaks (propane smoke test recommended)
+  - Verify intake manifold gasket not leaking
+
+Step 5: Ignition Timing Analysis
+  - Verify ignition timing advances under acceleration
+  - No advance = poor acceleration and detonation risk
+  - Too much advance = pre-ignition and detonation (knocking)
+  - Use oscilloscope to verify timing circuit signals
+
+Step 6: Oxygen Sensor Monitoring
+  - Monitor O2 sensor voltage response time
+  - Should cycle 0.1-0.9V within 100ms of change
+  - Slow response indicates sensor aging or circuit problem
+  - Sensor should go rich (0.7-0.9V) under acceleration initially
+
+Related Codes to Check:
+  - P0171, P0174: Fuel too lean
+  - P0131, P0134: Oxygen sensor circuit
+  - P0101: Mass airflow sensor range
+  - P0122, P0123: Throttle position sensor range
+  - P0335: Crankshaft position sensor
+  - P0340, P0345: Camshaft position
+  - P0012, P0014: Camshaft timing advance/retard
+
+Diagnostic Decision Tree:
+  IF fuel pressure drops significantly under load
+    → Weak fuel pump or clogged fuel filter
+  IF fuel pressure good but hesitation continues
+    → Check fuel injectors spray pattern
+  IF injectors good but still hesitating
+    → Diagnose air intake (MAF sensor most likely)
+  IF air intake good
+    → Check ignition system (timing, coil, plugs)
+  IF everything seems OK
+    → Check transmission (downshift not engaging, torque converter stuck)
+
+Repair Priority by Likelihood:
+  1. Fuel pump (weak under load) - 25% of cases
+  2. Fuel injectors (clogged or bad flow) - 20% of cases
+  3. Mass airflow sensor (dirty or faulty) - 20% of cases
+  4. Spark plugs or ignition coil - 15% of cases
+  5. Vacuum leak - 10% of cases
+  6. Transmission issue - 5% of cases
+  7. Engine compression problem - 5% of cases
+
+================================================================================
+WORKFLOW 7: TRANSMISSION SHIFTING PROBLEMS
+================================================================================
+
+Symptom: Hard shifts, delayed shifts, transmission slipping, no upshift
+
+Step 1: Verify Transmission Condition
+  - Check transmission fluid level (should be between MIN and MAX marks)
+  - Verify fluid color (should be bright red, not dark brown/burnt)
+  - Smell fluid (burnt smell = overheating/slipping)
+  - Feel for grit between fingers (metal particles = internal wear)
+  - Check for fluid leaks under vehicle
+
+Transmission Fluid Condition Guide:
+  - Bright red, smooth: Excellent condition
+  - Slightly darker red, smooth: Acceptable
+  - Dark red/brown, smooth: Needs attention (flush soon)
+  - Dark brown or burnt smell: Urgent (internal damage likely)
+  - Gritty feel: Severe internal damage (rebuild/replace needed)
+
+Step 2: Engine and Transmission Diagnostics
+  - Scan for transmission fault codes (P7xx range)
+  - Check engine load at different RPMs
+  - Verify engine shifting patterns during acceleration
+  - Monitor transmission temperature (should be < 200°F)
+  - Check for signs of overheating (high temp light)
+
+Common Transmission Codes:
+  - P0715: Input Speed Sensor Circuit
+  - P0720: Output Speed Sensor Circuit
+  - P0740: Torque Converter Clutch
+  - P0750: Shift Solenoid A Circuit
+  - P0755: Shift Solenoid B Circuit
+  - P0760: Shift Solenoid C Circuit
+  - P0850: Park/Neutral Position Switch
+
+Step 3: Shift Pattern Testing
+  - Test shifting from PARK to REVERSE (should engage smoothly)
+  - Test shifting from REVERSE to DRIVE (should engage smoothly)
+  - Test acceleration upshifts (3000 RPM upshifts = normal)
+  - Test manual downshifts (should downshift promptly)
+  - Test engine braking in manual mode (should hold gear)
+
+Shift Problems Diagnosis:
+  - Hard/harsh shifts → Low fluid, worn bands, solenoid problem
+  - Delayed upshifts → Low pressure, governor issue, throttle sensor
+  - No upshift (runs at high RPM) → Electronic solenoid failure
+  - Slipping (RPMs rise without speed increase) → Worn clutches, low pressure
+  - Refuses to shift out of first → Solenoid or wiring failure
+  - Intermittent shifting → Electrical contact issue, low voltage
+
+Step 4: Torque Converter Analysis
+  - Listen for noise (whine or grinding = bearing wear)
+  - Measure stall speed (if equipped with tach converter)
+  - Check for shuddering during acceleration (lockup issue)
+  - Verify lockup clutch engages at highway speed (improves MPG)
+
+Step 5: Throttle Position Sensor (TPS) Verification
+  - Many shift issues caused by bad TPS signal
+  - TPS voltage should range from 0.5V (closed throttle) to 4.5V (wide open)
+  - Should increase smoothly and linearly with throttle
+  - Any dead zones or jumps = replacement needed
+
+Step 6: Vehicle Dynamics Testing
+  - Test hill starts (transmission should hold gear)
+  - Test highway merging (should downshift and accelerate)
+  - Test towing (if applicable) - loads transmission heavily
+  - Test on full acceleration (should bang through gears quickly)
+
+Transmission Fluid Maintenance:
+  - Drain and refill every 30,000-60,000 miles
+  - Use only manufacturer-recommended fluid
+  - Never mix transmission fluid types
+  - Check for leaks at: pan gasket, seals, cooler lines
+  - Replace cooler lines if soft or cracked
+
+Repair Estimates:
+  - Fluid flush and refill: $150-300
+  - Solenoid replacement: $300-600 each
+  - Torque converter replacement: $800-1500
+  - Internal repair/rebuild: $1500-3500
+  - Full transmission replacement: $2500-5000+
+
+================================================================================
+WORKFLOW 8: BRAKING SYSTEM PROBLEMS
+================================================================================
+
+Symptom: Soft pedal, pulsing during braking, brake fade, grinding
+
+Step 1: Brake Pedal Assessment
+  - Press pedal and hold for 30 seconds (should stay firm)
+  - If slowly goes soft → Air in lines (bleed brakes)
+  - If stays firm but weak stopping → Worn pads or low fluid
+  - If pedal goes to floor → Severe leak or master cylinder failure
+
+Brake Pedal Firmness Guide:
+  - 1/4 inch travel: Excellent
+  - 1/2 inch travel: Good
+  - 1-2 inches travel: Acceptable
+  - > 2 inches before resistance: Problem (bleed or repair)
+
+Step 2: Visual Inspection
+  - Check brake fluid level (should be between MIN and MAX)
+  - Verify brake fluid color (clear to slightly amber = good)
+  - Dark fluid = age, replace all fluid
+  - Look for leaks at calipers, wheel cylinders, master cylinder
+  - Inspect brake hoses for cracks, bulges, or age-related deterioration
+
+Step 3: Brake Pad Inspection
+  - Remove wheels and visually inspect pads
+  - Measure pad thickness:
+    - > 3mm: Excellent condition
+    - 2-3mm: Good, monitor
+    - 1-2mm: Replace soon
+    - < 1mm: Replace immediately (safety hazard)
+  - Check for uneven wear (lateral scoring = alignment issue)
+  - Listen for squealing noise (pad wear indicator)
+
+Step 4: Rotor Inspection
+  - Measure rotor thickness with caliper
+  - Compare to minimum specification (typically 2mm minimum)
+  - Inspect for severe scoring or glazing
+  - Check for warping (rock car in 1st gear, measure runout)
+  - Rotors should be flat within 0.005"
+
+Rotor Condition Assessment:
+  - Smooth, flat surface: Excellent (can reuse with new pads)
+  - Minor scratches, flat: Good (resurface or replace)
+  - Severe scoring (visible gouges): Replace immediately
+  - Blued/discolored: Overheating occurred (inspect cooling)
+  - Warped/runout: Causing pulsation, must replace
+
+Step 5: Brake Line Pressure Testing
+  - Connect brake pressure gauge to each wheel circuit
+  - Apply steady brake pressure, note all four wheel readings
+  - Pressure should be: within 100 PSI of each other
+  - Front brakes typically: 800-1200 PSI
+  - Rear brakes typically: 700-1000 PSI
+  - Large pressure difference = proportioning valve issue
+
+Step 6: Master Cylinder Testing
+  - Inspect reservoir fluid level and condition
+  - Check for leaks at master cylinder base
+  - Test pedal feel during braking
+  - Measure brake fluid travel (should increase smoothly)
+  - Listen for unusual noises (grinding = cylinder damage)
+
+Step 7: Anti-Lock Brake System (ABS) Testing
+  - Scan for ABS codes (C-codes)
+  - Test ABS activation during hard braking
+  - Verify wheel speed sensors functioning
+  - Check ABS fluid level (separate from regular brake fluid)
+  - Note if ABS light stays on (sensor failure likely)
+
+Brake Problem Diagnosis:
+  - Soft pedal → Air in lines, low fluid, master cylinder
+  - Pulsing pedal under braking → Warped rotor or ABS activation
+  - Grinding noise → Worn pads (metal-to-metal contact)
+  - Squealing noise → Pad wear indicator or thin pads
+  - Pulling to one side → Uneven pad wear or caliper sticking
+  - Brake fade (pedal goes soft after repeated braking) → Fluid boiling
+
+Common Brake System Codes:
+  - C0035: Left Front Wheel Speed Sensor
+  - C0040: Right Front Wheel Speed Sensor
+  - C0055: Left Rear Wheel Speed Sensor
+  - C0060: Right Rear Wheel Speed Sensor
+  - C0200: Hydraulic Pump Motor (ABS pump)
+  - C1200: ABS Control Module Fault
+
+Brake Maintenance Schedule:
+  - Inspect pads every 15,000 miles
+  - Flush brake fluid every 2 years or 25,000 miles
+  - Replace pads typically at 50,000 miles (varies by vehicle/driving)
+  - Rotate brakes (front to rear) not standard, all four typically same age
+  - Bleed air from lines any time disconnected
+
+Safety Note: NEVER ignore brake warning lights or soft pedal. Brakes are safety-critical.
+
+Repair Timeline:
+  - Brake pad replacement: 1-2 hours
+  - Rotor replacement: 2-3 hours
+  - Master cylinder replacement: 2-4 hours
+  - Brake line repair: 1-3 hours depending on location
+  - Full brake system overhaul: 4-6 hours
+
+================================================================================
+END OF DOCUMENT
+================================================================================

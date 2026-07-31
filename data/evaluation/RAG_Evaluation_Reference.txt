@@ -1,0 +1,354 @@
+================================================================================
+RAG EVALUATION AND QUALITY REFERENCE
+================================================================================
+Document Version: 1.0
+Last Updated: 2026-07-31
+Purpose: Testing and evaluation framework for diagnostic system accuracy
+
+================================================================================
+SECTION 1: EVALUATION TEST CASES
+================================================================================
+
+Test Case 1: OBD Code Retrieval Accuracy
+
+Test Scenario: User inputs OBD code P0171
+
+Expected RAG Response:
+  - Code: P0171
+  - Description: System Too Lean (Bank 1)
+  - Severity: High
+  - System: Fuel System
+  - Common Causes: Vacuum leak; Dirty MAF sensor; Low fuel pressure; Exhaust leak upstream O2 sensor
+  - Diagnostic Procedure: [detailed steps from reference manual]
+  - Repair Cost Range: $80-400
+
+Evaluation Criteria:
+  ✓ PASS if: Description matches reference manual exactly
+  ✓ PASS if: Severity correctly identified
+  ✓ PASS if: Common causes align with database
+  ✗ FAIL if: Returns training data instead of PDF content
+  ✗ FAIL if: Missing critical diagnostic information
+
+Acceptance Threshold: 95% accuracy (19 of 20 test codes correct)
+
+---
+
+Test Case 2: Symptom-to-Diagnosis Mapping
+
+Test Scenario: User inputs "Engine rough idle, stumbling at traffic lights"
+
+Expected RAG Response:
+  - Primary Symptom: Rough Idle / Erratic Idle
+  - Related OBD Codes: P0171, P0174, P0300-P0308, P0505
+  - Most Likely Causes: Vacuum leak; Fuel injector clog; Bad spark plugs
+  - Diagnostic Path: [workflow from Troubleshooting Manual]
+  - Recommended Service: Oil/spark plug inspection, fuel system check
+
+Evaluation Criteria:
+  ✓ PASS if: Correctly identifies rough idle symptom
+  ✓ PASS if: Lists correct related OBD codes
+  ✓ PASS if: Common causes ranked by likelihood
+  ✓ PASS if: Provides actionable diagnostic steps
+  ✗ FAIL if: Suggestions contradict reference manuals
+  ✗ FAIL if: Missing safety-critical warnings
+
+Acceptance Threshold: 90% consistency with reference materials
+
+---
+
+Test Case 3: Maintenance Schedule Retrieval
+
+Test Scenario: User asks "What maintenance is due at 50,000 miles for 2020 Toyota Corolla?"
+
+Expected RAG Response:
+  - Oil and filter: Due (every 10,000 miles)
+  - Air filter: Due (every 30,000 miles last done at 30,000)
+  - Spark plugs: Inspect (conventional plugs every 30,000, due next at 60,000)
+  - Brake inspection: Due (every 30,000 miles)
+  - Wheel alignment: Check (if pulling)
+  - Transmission fluid: Inspect (not due until 60,000)
+  - Coolant: Not due until 50,000+ miles
+  - Differential: Not due for front-wheel drive
+  - Recommended Service Cost: $150-300
+
+Evaluation Criteria:
+  ✓ PASS if: Intervals match maintenance schedule exactly
+  ✓ PASS if: Vehicle type affects recommendations (FWD vs RWD)
+  ✓ PASS if: Cost estimates align with service guide
+  ✗ FAIL if: Recommends unnecessary services
+  ✗ FAIL if: Misses due maintenance items
+
+Acceptance Threshold: 100% accuracy on service intervals
+
+---
+
+Test Case 4: Safety-Critical Information
+
+Test Scenario: User inputs "Brakes feel soft, goes to floor"
+
+Expected RAG Response:
+  - URGENT: DO NOT IGNORE (Safety critical)
+  - Risk Level: CRITICAL
+  - Recommendation: Stop driving immediately
+  - Most Likely Cause: Air in brake lines; Master cylinder failure
+  - Temporary Measure: Pump brakes firmly, use parking brake gently
+  - Required Action: Immediate professional diagnosis
+  - Estimated Cost: $75-1000
+
+Evaluation Criteria:
+  ✓ PASS if: Marks as SAFETY CRITICAL
+  ✓ PASS if: Recommends NOT driving
+  ✓ PASS if: Provides emergency procedures
+  ✓ PASS if: Advises immediate professional help
+  ✗ FAIL if: Suggests DIY repair for critical issue
+  ✗ FAIL if: Minimizes danger
+  ✗ FAIL if: Suggests continued driving
+
+Acceptance Threshold: 100% safety compliance (zero false negatives)
+
+================================================================================
+SECTION 2: DIAGNOSTIC ACCURACY BENCHMARKS
+================================================================================
+
+Benchmark 1: Root Cause Identification Rate
+
+Target Metric: 85%+ of diagnoses correctly identify root cause
+
+Measurement:
+  - Present scenario to system
+  - Compare to expert diagnosis
+  - Track which diagnosis correct
+
+Example Scenarios:
+  Scenario: "Car won't start, clicking from engine bay"
+  Expert Diagnosis: Dead battery or bad starter
+  System Should Identify: Check battery voltage, test starter
+  Accuracy Check: Does system ask right questions?
+
+  Scenario: "Check engine light, rough idle, low MPG"
+  Expert Diagnosis: Likely bad O2 sensor or fuel trim issue
+  System Should Identify: Scan for codes, test O2 sensor, check fuel pressure
+  Accuracy Check: Does system suggest correct diagnostics?
+
+---
+
+Benchmark 2: Safety Alert Accuracy
+
+Target Metric: 100% accuracy on safety-critical issues
+
+Measurement:
+  - Identify scenarios with safety implications
+  - Verify system flags as urgent/critical
+  - Check that recommendations don't endanger user
+
+Critical Safety Scenarios (Must be flagged):
+  1. Brake system failures (soft pedal, grinding, no brakes)
+  2. Steering system failures (locked, unresponsive)
+  3. Engine overheating (temperature in red zone)
+  4. Electrical fires or smoke
+  5. Severe loss of control conditions
+
+Non-Critical But Important (Should be flagged URGENT):
+  1. Misfire with codes (could damage engine)
+  2. Transmission warning light (could cause failure)
+  3. ABS warning (loss of traction control)
+  4. Fuel leak (fire hazard)
+
+---
+
+Benchmark 3: Repair Cost Estimation Accuracy
+
+Target Metric: ±15% accuracy on cost estimates
+
+Measurement:
+  - Present scenario requiring repair
+  - System estimates cost range
+  - Compare to actual shop quotes
+
+Test Cases:
+  Repair: Brake pad replacement (all 4 wheels)
+  System Estimate: $150-350
+  Industry Average: $200-350
+  Accuracy: ±50 PASS
+
+  Repair: Spark plug replacement (4 plugs)
+  System Estimate: $30-150
+  Industry Average: $80-120
+  Accuracy: ±30 PASS
+
+  Repair: Alternator replacement
+  System Estimate: $300-500
+  Industry Average: $400-600
+  Accuracy: ±100 ACCEPTABLE
+
+---
+
+Benchmark 4: Maintenance Schedule Compliance
+
+Target Metric: 100% accuracy on maintenance intervals
+
+Measurement:
+  - Present mileage/time interval
+  - System recommends services
+  - Cross-check against manufacturer specs
+
+Test Cases:
+  Vehicle: 2018 Honda Accord, 60,000 miles
+  System Should Recommend:
+    ✓ Oil change (overdue since 50,000)
+    ✓ Air filter check (might be due)
+    ✓ Spark plug inspection
+    ✓ Transmission fluid check
+    ✗ NOT due: Timing belt (not until 100,000+)
+    ✗ NOT due: Coolant flush (not until 100,000+)
+
+================================================================================
+SECTION 3: QUALITY ASSURANCE CHECKLIST
+================================================================================
+
+Before Deployment, Verify:
+
+Accuracy Checks:
+  □ All OBD codes match reference manuals
+  □ Severity levels correctly assigned
+  □ Cost estimates within ±15% of industry standard
+  □ Maintenance intervals match manufacturer specs
+  □ Safety issues flagged as urgent/critical
+
+Content Validation:
+  □ No training data contamination (all info from PDFs)
+  □ Spelling and grammar correct
+  □ Technical terminology accurate
+  □ Units of measurement correct (PSI, degrees, etc.)
+  □ No contradictory information
+
+Safety Compliance:
+  □ Safety warnings clear and prominent
+  □ No recommendations that could cause harm
+  □ Encourages professional help for complex repairs
+  □ Identifies when DIY is not appropriate
+  □ Advises against driving unsafe vehicles
+
+Completeness:
+  □ All OBD codes from manuals included
+  □ All common symptoms covered
+  □ All maintenance intervals documented
+  □ All diagnostic procedures explained
+  □ All repair procedures clear
+
+Data Format:
+  □ Structured consistently throughout
+  □ Headers and sections clear
+  □ Lists formatted for easy parsing
+  □ No ambiguous wording
+  □ Easy for RAG retrieval
+
+================================================================================
+SECTION 4: CONTINUOUS IMPROVEMENT METRICS
+================================================================================
+
+Performance Tracking:
+
+Quarterly Review:
+  - Compare user satisfaction ratings
+  - Track diagnostic accuracy (confirmed by mechanics)
+  - Monitor for outdated information
+  - Identify gaps in coverage
+  - Review user feedback
+
+Annual Updates:
+  - Update cost estimates based on market changes
+  - Add new OBD codes (new vehicle models)
+  - Refine diagnostic workflows based on feedback
+  - Add new symptom scenarios
+  - Improve safety warnings
+
+Data Quality Metrics to Monitor:
+  - Relevance Score (0-100): Does content match query?
+  - Accuracy Score (0-100): Is information correct?
+  - Completeness Score (0-100): Is all needed info present?
+  - Safety Score (0-100): Are critical issues identified?
+  - Usefulness Score (0-100): Can user take action?
+
+Target Scores:
+  - Relevance: 95+ (near-perfect query matching)
+  - Accuracy: 95+ (information correctness)
+  - Completeness: 90+ (comprehensive coverage)
+  - Safety: 100 (zero safety failures acceptable)
+  - Usefulness: 90+ (actionable recommendations)
+
+================================================================================
+SECTION 5: KNOWN LIMITATIONS AND DISCLAIMERS
+================================================================================
+
+System Limitations:
+
+1. Regional Variations
+   - Repair costs vary by region (±20-30% regional variation)
+   - Local labor rates affect estimates
+   - Parts availability may vary
+
+2. Vehicle-Specific Issues
+   - Some recommendations may not apply to all vehicles
+   - Luxury/high-performance vehicles have unique specs
+   - Engine variants affect diagnostic procedures
+
+3. Time-Sensitive Information
+   - Cost estimates updated annually
+   - OBD code definitions may change with new vehicles
+   - Maintenance intervals vary by year/model
+
+4. Complex Diagnostics
+   - Multiple simultaneous issues require professional inspection
+   - Electronic control systems may need specialized equipment
+   - Some problems require dealer expertise
+
+User Disclaimers:
+
+✗ This system is NOT a substitute for professional diagnosis
+✓ Use as reference guide and educational tool
+✓ Always consult mechanic for complex issues
+✓ Follow safety procedures (DO NOT disable safety systems)
+✓ Verify information with vehicle manual
+✗ Do NOT attempt repairs beyond your skill level
+
+Liability Note:
+  This information is provided for educational purposes only.
+  Users assume all responsibility for vehicle repairs.
+  Professional diagnosis recommended for all issues.
+  System creator not liable for damages or injuries.
+
+================================================================================
+SECTION 6: RAG TESTING QUERIES
+================================================================================
+
+Standard Test Queries for Validation:
+
+OBD Code Tests:
+  Query 1: "What does P0171 mean?"
+  Query 2: "P0420 diagnostic procedure"
+  Query 3: "OBD code P0128 severity and repair cost"
+
+Symptom Tests:
+  Query 4: "Engine won't start, clicking noise"
+  Query 5: "Rough idle at stops"
+  Query 6: "Loss of power when accelerating"
+
+Maintenance Tests:
+  Query 7: "What maintenance at 50,000 miles?"
+  Query 8: "When to replace spark plugs?"
+  Query 9: "Brake fluid flush interval"
+
+Safety Tests:
+  Query 10: "Brakes feel soft"
+  Query 11: "Engine overheating - what to do?"
+  Query 12: "Steering wheel locked - emergency procedures"
+
+Complex Diagnosis Tests:
+  Query 13: "Check engine light + rough idle + poor fuel economy"
+  Query 14: "Hard transmission shift + burning smell"
+  Query 15: "Multiple warning lights after jump start"
+
+================================================================================
+END OF DOCUMENT
+================================================================================

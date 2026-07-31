@@ -1,0 +1,320 @@
+================================================================================
+OBD CODES MANUAL B - BODY, CHASSIS, AND NETWORK CODES
+================================================================================
+Document Version: 1.0
+Last Updated: 2026-07-31
+Purpose: Reference for OBD-II codes affecting body systems and networks
+
+================================================================================
+SECTION 1: TRANSMISSION CODES (P6xx, P7xx)
+================================================================================
+
+---
+OBD Code: P0606
+Description: PCM/ECM Processor Fault
+Severity: Critical
+System Affected: Engine Control Module / Powertrain Control Module
+Common Causes:
+  - Internal ECU processor failure (rare)
+  - Power supply problem to ECU
+  - ECU overheating (shorted transistor)
+  - Software corruption in ECU memory
+  - Defective ECU fuel injector driver circuit
+Diagnostic Steps:
+  1. Clear code and see if it returns (intermittent vs. hard fault)
+  2. Check ECU power supply voltage (typically 12V+)
+  3. Check ECU ground circuits (should be < 0.2 ohms)
+  4. Monitor ECU temperature sensor (should be < 100°C)
+  5. Perform ECU voltage stress test while running
+Repair Recommendation: Replace ECU or reprogram if possible
+Typical Repair Cost: $500-1500
+
+---
+OBD Code: P0700
+Description: Transmission Control System Malfunction
+Severity: High
+System Affected: Automatic Transmission Control
+Common Causes:
+  - Transmission fluid low or dirty
+  - Transmission shift solenoid failure
+  - Transmission speed sensor malfunction
+  - Torque converter lockup solenoid failure
+  - Transmission ECU communication error
+Diagnostic Steps:
+  1. Check transmission fluid level and condition
+  2. Scan for specific transmission codes (P07xx series)
+  3. Test transmission shift solenoid circuits
+  4. Verify input/output speed sensor signals
+  5. Check transmission temperature sensor
+Repair Recommendation: Repair or replace failing component based on codes
+Typical Repair Cost: $300-1500 (solenoid) to $2500+ (rebuild)
+
+---
+OBD Code: P0715
+Description: Input Speed Sensor Circuit (Transmission)
+Severity: High
+System Affected: Transmission Control
+Common Causes:
+  - Faulty input speed sensor
+  - Sensor connector corrosion
+  - Wiring break or damage
+  - Transmission fluid contamination preventing sensor function
+Diagnostic Steps:
+  1. Locate input speed sensor (usually on transmission)
+  2. Unplug sensor and test resistance (typical 200-900 ohms)
+  3. Apply 12V to sensor, measure voltage output while turning
+  4. Check for AC voltage output while driving
+  5. Verify wiring continuity to transmission ECU
+Repair Recommendation: Clean connector, repair wiring, or replace sensor
+Typical Repair Cost: $200-600
+
+---
+OBD Code: P0750
+Description: Shift Solenoid A (Solenoid 1) Circuit
+Severity: High
+System Affected: Automatic Transmission Shifting
+Common Causes:
+  - Faulty shift solenoid coil
+  - Solenoid stuck or plunger jammed
+  - Transmission fluid pressure low
+  - Wiring harness short or open
+  - ECU solenoid driver circuit failure
+Diagnostic Steps:
+  1. Scan for transmission mode (should show gear selection)
+  2. Test solenoid coil resistance (typical 5-30 ohms depending on design)
+  3. Apply 12V directly to solenoid, listen for click
+  4. Check wiring continuity to transmission ECU
+  5. Verify transmission fluid pressure at solenoid
+Repair Recommendation: Replace shift solenoid or repair wiring
+Typical Repair Cost: $300-800 per solenoid
+
+---
+OBD Code: P0755
+Description: Shift Solenoid B (Solenoid 2) Circuit
+Severity: High
+System Affected: Automatic Transmission Shifting
+Common Causes:
+  - Faulty shift solenoid coil (solenoid B)
+  - Internal solenoid malfunction
+  - Low transmission fluid pressure
+  - Wiring or connector failure
+Diagnostic Steps:
+  1. Verify transmission stays in safe mode (usually 2nd or 3rd gear)
+  2. Test solenoid B resistance (compare to specification)
+  3. Apply power directly to solenoid, verify response
+  4. Check wiring continuity from ECU to solenoid
+  5. Verify transmission pressure
+Repair Recommendation: Replace shift solenoid B
+Typical Repair Cost: $300-800
+
+================================================================================
+SECTION 2: BODY AND CHASSIS CODES (U0xxx, C0xxx)
+================================================================================
+
+---
+OBD Code: U0073
+Description: Control Module Communication Bus Off
+Severity: High
+System Affected: CAN Bus Network (all modules communicate via this)
+Common Causes:
+  - CAN bus termination resistor failure
+  - CAN bus wiring shorted or open
+  - Module with failed CAN transceiver
+  - Battery voltage problem affecting bus
+  - Corroded connectors
+Diagnostic Steps:
+  1. Scan all modules to determine which failed
+  2. Check bus voltage (should be ~2.5V idle, switching when active)
+  3. Inspect CAN bus wiring for damage
+  4. Check connectors for corrosion
+  5. Test termination resistors (typically 120 ohms at each end)
+Repair Recommendation: Repair CAN bus wiring, connectors, or replace failed module
+Typical Repair Cost: $200-1200
+
+---
+OBD Code: C0035
+Description: Left Front Wheel Speed Sensor Circuit
+Severity: Medium
+System Affected: Anti-Lock Brake System (ABS)
+Common Causes:
+  - Faulty wheel speed sensor
+  - Sensor connector corrosion or loose
+  - Wiring damage near wheel
+  - Air gap between sensor and tone ring incorrect
+  - Tone ring damaged or missing teeth
+Diagnostic Steps:
+  1. Scan for wheel speed sensor data (should see ~400-1200 pulse rate at driving speed)
+  2. Inspect sensor mounting (should be 0.025-0.035" from tone ring)
+  3. Test sensor resistance (typical 1200-2000 ohms)
+  4. Measure AC voltage output while driving
+  5. Check for debris on tone ring
+Repair Recommendation: Replace wheel speed sensor or repair wiring
+Typical Repair Cost: $150-350 per sensor
+
+---
+OBD Code: C0040
+Description: Right Front Wheel Speed Sensor Circuit
+Severity: Medium
+System Affected: Anti-Lock Brake System (ABS) - Right Front
+Diagnostic: Same as C0035 but for right front wheel
+Repair Recommendation: Replace right front wheel speed sensor
+Typical Repair Cost: $150-350
+
+---
+OBD Code: C0055
+Description: Left Rear Wheel Speed Sensor Circuit
+Severity: Medium
+System Affected: Anti-Lock Brake System (ABS) - Left Rear
+Diagnostic: Same as C0035 but for left rear wheel
+Repair Recommendation: Replace left rear wheel speed sensor
+Typical Repair Cost: $150-350
+
+---
+OBD Code: C0060
+Description: Right Rear Wheel Speed Sensor Circuit
+Severity: Medium
+System Affected: Anti-Lock Brake System (ABS) - Right Rear
+Diagnostic: Same as C0035 but for right rear wheel
+Repair Recommendation: Replace right rear wheel speed sensor
+Typical Repair Cost: $150-350
+
+---
+OBD Code: C0200
+Description: ABS Hydraulic Pump Motor Malfunction
+Severity: High
+System Affected: ABS Hydraulic System
+Common Causes:
+  - ABS pump motor seized or failed
+  - Pump relay failure
+  - Wiring harness to pump damaged
+  - Insufficient hydraulic pressure
+  - ABS ECU relay failure
+Diagnostic Steps:
+  1. Verify ABS light illuminated on dashboard
+  2. Listen for pump motor noise during ABS activation
+  3. Test pump motor resistance
+  4. Check pump relay operation (should click)
+  5. Verify hydraulic pressure building during ABS test
+Repair Recommendation: Replace ABS pump motor or relay
+Typical Repair Cost: $400-900
+
+================================================================================
+SECTION 3: NETWORK/COMMUNICATION CODES (U-codes)
+================================================================================
+
+---
+OBD Code: U0101
+Description: Lost Communication with TCM (Transmission Control Module)
+Severity: High
+System Affected: Engine-Transmission Communication (CAN Bus)
+Common Causes:
+  - Transmission control module (TCM) failure
+  - CAN bus wiring damaged between PCM and TCM
+  - TCM connector corrosion
+  - PCM processor error
+  - Battery voltage problem
+Diagnostic Steps:
+  1. Scan both PCM and TCM for internal codes
+  2. Check CAN bus voltage and signals with oscilloscope
+  3. Verify TCM power and ground connections
+  4. Test CAN bus wiring continuity
+  5. Check for CAN bus termination
+Repair Recommendation: Repair CAN bus wiring, connectors, or replace TCM
+Typical Repair Cost: $300-1500
+
+---
+OBD Code: U0110
+Description: Lost Communication with ABS Module
+Severity: Medium
+System Affected: Brake System Communication (CAN Bus)
+Common Causes:
+  - ABS module failure
+  - CAN bus wiring problem
+  - ABS module connector corrosion
+  - ABS module power supply failure
+Diagnostic Steps:
+  1. Scan ABS module directly
+  2. Verify ABS module power (typically 12V+)
+  3. Check CAN bus signals to ABS module
+  4. Test ABS module ground
+  5. Inspect CAN bus wiring
+Repair Recommendation: Repair CAN bus connections or replace ABS module
+Typical Repair Cost: $200-1200
+
+---
+OBD Code: U0121
+Description: Lost Communication with Body Control Module (BCM)
+Severity: Medium
+System Affected: Body System Communication (CAN Bus)
+Common Causes:
+  - Body control module (BCM) failure
+  - CAN bus wiring damaged
+  - BCM connector corrosion
+  - BCM power supply issue
+Diagnostic Steps:
+  1. Verify BCM status (some lights may be dim/off)
+  2. Check CAN bus voltage
+  3. Test BCM power supply
+  4. Inspect BCM connectors for corrosion
+  5. Check for CAN bus shorts or opens
+Repair Recommendation: Repair CAN bus, connectors, or replace BCM
+Typical Repair Cost: $300-1500
+
+---
+OBD Code: U0415
+Description: Insufficient SPI Communication with ABS Module
+Severity: Medium
+System Affected: ABS Module Serial Communication
+Common Causes:
+  - SPI (Serial Peripheral Interface) communication line open or shorted
+  - ABS module SPI transceiver failure
+  - Wiring harness damage in SPI lines
+  - Connector pin corrosion
+Diagnostic Steps:
+  1. Check SPI wiring integrity
+  2. Test SPI signal voltages with oscilloscope
+  3. Verify ABS module SPI transceiver
+  4. Check connector pins for corrosion
+  5. Perform continuity test on SPI lines
+Repair Recommendation: Repair SPI wiring, connectors, or replace ABS module
+Typical Repair Cost: $200-1000
+
+================================================================================
+SECTION 4: NETWORK CODES QUICK REFERENCE
+================================================================================
+
+U-Code Categories:
+  U01xx: PCM/ECM to Other Module Communication
+  U02xx: TCM Communication Errors
+  U03xx: ABS/Brake Module Communication
+  U04xx: Body Control Module Communication
+  U05xx: HVAC Module Communication
+  U06xx: Integration Module Communication
+  U07xx: Vehicle Interface Module Communication
+  U08xx: Data Bus (CAN) Errors
+
+C-Code Categories (ABS/Stability Control):
+  C0xxx: Anti-Lock Brake System codes
+  C1xxx: Traction Control codes
+  C2xxx: Stability Control codes
+  C3xxx: Suspension codes
+  C4xxx: Transmission codes
+
+Common Symptoms of Network Errors:
+  - Multiple unrelated codes from different modules
+  - Intermittent warning lights
+  - Service lights that stay on
+  - Transmission not communicating with engine
+  - Multiple system failures at once
+  - Codes return immediately after clearing
+
+CAN Bus Diagnostic Tips:
+  - Network codes often mean physical problem, not module failure
+  - Check connections and wiring before replacing modules
+  - Use oscilloscope to verify CAN signal
+  - Test power/ground to affected modules
+  - Check battery voltage (low voltage can cause network errors)
+
+================================================================================
+END OF DOCUMENT
+================================================================================

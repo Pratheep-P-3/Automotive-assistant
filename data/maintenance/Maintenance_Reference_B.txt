@@ -1,0 +1,356 @@
+================================================================================
+MAINTENANCE MANUAL B - FLUIDS, BRAKES, TIRES, AND ADVANCED SERVICE
+================================================================================
+Document Version: 1.0
+Last Updated: 2026-07-31
+Purpose: Advanced maintenance procedures and service schedules
+
+================================================================================
+SECTION 1: TRANSMISSION FLUID MAINTENANCE
+================================================================================
+
+Maintenance Item: Automatic Transmission Fluid Flush and Refill
+Schedule: Every 30,000-60,000 miles or 2-4 years
+Severity: High (prevents shifting problems and transmission failure)
+When to Perform:
+  - During regular maintenance intervals
+  - Fluid color is dark brown or burnt
+  - Transmission slipping or hard shifts
+  - After extended towing or heavy use
+  - When smell is burnt or unusual
+
+Fluid Specification Verification:
+  - Check manufacturer specification (ATF +4, DEXRON, MERCON, JWS 3309, etc.)
+  - Never mix different transmission fluid types
+  - Use only specified fluid - wrong fluid causes shifting issues
+  - Synthetic fluids last longer (50,000-100,000 miles) vs. conventional (30,000-50,000)
+
+Flush Procedure:
+  1. Locate transmission drain plug (usually on transmission pan)
+  2. Warm transmission to operating temperature
+  3. Place drain pan under drain plug
+  4. Remove drain plug slowly - fluid will be hot
+  5. Allow all fluid to drain (may take 10-15 minutes)
+  6. Reinstall drain plug with new crush washer
+  7. Locate transmission filter (if equipped - not all transmissions have serviceable filter)
+  8. Remove filter and O-ring, install new filter with fresh O-ring
+  9. Add specified amount of new fluid through filler tube
+  10. Start engine and allow to idle while shifting through all gears
+  11. Allow to run 2-3 minutes in Park, then recheck level
+  12. Drive vehicle to reach operating temperature
+  13. Recheck fluid level (should be between MIN and MAX when warm)
+
+Cost: $100-200 (DIY) or $200-400 (professional)
+Tools: Drain pan, wrench set, transmission fluid, filter (if applicable)
+Fluid Capacity: Typically 6-10 quarts (varies significantly by vehicle)
+
+---
+Maintenance Item: Manual Transmission Fluid Change
+Schedule: Every 50,000-100,000 miles or 3-5 years
+Severity: Medium (keeps synchronizers smooth and gears healthy)
+When to Perform:
+  - Difficult shifting or grinding when shifting
+  - Fluid is dark or smells burnt
+  - After heavy towing or racing
+  - As part of preventive maintenance
+
+Manual Transmission Fluid Specification:
+  - Never use automatic transmission fluid in manual transmission
+  - Typical specs: SAE 75W-90 or 75W-140 (severe conditions)
+  - Synthetic lubricants extend drain intervals to 100,000+ miles
+  - Check owner's manual for exact specification
+
+Service Procedure:
+  1. Access transmission fill/drain plug (usually on side of transmission)
+  2. Locate transmission identification label
+  3. Place drain pan below drain plug
+  4. Remove drain plug with appropriate socket
+  5. Allow all fluid to drain
+  6. Reinstall drain plug with new crush washer
+  7. Locate fill plug (usually higher than drain plug)
+  8. Add new fluid using pump or squeeze bottle
+  9. Fill until fluid level reaches drain plug hole opening
+  10. Reinstall fill plug
+
+Cost: $50-150 (DIY) or $150-250 (professional)
+Tools: Drain pan, socket set, transmission fluid (SAE 75W-90 or 75W-140)
+Fluid Capacity: Typically 4-6 quarts
+
+================================================================================
+SECTION 2: DIFFERENTIAL FLUID MAINTENANCE
+================================================================================
+
+Maintenance Item: Differential Fluid Flush and Refill
+Schedule: Every 50,000-100,000 miles (more often if towing or 4WD)
+Severity: Medium (prevents bearing wear and gear damage)
+When to Perform:
+  - At manufacturer recommended intervals
+  - After heavy towing (always)
+  - 4WD vehicles: every 30,000 miles
+  - Hearing whining noise from rear (differential bearing wear)
+
+Differential Fluid Types:
+  - Rear Differential (RWD/AWD): Typically SAE 75W-90 or 75W-140
+  - Front Differential (AWD): Same as rear or synthetic
+  - Limited Slip Differential (LSD): Requires friction modifier additive
+  - Electronic Locking Differential: May require special synthetic fluid
+
+Service Procedure:
+  1. Safely raise vehicle on jack stands (both rear wheels off ground)
+  2. Locate differential drain plug (bottom of differential housing)
+  3. Place drain pan below
+  4. Remove drain plug slowly - fluid may be hot
+  5. Allow complete drainage (10-15 minutes)
+  6. If equipped, locate differential fill plug
+  7. Clean area around fill plug before opening
+  8. Remove fill plug
+  9. Add new differential fluid using pump or squeeze bottle
+  10. Fill until fluid reaches fill plug opening
+  11. Reinstall fill plug with crush washer
+  12. Lower vehicle
+
+Cost: $100-250 (DIY) or $200-350 (professional)
+Fluid Capacity: Typically 3-5 quarts
+Differential Rebuilding Cost (if bearing damage): $800-2000+
+
+================================================================================
+SECTION 3: BRAKE FLUID SERVICE
+================================================================================
+
+Maintenance Item: Brake Fluid Flush and Bleed
+Schedule: Every 2 years or 25,000 miles
+Severity: Critical (brake fluid absorbs moisture and loses effectiveness)
+Why Important:
+  - Brake fluid is hygroscopic (absorbs water from air)
+  - Old fluid with water boils at lower temperature (causes brake fade)
+  - Moisture causes brake corrosion from inside
+  - DOT 3/4 fluid: boiling point decreases 5°F for every 3% moisture
+  - Fresh fluid: boiling point 400°F+ vs. old fluid: boiling point 280°F-
+
+Brake Fluid Specifications:
+  - DOT 3: Most common (minimum boiling point 401°F)
+  - DOT 4: Higher boiling point 446°F (performance vehicles)
+  - DOT 5: Silicone-based, not hygroscopic (specialty only)
+  - DOT 5.1: Polyethylene glycol, very high boiling point
+  - Never mix DOT 3 and DOT 5 (incompatible)
+
+Brake Bleeding Procedure (Two-Person Method):
+  1. Locate brake bleeder screws (one on each wheel caliper/cylinder)
+  2. Fill master cylinder reservoir with correct DOT brake fluid
+  3. Start with wheel farthest from master cylinder (usually right rear)
+  4. Loosen bleeder screw 3/4 turn
+  5. Have assistant press brake pedal slowly to floor
+  6. Close bleeder screw when pedal reaches floor
+  7. Have assistant release pedal slowly (pedal returns to top)
+  8. Repeat until no more air bubbles in fluid
+  9. Move to next wheel
+  10. Repeat process for all four wheels
+  11. Top off master cylinder to MAX line
+  12. Test brake pedal (should be firm)
+
+Cost: $100-200 (DIY) or $150-300 (professional)
+Tools: Box wrench (bleeder screw size), turkey baster, clear tube, container
+Safety: Do NOT use old/dirty brake fluid - only fresh new fluid
+
+---
+Maintenance Item: Brake Caliper Lubrication
+Schedule: Every 15,000 miles or with brake service
+Severity: Medium (prevents brake noise and uneven wear)
+Purpose: Lubricates caliper slide pins so pads move freely
+
+Procedure:
+  1. Remove wheel
+  2. Remove brake caliper (unbolt from mounting bracket)
+  3. Inspect slide pins (usually 2 per caliper)
+  4. Clean pins with wire brush to remove rust/corrosion
+  5. Apply brake caliper grease to pins
+  6. Move caliper back and forth to distribute lubricant
+  7. Reinstall caliper
+  8. Pump brake pedal to seat pads against rotor
+
+Cost: $20-40 (DIY) or included with brake service
+Grease Type: High-temperature brake caliper grease (NOT general grease)
+
+================================================================================
+SECTION 4: TIRE MAINTENANCE AND REPLACEMENT
+================================================================================
+
+Maintenance Item: Tire Rotation
+Schedule: Every 5,000-7,500 miles
+Severity: Medium (extends tire life by 15-20%)
+Rotation Patterns:
+  - Recommended (X-pattern): Front left → Rear right, Front right → Rear left
+  - Alternative (side-to-side): Transfer each side without crossing
+  - Sport vehicles: Keep fronts front, rears rear (different wear patterns)
+
+Benefits of Rotation:
+  - Extends tire life from 40,000 miles to 50,000+ miles
+  - Improves handling and traction
+  - Identifies developing tire issues early
+  - Ensures even wear across all four tires
+
+---
+Maintenance Item: Tire Balance and Alignment
+Schedule: Every 30,000 miles or when vibration noticed
+Severity: High (improper alignment causes uneven wear)
+Tire Balance:
+  - Required when: steering wheel vibration, tire hop
+  - Dynamic balance (computer-aided) more accurate than static
+  - Cost: $15-25 per wheel (4 wheels = $60-100)
+
+Wheel Alignment:
+  - Required when: vehicle pulls to one side, uneven tire wear
+  - Three angles: Camber, Caster, Toe
+  - Cost: $100-200 (4-wheel alignment)
+  - Improves fuel economy by 3% if properly aligned
+
+Signs of Misalignment:
+  - Vehicle pulls left or right when driving straight
+  - Uneven tire wear (one edge worn more than other)
+  - Steering wheel not centered while driving straight
+  - Squealing tires on turns
+
+---
+Maintenance Item: Tire Replacement
+Condition Assessment:
+  - Minimum tread depth: 4/32" (legal minimum 2/32")
+  - Penny test: Insert penny into tread (if penny shows on Lincoln's head = bald)
+  - Maximum recommended age: 10 years (sidewall hardening)
+  - Uneven wear: Compare tread depth across tire width
+
+When to Replace:
+  - Tread < 4/32" in any location
+  - Tire age > 10 years (hardening)
+  - Visible damage: cuts > 1/4", sidewall damage, bulges
+  - Puncture > 1/4" diameter (tire shops can patch)
+  - Severe cupping or scalloping (vibration indicator)
+
+Tire Replacement Procedure:
+  1. Loosen lug nuts while vehicle on ground
+  2. Raise vehicle on jack stands (NEVER just jack)
+  3. Remove all lug nuts
+  4. Remove old wheel
+  5. Mount new tire on rim
+  6. Hand-tighten all lug nuts
+  7. Lower vehicle
+  8. Final torque lug nuts (typically 80-120 ft-lbs in star pattern)
+  9. Have alignment checked after replacement
+  10. Have balance checked after installation
+
+Tire Grading System:
+  - Treadwear (100-800+): 100 = hardest/longest lasting
+  - Traction (AA, A, B, C): AA = best wet traction
+  - Temperature (A, B, C): A = best heat resistance
+  - Load Index (100-150): Maximum weight tire can carry
+  - Speed Rating (Z-V-T-H-S-R-Q-P-N-M-L): Maximum speed rating
+
+Tire Size Explanation (Example: P215/65R15 95H):
+  - P = Passenger car tire
+  - 215 = Width in millimeters
+  - 65 = Aspect ratio (sidewall height as % of width)
+  - R = Radial construction
+  - 15 = Wheel diameter in inches
+  - 95 = Load index
+  - H = Speed rating (up to 130 mph)
+
+Tire Cost Range:
+  - Budget tires: $80-120 per tire
+  - Mid-range tires: $120-200 per tire
+  - Premium tires: $200-350+ per tire
+
+================================================================================
+SECTION 5: COOLANT SYSTEM MAINTENANCE
+================================================================================
+
+Maintenance Item: Coolant Flush and System Refill
+Schedule: Every 30,000-50,000 miles or 2-3 years
+Severity: High (prevents corrosion and maintains engine temperature)
+Coolant Types:
+  - Green (IAT - Inorganic Acid): 30,000-50,000 mile intervals
+  - Orange/Red (OAT - Organic Acid): 100,000-150,000 mile intervals
+  - Yellow/Pink (HOAT - Hybrid OAT): 50,000-100,000 mile intervals
+  - Do NOT mix types - use only manufacturer specified
+
+Flushing Procedure:
+  1. Ensure engine is COLD (severe burn risk if hot)
+  2. Locate radiator drain plug at bottom
+  3. Place large drain pan below
+  4. Open radiator cap carefully (steam may escape)
+  5. Slowly open drain plug
+  6. Drain all old coolant into waste container (NOT into environment)
+  7. Close drain plug
+  8. Flush with distilled water 2-3 times until water runs clear
+  9. Install new drain plug
+  10. Fill radiator with 50/50 premixed coolant
+  11. Fill overflow reservoir to MAX line
+  12. Start engine and allow to idle
+  13. After 5 minutes of warm running, recheck level
+  14. Add more if necessary
+
+Cost: $80-150 (DIY) or $150-300 (professional with flush machine)
+System Capacity: Typically 10-15 quarts (varies by engine)
+Disposal: Recycle old coolant or dispose at hazardous waste facility
+
+Flush Machine Service (Professional):
+  - Reverse flushes radiator and engine block
+  - More thorough than gravity drain
+  - Removes sediment and corrosion buildup
+  - Cost: $150-300 but worth it for heavily used vehicles
+
+================================================================================
+SECTION 6: BELT AND HOSE MAINTENANCE
+================================================================================
+
+Maintenance Item: Drive Belt Inspection and Replacement
+Schedule: Inspect every 30,000 miles; Replace every 50,000-100,000 miles
+Severity: High (belt failure = engine shutdown)
+Serpentine Belt (Single Belt):
+  - Modern vehicles use one serpentine belt driving all accessories
+  - Tension maintained by automatic tensioner
+  - Replacement: 60-90 minutes labor
+
+V-Belts (Multiple Belts):
+  - Older vehicles may have separate belts for alternator, water pump, A/C
+  - Check tension by pressing on belt midspan (should move 1/2-1 inch)
+  - Replace when cracking visible or tension poor
+
+Timing Belt/Chain (Critical):
+  - Some vehicles use belt; newer use chain (chain lasts vehicle life)
+  - Timing belt failure = internal engine damage (CATASTROPHIC)
+  - Replacement interval critical: 60,000-100,000 miles
+  - Cost: $500-1500 (belt replacement is expensive but essential)
+
+Belt Wear Signs:
+  - Cracking or fraying edges
+  - Missing chunks or chunks of belt
+  - Squealing noise (especially on cold start)
+  - Visible wear patterns or glazing
+  - Glazed/shiny appearance (loss of grip)
+
+---
+Maintenance Item: Coolant Hose Inspection and Replacement
+Schedule: Inspect every year; Replace if < 5 years old or damaged
+Severity: High (hose failure causes overheating and damage)
+Inspection Procedure:
+  1. Visually inspect all hoses (upper and lower radiator hoses primarily)
+  2. Feel hoses for cracks, splits, or soft spots
+  3. Check connections for leaks
+  4. Note age (rubber hardens with time)
+
+Hose Replacement Procedure:
+  1. Drain coolant into container
+  2. Loosen hose clamps on both ends
+  3. Remove old hose
+  4. Clean connection fittings
+  5. Install new hose (same diameter and length)
+  6. Secure clamps firmly but not over-tight
+  7. Refill with coolant
+  8. Start engine, check for leaks
+
+Cost: $40-80 per hose
+Timing: Replace hoses every 5 years even if appearing OK
+Safety: Replace together with radiator service (cost-effective bundling)
+
+================================================================================
+END OF DOCUMENT
+================================================================================

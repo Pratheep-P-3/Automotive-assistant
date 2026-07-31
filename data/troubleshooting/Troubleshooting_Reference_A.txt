@@ -1,0 +1,295 @@
+================================================================================
+TROUBLESHOOTING MANUAL A - SYMPTOM WORKFLOWS
+================================================================================
+Document Version: 1.0
+Last Updated: 2026-07-31
+Purpose: Step-by-step diagnostic workflows for common vehicle symptoms
+
+================================================================================
+WORKFLOW 1: ENGINE WON'T START
+================================================================================
+
+Symptom: Engine cranks but does not start
+
+Step 1: Verify Fuel System
+  - Check fuel gauge (ensure fuel in tank)
+  - Listen for fuel pump prime (should click when key turned to ON)
+  - Test fuel pressure: 40-65 PSI (engine running) is normal
+  - Inspect fuel filter for blockage
+  - Check fuel pump relay operation
+
+Step 2: Verify Ignition System
+  - Test spark plugs (should be gap 0.028-0.040" depending on engine)
+  - Inspect spark plug wires for cracks or burns
+  - Check ignition coil voltage: should be 5V during cranking
+  - Verify distributor rotor and cap condition (if equipped)
+  - Test battery voltage during cranking (should be 9.6V+ at battery)
+
+Step 3: Verify Air Intake
+  - Check air filter for blockage
+  - Inspect intake valves for carbon buildup
+  - Verify PCV system functioning
+  - Check for vacuum leaks
+
+Step 4: Verify Compression
+  - Perform wet compression test (inject oil into cylinder)
+  - Normal compression: 150+ PSI (varies by engine)
+  - If low, suspect: worn rings, bent valves, head gasket leak
+  - If uneven between cylinders, suspect: valve damage, ring wear
+
+Diagnosis Decision Tree:
+  IF no fuel pressure → Replace fuel pump or check fuel lines
+  IF good fuel but no spark → Check ignition coil, plugs, wires
+  IF fuel and spark but won't start → Check compression, timing chain
+  IF timing way off → May need timing belt replacement
+
+Related OBD Codes to Check:
+  - P0201-P0208: Fuel injector circuit faults
+  - P0010, P0020: Camshaft position issues
+  - P0341, P0346: Crankshaft position timing
+  - P0335, P0340: Crankshaft/Camshaft sensor failure
+
+Repair Timeline:
+  - Fuel pump replacement: 2-4 hours
+  - Ignition coil/plugs: 1-2 hours
+  - Timing chain repair: 4-8 hours
+
+================================================================================
+WORKFLOW 2: ENGINE MISFIRES / ROUGH IDLE
+================================================================================
+
+Symptom: Engine runs rough, stumbling, loss of power
+
+Step 1: Visual Inspection
+  - Scan for misfire codes (P0300-P0308)
+  - Note which cylinder(s) are misfiring
+  - Check all visible wires and hoses for damage
+  - Verify all vacuum hoses connected
+
+Step 2: Fuel System Check
+  - Test fuel pressure (should be stable 40-65 PSI)
+  - Inspect fuel injector resistance (typical 12-16 ohms)
+  - Check fuel filter condition
+  - Test for fuel leaks in system
+  - Verify fuel quality (water contamination?)
+
+Step 3: Ignition System Check
+  - Inspect spark plugs for fouling (black/wet = rich, white = lean)
+  - Test spark plug gap (should be 0.028-0.040")
+  - Check ignition coil outputs with oscilloscope
+  - Verify spark wire resistance (typical <10k ohms per foot)
+  - Test distributor cap and rotor (if equipped)
+
+Step 4: Engine Compression Check
+  - Perform compression test (150+ PSI normal)
+  - Test on all cylinders
+  - Low compression indicates: worn rings, bent valves, gasket leak
+  - Uneven compression between cylinders: valve/ring damage
+
+Step 5: Air/Fuel Ratio Check
+  - Run fuel trim analysis (±10% is normal, ±20% indicates problem)
+  - Check oxygen sensor voltage (0.1V-0.9V cycling = good)
+  - Verify air intake not restricted
+  - Check for vacuum leaks (smoke test recommended)
+
+Diagnosis Decision Tree:
+  IF single cylinder misfire → Likely plug, coil, or injector for that cylinder
+  IF random multiple misfire → Likely fuel system or ignition timing
+  IF rough at idle only → Likely vacuum leak or carburetor issue
+  IF misfire under load → Likely fuel delivery or ignition advance problem
+
+Related OBD Codes:
+  - P0300: Random misfire (multiple cylinders)
+  - P0301-P0308: Individual cylinder misfire (1-8)
+  - P0171, P0174: Fuel system too lean
+  - P0300-P0308: Combined with fuel trim codes indicate fuel issue
+  - P0125: Insufficient coolant temperature for closed loop
+
+Repair Priority:
+  1. Replace spark plugs (most common, cheapest)
+  2. Replace ignition coil pack
+  3. Clean fuel injectors or replace
+  4. Check/replace air filter, fuel filter
+  5. Diagnose compression issues (more expensive)
+
+================================================================================
+WORKFLOW 3: LOSS OF POWER / SLUGGISH ACCELERATION
+================================================================================
+
+Symptom: Vehicle sluggish, poor acceleration, feels weak
+
+Step 1: Check Engine Load
+  - Scan for check engine light codes
+  - Monitor real-time fuel trim
+  - Check fuel pressure under load (drop indicates pump weakness)
+  - Test oxygen sensor response time
+
+Step 2: Fuel System Diagnosis
+  - Measure fuel pressure at idle vs. full throttle
+  - Normal: 40-65 PSI steady, little drop under load
+  - If pressure drops significantly under load: weak fuel pump
+  - Inspect fuel filter for restriction
+  - Check fuel injector spray pattern and volume
+
+Step 3: Air Intake System
+  - Check air filter for blockage
+  - Test for vacuum leaks (HISSING sound, rough idle)
+  - Verify turbo/supercharger boost (if equipped)
+  - Inspect throttle body for carbon buildup
+  - Check mass airflow (MAF) sensor for contamination
+
+Step 4: Ignition System
+  - Verify ignition timing (should advance under acceleration)
+  - Check spark plugs for wear (gap increases with age)
+  - Test ignition coil output under load
+  - Verify knock sensor functioning (retards timing if knock detected)
+
+Step 5: Transmission
+  - Check transmission fluid level and condition
+  - Verify transmission isn't stuck in limp mode
+  - Scan for transmission fault codes
+  - Test shift quality during acceleration
+
+Step 6: Emission System
+  - Check catalytic converter for restriction
+  - Scan for P0420 (cat efficiency) codes
+  - Test back pressure at exhaust tail pipe
+
+Related OBD Codes:
+  - P0101: Mass Airflow (MAF) sensor range
+  - P0171, P0174: Fuel system too lean
+  - P0420: Catalytic converter efficiency
+  - P0303, P0308: Misfire codes
+  - P0753: Torque converter solenoid (transmission)
+
+Performance Check:
+  - 0-60 acceleration time (benchmark baseline for comparison)
+  - Top end speed (verify approaching specification)
+  - Load test under highway driving
+  - Towing capacity test (if applicable)
+
+================================================================================
+WORKFLOW 4: OVERHEATING ENGINE
+================================================================================
+
+Symptom: Engine temperature warning light on, coolant boiling, steam
+
+URGENT: PULL OVER IMMEDIATELY AND TURN OFF ENGINE
+
+Step 1: Safety First
+  - Turn engine off immediately
+  - Allow 15-20 minutes for cooling
+  - DO NOT open coolant cap when hot (severe burn risk)
+  - Check coolant level after cooling (should be at MAX line)
+
+Step 2: Visual Inspection
+  - Scan for engine temperature fault codes
+  - Look for coolant leaks under vehicle (green/orange puddles)
+  - Check radiator for debris blocking airflow
+  - Verify electric cooling fan operation
+  - Inspect all coolant hoses for leaks, cracks, bulges
+
+Step 3: Thermostat Check
+  - Engine should warm up in 5-10 minutes
+  - If takes longer: thermostat stuck open
+  - If overheats quickly: thermostat stuck closed
+  - Verify coolant temp gauge reads correct temperature
+
+Step 4: Water Pump Inspection
+  - Listen for water pump noise (whine = worn bearing)
+  - Check water pump shaft for leakage
+  - Verify pulley alignment with belts
+
+Step 5: Cooling System Pressure Test
+  - Use pressure tester on radiator cap
+  - Normal cap rating: 13-16 PSI
+  - Test radiator hoses (should be firm when pressurized)
+  - Check heater core hoses for flow
+
+Step 6: Radiator Inspection
+  - Check for internal blockage (brown/rusty coolant)
+  - Verify radiator fans kicking on at proper temperature
+  - Clean radiator fins if plugged with debris
+  - Flush radiator if fluid is discolored
+
+Related OBD Codes:
+  - P0115: Engine Coolant Temperature (ECT) Sensor
+  - P0117: ECT Sensor Low
+  - P0118: ECT Sensor High
+  - P0125: Coolant temperature too low for closed loop
+
+DO NOT CONTINUE DRIVING IF:
+  - Steam visible from engine bay
+  - Temperature gauge in red zone
+  - Coolant level critically low
+  - Multiple coolant leaks detected
+
+Repair Costs (Estimated):
+  - Thermostat replacement: $150-300
+  - Water pump replacement: $300-600
+  - Radiator replacement: $400-1000
+  - Head gasket replacement (if blown): $1500-3000+
+
+================================================================================
+WORKFLOW 5: CHECK ENGINE LIGHT / LIMP MODE
+================================================================================
+
+Symptom: Check engine light illuminated, reduced power mode, restricted performance
+
+Step 1: Immediate Scanning
+  - Connect OBD scanner immediately
+  - Record all fault codes (P-codes, B-codes, C-codes, U-codes)
+  - Note if check engine light is: steady (hard fault) or flashing (misfire)
+  - Monitor live sensor data for abnormal readings
+
+Step 2: Fuel System Diagnostics
+  - Check fuel pressure (should be 40-65 PSI steady)
+  - Monitor fuel trim at idle and under load
+  - Scan for fuel-related codes (P0171, P0174, P0200-P0208)
+  - Verify fuel injector pulse width
+  - Inspect fuel filter condition
+
+Step 3: Ignition System Diagnostics
+  - Scan for ignition-related codes (P0300-P0308)
+  - Test spark plugs (age, gap, condition)
+  - Verify ignition coil outputs
+  - Check for P0012/P0014 (camshaft timing)
+
+Step 4: Sensor Diagnostics
+  - Check oxygen sensor voltages (should cycle 0.1V-0.9V)
+  - Verify mass airflow sensor (MAF) readings reasonable
+  - Test throttle position sensor (TPS) range
+  - Check engine coolant temp (ECT) sensor
+
+Step 5: Emission System Check
+  - Scan for EVAP system codes (P0441, P0442, P0455, P0457)
+  - Check catalytic converter (P0420, P0430)
+  - Verify oxygen sensor heater circuits
+  - Test secondary air injection (P0410, P0415)
+
+Related OBD Codes Reference:
+  - P0101: Mass Air Flow (MAF) sensor
+  - P0128: Coolant thermostat
+  - P0171, P0174: Fuel trim (too lean/rich)
+  - P0300-P0308: Misfire detection
+  - P0420, P0430: Catalyst efficiency
+  - P0441, P0442, P0455: EVAP system
+  - P0500: Vehicle speed sensor
+  - P1000: OBD System readiness
+
+Limp Mode Triggers:
+  - Multiple misfire detection (P0300)
+  - Transmission fault (torque converter solenoid failure)
+  - Severe fuel trim (> ±25%)
+  - Catalyst efficiency failure (P0420/P0430)
+  - Any critical sensor failure
+
+Recovery Steps:
+  1. Repair the underlying fault code
+  2. Clear diagnostic trouble codes with scanner
+  3. Drive vehicle through drive cycle (accel/decel, highway speeds)
+  4. Verify fault doesn't return (30+ miles minimum)
+
+================================================================================
+END OF DOCUMENT
+================================================================================
