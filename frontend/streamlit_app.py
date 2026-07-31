@@ -33,7 +33,7 @@ st.markdown(
 
     /* Main App */
     .stApp {
-        background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+        background: linear-gradient(135deg, #F5F7FA 0%, #EBEEF2 100%);
     }
 
     [data-testid="stAppViewContainer"] {
@@ -86,8 +86,8 @@ st.markdown(
         background: white;
         border-radius: 16px;
         padding: 2.5rem;
-        border: 1px solid #E2E8F0;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        border: 2px solid #E5E7EB;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
         margin-bottom: 2rem;
     }
 
@@ -96,101 +96,108 @@ st.markdown(
         align-items: center;
         margin-bottom: 1.75rem;
         padding-bottom: 1rem;
-        border-bottom: 2px solid #F1F5F9;
+        border-bottom: 2.5px solid #ECECF1;
     }
 
     .form-section-icon {
-        font-size: 1.5rem;
-        margin-right: 0.75rem;
+        font-size: 1.6rem;
+        margin-right: 0.85rem;
     }
 
     .form-section-title {
-        font-size: 1.15rem;
-        font-weight: 700;
+        font-size: 1.2rem;
+        font-weight: 800;
         color: #0F172A;
         margin: 0;
+        letter-spacing: -0.3px;
     }
 
     .form-group {
         display: flex;
         flex-direction: column;
-        margin-bottom: 1rem;
+        margin-bottom: 1.25rem;
     }
 
     .form-label {
         font-size: 0.9rem;
-        font-weight: 600;
+        font-weight: 700;
         color: #0F172A;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.6rem;
         display: flex;
         align-items: center;
+        letter-spacing: 0.2px;
     }
 
     .form-label-icon {
-        margin-right: 0.5rem;
-        opacity: 0.75;
+        margin-right: 0.6rem;
+        opacity: 1;
+        font-size: 1.05rem;
     }
 
     .form-tooltip {
-        font-size: 0.75rem;
-        color: #94A3B8;
-        margin-top: 0.3rem;
-        font-weight: 400;
+        font-size: 0.8rem;
+        color: #4B5563;
+        margin-top: 0.4rem;
+        font-weight: 500;
     }
 
     /* Input Styling */
     .stTextInput input, .stNumberInput input, .stTextArea textarea {
-        background-color: #F8FAFC !important;
-        border: 1.5px solid #E2E8F0 !important;
+        background-color: #FFFFFF !important;
+        border: 2px solid #D1D5DB !important;
         border-radius: 12px !important;
-        padding: 0.85rem 1rem !important;
+        padding: 0.95rem 1.25rem !important;
         font-size: 0.95rem !important;
         color: #0F172A !important;
+        font-weight: 500 !important;
         transition: all 0.3s ease !important;
         font-family: 'Inter', sans-serif !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
     }
 
     .stTextInput input::placeholder, .stNumberInput input::placeholder, .stTextArea textarea::placeholder {
-        color: #CBD5E1 !important;
-        font-weight: 400 !important;
+        color: #6B7280 !important;
+        font-weight: 500 !important;
+        opacity: 0.8 !important;
     }
 
     .stTextInput input:hover, .stNumberInput input:hover, .stTextArea textarea:hover {
-        border-color: #CBD5E1 !important;
+        border-color: #2563EB !important;
         background-color: #FFFFFF !important;
+        box-shadow: 0 4px 6px rgba(37, 99, 235, 0.1) !important;
     }
 
     .stTextInput input:focus, .stNumberInput input:focus, .stTextArea textarea:focus {
         border-color: #2563EB !important;
         background-color: #FFFFFF !important;
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15) !important;
         outline: none !important;
     }
 
     /* Button */
     .stButton > button {
         width: 100%;
-        padding: 0.95rem 1.5rem !important;
-        font-size: 1rem !important;
-        font-weight: 700 !important;
+        padding: 1.15rem 1.5rem !important;
+        font-size: 1.05rem !important;
+        font-weight: 800 !important;
         border-radius: 12px !important;
         border: none !important;
         background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important;
         color: white !important;
         cursor: pointer !important;
         transition: all 0.3s ease !important;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35) !important;
         letter-spacing: 0.3px !important;
     }
 
     .stButton > button:hover {
         background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%) !important;
-        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4) !important;
-        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 28px rgba(37, 99, 235, 0.45) !important;
+        transform: translateY(-3px) !important;
     }
 
     .stButton > button:active {
-        transform: translateY(0) !important;
+        transform: translateY(-1px) !important;
     }
 
     /* Vehicle Summary */
