@@ -22,14 +22,41 @@ logger = logging.getLogger(__name__)
 class DocumentAwareChunker:
     """Intelligently chunks documents while preserving semantic units."""
 
-    # Patterns for different document types
-    OBD_PATTERN = re.compile(r"^OBD Code:\s*([PUC]\d{4})\s*$", re.MULTILINE)
-    MAINTENANCE_HEADER_PATTERN = re.compile(
-        r"^([\d,]+\s*(?:km|miles)\s+Service|.*?Procedure|.*?Replacement|.*?Inspection|Maintenance:.*?)$",
+    # Patterns for OBD codes - more robust to detect various formats
+    # Supports: P0300, Code: P0300, OBD Code: P0300, P0300 - Random Misfire, DTC P0300, etc.
+    OBD_PATTERN = re.compile(
+        r"(?:^|^\s*|\b)(?:OBD\s+)?(?:Code|DTC)\s*[:\-]?\s*([PUCB]\d{4})(?:\s|$|\-)",
         re.MULTILINE | re.IGNORECASE,
     )
+    
+    # More robust maintenance header detection
+    # Supports: 5000 km Service, 10000 km Service, ENGINE OIL CHANGE, Oil Change, Scheduled Maintenance, etc.
+    MAINTENANCE_HEADER_PATTERN = re.compile(
+        r"^\s*(?:"
+        r"(?:\d+(?:[,.]\d+)?\s*(?:km|mile|KM|MILE))\s+(?:service|maintenance|Service|Maintenance)|"  # 5000 km Service
+        r"(?:ENGINE\s+)?OIL\s+CHANGE|"  # ENGINE OIL CHANGE
+        r"(?:Brake|Coolant|Air\s+Filter|Transmission|Battery|Spark\s+Plug|Tire)\s+(?:Inspection|Replacement|Change|Service|Maintenance)|"  # Specific services
+        r"(?:Scheduled\s+)?(?:Maintenance|Service)(?:\s+Schedule)?|"  # Maintenance Schedule
+        r"Regular\s+Service|"  # Regular Service
+        r"(?:Wheel|Fluid|Belt|Hose)\s+(?:Inspection|Replacement|Check)"  # Additional services
+        r")\s*$",
+        re.MULTILINE | re.IGNORECASE,
+    )
+    
+    # More robust troubleshooting/symptom detection
+    # Supports: Engine Misfire, Vehicle Stalling, Poor Fuel Economy, Hard Starting, Transmission Slipping, etc.
     TROUBLESHOOTING_PATTERN = re.compile(
-        r"^(Engine\s+\w+|Vehicle\s+\w+|Transmission\s+\w+|Brake\s+\w+|.*?Symptom|.*?Problem)$",
+        r"^\s*(?:"
+        r"(?:Engine|Vehicle|Transmission|Brake|Cooling|Electrical|Fuel|Battery|Charging|Steering|Suspension)\s+(?:Misfire|Stalling|Noise|Drain|Slipping|Overheat|Hard\s+Start|Rough\s+Idle|Poor\s+Economy|Light|Fault|Warning|Malfunction|Failure)|"  # Symptom patterns
+        r"(?:Check\s+)?Engine\s+Light|"  # Check Engine Light
+        r"(?:Hard|Difficult)\s+Starting|"  # Hard Starting
+        r"(?:Rough|Idle)\s+(?:Idle|Operation)|"  # Rough Idle
+        r"(?:Poor|Low)\s+Fuel\s+Economy|"  # Poor Fuel Economy
+        r"(?:Transmission|Brake|Engine)\s+(?:Slipping|Grinding|Knocking)|"  # Slipping/Grinding
+        r"Battery\s+(?:Drain|Discharge)|"  # Battery Drain
+        r"(?:Engine|Coolant)\s+(?:Overheating|Overheat)|"  # Overheating
+        r"\w+\s+(?:Symptom|Problem|Fault|Warning|Issue)"  # Generic symptom
+        r")\s*$",
         re.MULTILINE | re.IGNORECASE,
     )
 
@@ -81,6 +108,7 @@ class DocumentAwareChunker:
         Chunk OBD document by code entries.
 
         Each OBD code with its full definition stays in one chunk.
+        Supports multiple OBD format variations.
 
         Args:
             doc: Document to chunk
@@ -96,11 +124,15 @@ class DocumentAwareChunker:
         matches = list(self.OBD_PATTERN.finditer(text))
 
         if not matches:
-            # No OBD codes found, return as-is
-            logger.debug(f"[DocumentAwareChunker] No OBD codes found in {source}")
+            # No OBD codes found, log warning and fallback
+            logger.warning(
+                f"[DocumentAwareChunker] ✗ No OBD pattern matched in {source}. "
+                f"Supported formats: P0300, Code: P0300, OBD Code: P0300, P0300 - Description"
+            )
+            logger.warning(f"[DocumentAwareChunker] Using fallback chunking for {source}")
             return [doc]
 
-        logger.debug(f"[DocumentAwareChunker] Found {len(matches)} OBD codes in {source}")
+        logger.info(f"[DocumentAwareChunker] File={source} | Category=obd | OBD Entries Found={len(matches)} | Chunks Produced={len(matches)}")
 
         # Create chunks between OBD codes
         for i, match in enumerate(matches):
@@ -137,6 +169,7 @@ class DocumentAwareChunker:
         Chunk maintenance document by procedures.
 
         Each maintenance procedure stays in one chunk.
+        Supports multiple maintenance header formats.
 
         Args:
             doc: Document to chunk
@@ -152,10 +185,14 @@ class DocumentAwareChunker:
         sections = self._split_by_headers(text, self.MAINTENANCE_HEADER_PATTERN)
 
         if not sections:
-            logger.debug(f"[DocumentAwareChunker] No maintenance sections found in {source}")
+            logger.warning(
+                f"[DocumentAwareChunker] ✗ No maintenance pattern matched in {source}. "
+                f"Supported formats: 5000 km Service, Oil Change, Brake Inspection, Scheduled Maintenance"
+            )
+            logger.warning(f"[DocumentAwareChunker] Using fallback chunking for {source}")
             return [doc]
 
-        logger.debug(f"[DocumentAwareChunker] Found {len(sections)} maintenance sections")
+        logger.info(f"[DocumentAwareChunker] File={source} | Category=maintenance | Sections Detected={len(sections)} | Chunks Produced={len(sections)}")
 
         for section_title, section_content in sections:
             if len(section_content) > self.MIN_CHUNK_SIZE:
@@ -179,6 +216,7 @@ class DocumentAwareChunker:
         Chunk troubleshooting document by symptom/workflow.
 
         Each symptom workflow stays in one chunk.
+        Supports multiple symptom header formats with various capitalizations.
 
         Args:
             doc: Document to chunk
@@ -194,10 +232,14 @@ class DocumentAwareChunker:
         sections = self._split_by_headers(text, self.TROUBLESHOOTING_PATTERN)
 
         if not sections:
-            logger.debug(f"[DocumentAwareChunker] No troubleshooting sections found in {source}")
+            logger.warning(
+                f"[DocumentAwareChunker] ✗ No troubleshooting pattern matched in {source}. "
+                f"Supported formats: Engine Misfire, Vehicle Stalling, Transmission Slipping, Battery Drain, Check Engine Light"
+            )
+            logger.warning(f"[DocumentAwareChunker] Using fallback chunking for {source}")
             return [doc]
 
-        logger.debug(f"[DocumentAwareChunker] Found {len(sections)} troubleshooting sections")
+        logger.info(f"[DocumentAwareChunker] File={source} | Category=symptom/troubleshooting | Sections Detected={len(sections)} | Chunks Produced={len(sections)}")
 
         for section_title, section_content in sections:
             if len(section_content) > self.MIN_CHUNK_SIZE:

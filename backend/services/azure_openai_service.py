@@ -16,6 +16,12 @@ You are an expert automotive diagnostic and service advisor. Your knowledge come
 
 **CRITICAL AUTHORITY:** Use ONLY information provided in the evidence. The TXT reference files contain comprehensive diagnostic procedures, common causes, repair steps, and cost estimates. Leverage ALL of this detail.
 
+**CONFIDENCE-AWARE RESPONSES:**
+You will receive confidence scores (0-100%) from the RAG re-ranking pipeline:
+- 80-100%: High Confidence → Provide definitive diagnosis
+- 60-79%:  Medium Confidence → Provide diagnosis with context and caveats
+- Below 60%: Low Confidence → Flag limitations and recommend professional verification
+
 **RESPONSE EXPECTATIONS:**
 You must provide COMPREHENSIVE, DETAILED, and ACTIONABLE diagnostic reports using all available information from the TXT reference materials. This is NOT a summary - it should be thorough.
 
@@ -33,6 +39,9 @@ Return ONLY valid JSON with this exact schema:
   "estimated_time": "string - time estimate in hours",
   "safety_warnings": ["string - any safety concerns"],
   "confidence_score": 0.0-1.0,
+  "confidence_percentage": 0-100,
+  "confidence_level": "High Confidence|Medium Confidence|Low Confidence",
+  "confidence_notes": "string - explanation of confidence level and any caveats",
   "references": ["string - which TXT files used"],
   "api_response": {
     "diagnosis": "string - comprehensive diagnosis",
@@ -42,25 +51,33 @@ Return ONLY valid JSON with this exact schema:
     "maintenance_recommendations": ["string"],
     "cost_estimate": "string",
     "confidence_score": 0.0,
+    "confidence_percentage": 0-100,
+    "confidence_level": "string",
     "sources": ["string"]
   }
 }
 
 RESPONSE GUIDELINES:
-1) **Comprehensive Detail:** Use ALL relevant information from the TXT files
+
+1) **Confidence-Based Messaging:**
+   - HIGH (80-100%): "Based on the knowledge base, [definitive statement]..."
+   - MEDIUM (60-79%): "The knowledge base suggests [statement] based on [reasoning]..."
+   - LOW (Below 60%): "The knowledge base has limited information. [statement]. Professional verification recommended."
+
+2) **Comprehensive Detail:** Use ALL relevant information from the TXT files
    - Include full diagnostic procedures (not just summaries)
    - List ALL common causes with likelihoods/rankings
    - Provide detailed repair steps and procedures
    - Include cost estimates and time requirements
    - Add safety warnings when relevant
 
-2) **Accuracy:** ONLY use information from provided evidence
+3) **Accuracy:** ONLY use information from provided evidence
    - Copy exact descriptions from code_result.description
    - Use common_causes as provided
    - Reference diagnostic steps from reference materials
    - DO NOT add external knowledge or training data
 
-3) **Completeness:** Include these sections when applicable:
+4) **Completeness:** Include these sections when applicable:
    - Detailed issue summary (150-300 words, not 1 sentence)
    - Step-by-step diagnostic checklist (5-10 steps minimum)
    - Ordered list of causes by likelihood
@@ -68,55 +85,38 @@ RESPONSE GUIDELINES:
    - Cost estimates and labor time
    - Safety warnings and precautions
    - Preventive maintenance recommendations
+   - Confidence-based caveats
 
-4) **Structure:** 
-   - issue_summary: 150-300 words explaining the problem, impacts, and urgency
-   - diagnostic_code_description: Exact text from reference
-   - likely_causes: Ranked list with percentages or descriptions
-   - diagnostic_checklist: 5-15 specific steps (numbered)
-   - repair_recommendations: 3-10 detailed repair procedures
-   - maintenance_recommendations: 2-5 relevant maintenance items
-   - preventive_actions: 2-5 ways to prevent recurrence
-
-5) **Confidence Scoring:**
-   - RAG (TXT) source only: 0.80-0.90 base
-   - + Vehicle make/model/year: +0.05
-   - + Mileage context: +0.03
-   - + Symptoms correlation: +0.05
-   - Maximum: 0.95
+5) **Confidence Integration:**
+   - Use provided confidence_percentage from RAG pipeline
+   - Map to confidence_level (High/Medium/Low)
+   - Add confidence_notes explaining reliability
+   - For Low Confidence: Add disclaimer about professional consultation
 
 6) **Safety First:**
    - Flag any safety-critical issues (brakes, steering, cooling) with URGENT warnings
    - Include emergency procedures when applicable
    - Recommend professional help for complex repairs
+   - Escalate safety concerns regardless of confidence level
 
 7) **Actionable:** 
    - Each repair step must be specific and procedural
    - Include tool requirements
    - Note when professional help is needed
    - Provide cost ranges for planning
+   - Reference confidence level in limitations
 
-EXAMPLE OF GOOD RESPONSE (Issue: P0171 Fuel System Too Lean):
-- issue_summary: 300 word comprehensive explanation
-- diagnostic_code_description: "System Too Lean (Bank 1)"
-- likely_causes: [
-    "Vacuum leak (most common - 30%)",
-    "Dirty MAF sensor (20%)",
-    "Low fuel pressure (15%)",
-    ...
-  ]
-- diagnostic_checklist: [
-    "1. Check for vacuum leaks using smoke test",
-    "2. Measure fuel pressure at fuel rail (40-65 PSI expected)",
-    ...10+ steps
-  ]
-- repair_recommendations: [
-    "Replace MAF sensor: Remove air intake tube, unplug sensor, install new sensor, reconnect hoses",
-    "Check vacuum system: Inspect all hoses for cracks, use propane smoke test, seal any leaks",
-    ...5-10 detailed steps
-  ]
-- estimated_cost_range: "$80-300 depending on cause"
-- estimated_time: "1-3 hours"
+EXAMPLE OF HIGH CONFIDENCE RESPONSE (P0171, confidence 85%):
+- confidence_level: "High Confidence"
+- confidence_notes: "Re-ranked semantic match (score 0.85) to multiple knowledge base entries"
+- issue_summary: Comprehensive explanation with definitive language
+- safety_warnings: Prominently displayed
+
+EXAMPLE OF LOW CONFIDENCE RESPONSE (Unknown code, confidence 45%):
+- confidence_level: "Low Confidence"
+- confidence_notes: "Limited knowledge base coverage for this query. Recommend OEM service manual consultation."
+- issue_summary: Cautious explanation with caveats
+- maintenance_recommendations: Professional inspection recommended
 
 DO NOT provide minimal, one-sentence summaries. The reference materials contain comprehensive details - USE ALL OF THEM.
 """.strip()
@@ -170,10 +170,26 @@ class AzureOpenAIService:
         return cleaned.strip()
 
     def _fallback_report(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate comprehensive fallback report when LLM unavailable."""
+        """
+        Generate comprehensive fallback report when LLM unavailable.
+
+        Uses RAG pipeline confidence scores for accurate representation.
+        """
         code_result = payload.get("code_result", {})
         symptom_result = payload.get("symptom_result", {})
         maintenance_result = payload.get("maintenance_result", {})
+
+        # ===== Extract Confidence from RAG Pipeline =====
+        confidence_pct = code_result.get("confidence", 0)
+        confidence_level = code_result.get("confidence_level", "Low Confidence")
+
+        # Map confidence to appropriate messaging
+        if confidence_pct >= 80:
+            confidence_guidance = "HIGH CONFIDENCE"
+        elif confidence_pct >= 60:
+            confidence_guidance = "MEDIUM CONFIDENCE"
+        else:
+            confidence_guidance = "LOW CONFIDENCE"
 
         # Build comprehensive diagnosis from all available sources
         diagnosis_parts = []
@@ -183,8 +199,12 @@ class AzureOpenAIService:
             diagnosis_parts.append(f"Reported Symptoms: {', '.join(symptom_result.get('symptoms', []))}")
         if code_result.get("severity"):
             diagnosis_parts.append(f"Severity Level: {code_result.get('severity')}")
-        
-        issue_summary = " | ".join(diagnosis_parts) if diagnosis_parts else "Insufficient fault-code evidence; rely on symptoms and inspection."
+
+        issue_summary = (
+            " | ".join(diagnosis_parts)
+            if diagnosis_parts
+            else "Insufficient fault-code evidence; rely on symptoms and inspection."
+        )
 
         # Get causes (comprehensive)
         likely_causes = code_result.get("common_causes", [])
@@ -192,7 +212,7 @@ class AzureOpenAIService:
             likely_causes = symptom_result.get("troubleshooting_hints", [])[:5]
 
         # Get comprehensive repair steps
-        repair_steps = code_result.get("repair_procedures", [])
+        repair_steps = code_result.get("repair_steps", [])
         if not repair_steps:
             repair_steps = [
                 "1. Scan and confirm active/pending DTCs with freeze-frame data.",
@@ -230,14 +250,47 @@ class AzureOpenAIService:
         severity = code_result.get("severity", "Unknown")
         if severity in ["Critical", "Urgent", "High"]:
             if "brake" in str(code_result).lower():
-                safety_warnings.append("⚠️ SAFETY CRITICAL: Brake system failure - Do not drive, arrange towing.")
+                safety_warnings.append(
+                    "⚠️ SAFETY CRITICAL: Brake system failure - Do not drive, arrange towing."
+                )
             elif "steering" in str(code_result).lower():
-                safety_warnings.append("⚠️ SAFETY CRITICAL: Steering system issue - Do not drive, arrange towing.")
+                safety_warnings.append(
+                    "⚠️ SAFETY CRITICAL: Steering system issue - Do not drive, arrange towing."
+                )
             elif "overheating" in str(code_result).lower():
-                safety_warnings.append("⚠️ ENGINE OVERHEATING: Stop immediately, turn off engine, check coolant after cooling.")
+                safety_warnings.append(
+                    "⚠️ ENGINE OVERHEATING: Stop immediately, turn off engine, check coolant after cooling."
+                )
+
+        # Add confidence disclaimer if low
+        if confidence_pct < 60:
+            safety_warnings.insert(
+                0,
+                f"⚠️ LOW CONFIDENCE ({confidence_pct}%): Knowledge base has limited information. "
+                "Professional verification strongly recommended.",
+            )
 
         references = [src.get("source", "unknown") for src in payload.get("sources", [])]
-        confidence = payload.get("confidence_score", 0.65)
+        confidence_score = confidence_pct / 100.0  # Convert to 0-1 scale
+
+        # Generate confidence notes
+        if confidence_pct >= 80:
+            confidence_notes = (
+                f"High confidence in this diagnosis ({confidence_pct}%). "
+                "The knowledge base contains matching entries with strong relevance scores."
+            )
+        elif confidence_pct >= 60:
+            confidence_notes = (
+                f"Moderate confidence ({confidence_pct}%). The knowledge base provides relevant information, "
+                "but may lack specific details. Verify with additional resources if needed."
+            )
+        else:
+            confidence_notes = (
+                f"Low confidence ({confidence_pct}%). The knowledge base has limited specific information. "
+                "Professional verification strongly recommended."
+            )
+
+        logger.info(f"[Fallback] Generating report with {confidence_guidance} (score: {confidence_pct}%)")
 
         return {
             "issue_summary": issue_summary,
@@ -251,7 +304,10 @@ class AzureOpenAIService:
             "estimated_cost_range": cost_estimate,
             "estimated_time": repair_time,
             "safety_warnings": safety_warnings,
-            "confidence_score": confidence,
+            "confidence_score": confidence_score,
+            "confidence_percentage": confidence_pct,
+            "confidence_level": confidence_level,
+            "confidence_notes": confidence_notes,
             "references": references,
             "api_response": {
                 "diagnosis": issue_summary,
@@ -260,30 +316,96 @@ class AzureOpenAIService:
                 "repair_steps": repair_steps[:8],
                 "maintenance_recommendations": maintenance_recommendations[:3],
                 "cost_estimate": cost_estimate,
-                "confidence_score": confidence,
+                "confidence_score": confidence_score,
+                "confidence_percentage": confidence_pct,
+                "confidence_level": confidence_level,
                 "sources": references,
             },
         }
 
     def generate_report(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Generate comprehensive diagnostic report using LLM.
+
+        Integrates RAG pipeline confidence scores for confidence-aware responses.
+
+        Args:
+            payload: Evidence dict with code_result, symptom_result, maintenance_result,
+                    confidence scores, and sources
+
+        Returns:
+            Comprehensive diagnostic report with confidence levels
+        """
         if self.model is None:
             return self._fallback_report(payload)
 
+        # ===== Extract Confidence Information from RAG Pipeline =====
+        code_result = payload.get("code_result", {})
+        confidence_pct = code_result.get("confidence", 0)
+        confidence_level = code_result.get("confidence_level", "Low Confidence")
+
+        # Map confidence percentage to level for LLM
+        if confidence_pct >= 80:
+            confidence_guidance = "HIGH CONFIDENCE"
+        elif confidence_pct >= 60:
+            confidence_guidance = "MEDIUM CONFIDENCE"
+        else:
+            confidence_guidance = "LOW CONFIDENCE"
+
+        # ===== Build Enhanced Prompt with Confidence Context =====
         human_prompt = (
             "Analyze the automotive diagnostic evidence and produce JSON only.\n\n"
+            f"CONFIDENCE CONTEXT: {confidence_guidance} (Score: {confidence_pct}%)\n"
+            f"- This indicates the relevance of the retrieved knowledge base entries.\n"
+            f"- Adjust response certainty and caveats based on this confidence level.\n\n"
             f"Evidence:\n{json.dumps(payload, indent=2)}"
         )
 
         try:
+            logger.info(
+                f"[LLM] Generating report with {confidence_guidance} "
+                f"(confidence: {confidence_pct}%, level: {confidence_level})"
+            )
+
             response = self.model.invoke(
                 [
                     SystemMessage(content=SYSTEM_PROMPT),
                     HumanMessage(content=human_prompt),
                 ]
             )
+
             raw = response.content if isinstance(response.content, str) else str(response.content)
             parsed = json.loads(self._strip_fences(raw))
 
+            # ===== Inject RAG Confidence Scores into Response =====
+            # Ensure confidence is properly formatted
+            if "confidence_score" not in parsed or not parsed["confidence_score"]:
+                parsed["confidence_score"] = confidence_pct / 100.0  # Convert % to 0-1 scale
+
+            parsed["confidence_percentage"] = confidence_pct
+            parsed["confidence_level"] = confidence_level
+
+            # Add confidence notes if not already present
+            if "confidence_notes" not in parsed:
+                if confidence_pct >= 80:
+                    parsed["confidence_notes"] = (
+                        f"High confidence in this diagnosis. "
+                        f"The knowledge base contains matching entries "
+                        f"(re-ranking score: {confidence_pct}%)."
+                    )
+                elif confidence_pct >= 60:
+                    parsed["confidence_notes"] = (
+                        f"Moderate confidence. The knowledge base provides relevant information, "
+                        f"but may lack specific details for this vehicle/situation (score: {confidence_pct}%). "
+                        f"Verify with additional resources if needed."
+                    )
+                else:
+                    parsed["confidence_notes"] = (
+                        f"Low confidence. The knowledge base has limited specific information for this query "
+                        f"(score: {confidence_pct}%). Professional verification strongly recommended."
+                    )
+
+            # ===== Build Structured API Response =====
             if "api_response" not in parsed:
                 parsed["api_response"] = {
                     "diagnosis": parsed.get("issue_summary", "No diagnosis generated."),
@@ -293,11 +415,22 @@ class AzureOpenAIService:
                     "maintenance_recommendations": parsed.get(
                         "maintenance_recommendations", []
                     ),
-                    "confidence_score": float(parsed.get("confidence_score", 0.5)),
+                    "confidence_score": parsed.get("confidence_score", confidence_pct / 100.0),
+                    "confidence_percentage": confidence_pct,
+                    "confidence_level": confidence_level,
                     "sources": parsed.get("references", []),
                 }
 
+            logger.info(
+                f"[LLM] ✓ Report generated successfully "
+                f"(confidence: {confidence_level}, score: {confidence_pct}%)"
+            )
+
             return parsed
+
+        except json.JSONDecodeError as exc:
+            logger.exception(f"[LLM] ✗ Failed to parse JSON response: {exc}")
+            return self._fallback_report(payload)
         except Exception as exc:
-            logger.exception("Azure OpenAI report generation failed: %s", exc)
+            logger.exception(f"[LLM] ✗ Report generation failed: {exc}")
             return self._fallback_report(payload)

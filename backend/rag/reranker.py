@@ -135,7 +135,20 @@ class CrossEncoderReranker:
 
     def get_confidence_from_scores(self, scores: list[dict]) -> tuple[int, str]:
         """
-        Calculate confidence level from re-ranking scores.
+        Calculate confidence level from re-ranking scores (multi-factor).
+
+        Uses three factors:
+        1. Top reranker score (0-1 range)
+        2. Average score of Top 3 results (consistency indicator)
+        3. Separation between Rank 1 and Rank 2 (confidence gap)
+
+        Rewards:
+        - Strong top match
+        - Consistent supporting evidence (narrow score distribution)
+
+        Reduces confidence when:
+        - Scores are very close together (ambiguous)
+        - Relevance scores are weak
 
         Args:
             scores: List of re-ranking score dictionaries
@@ -144,13 +157,29 @@ class CrossEncoderReranker:
             Tuple of (confidence_percentage, confidence_level)
         """
         if not scores or not scores[0].get("score"):
+            logger.info("[Reranker] No scores available, returning default confidence")
             return 50, "Low Confidence"
 
-        # Get top score (0-1 range from cross-encoder)
+        # Factor 1: Top score (0-1 range from cross-encoder)
         top_score = scores[0]["score"]
 
-        # Map to 0-100 scale with emphasis on high confidence
-        confidence_pct = min(100, int(top_score * 100))
+        # Factor 2: Average of top 3 results (consistency)
+        top_3_scores = [s["score"] for s in scores[:3]]
+        avg_top_3 = sum(top_3_scores) / len(top_3_scores)
+
+        # Factor 3: Separation between Rank 1 and Rank 2
+        score_gap = 0.0
+        if len(scores) > 1:
+            score_gap = top_score - scores[1]["score"]
+        else:
+            score_gap = top_score  # If only 1 result, gap is the score itself
+
+        # Calculate combined confidence
+        # Weight: 50% top score + 30% average consistency + 20% score gap
+        confidence_score = (top_score * 0.5) + (avg_top_3 * 0.3) + (score_gap * 0.2)
+
+        # Map to 0-100 scale
+        confidence_pct = min(100, int(confidence_score * 100))
 
         # Determine confidence level
         if confidence_pct >= 80:
@@ -160,6 +189,10 @@ class CrossEncoderReranker:
         else:
             level = "Low Confidence"
 
-        logger.info(f"[Reranker] Confidence: {confidence_pct}% ({level})")
+        logger.info(
+            f"[Reranker] Confidence calculation: "
+            f"top_score={top_score:.3f}, avg_top_3={avg_top_3:.3f}, gap={score_gap:.3f} -> "
+            f"{confidence_pct}% ({level})"
+        )
 
         return confidence_pct, level

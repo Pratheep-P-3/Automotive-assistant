@@ -15,19 +15,29 @@ logger = logging.getLogger(__name__)
 
 
 class EmbeddingFactory:
-    """Factory for creating embedding models."""
+    """Factory for creating embedding models with singleton caching."""
 
     AZURE_OPENAI_MODEL = "text-embedding-3-small"
     HUGGINGFACE_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+    
+    # Singleton cache - store embedding instance to avoid repeated initialization
+    _embedding_instance: Any | None = None
+    _embedding_source: str = ""
 
     @staticmethod
     def get_embeddings() -> Any:
         """
-        Get embedding model.
+        Get embedding model (singleton-cached).
 
         Priority:
-        1. Azure OpenAI (if configured)
-        2. HuggingFace (fallback)
+        1. Return cached instance if available
+        2. Azure OpenAI (if configured)
+        3. HuggingFace (fallback)
+
+        Benefits:
+        - Faster startup on subsequent calls
+        - Lower Azure initialization overhead
+        - Cleaner resource management
 
         Returns:
             Embedding model instance (AzureOpenAIEmbeddings or HuggingFaceEmbeddings)
@@ -35,22 +45,44 @@ class EmbeddingFactory:
         Raises:
             ValueError: If no valid embedding service is available
         """
+        # Return cached instance if available
+        if EmbeddingFactory._embedding_instance is not None:
+            logger.debug(
+                f"[EmbeddingFactory] Returning cached embedding instance ({EmbeddingFactory._embedding_source})"
+            )
+            return EmbeddingFactory._embedding_instance
+
         # Try Azure OpenAI first
         if EmbeddingFactory._is_azure_configured():
             try:
-                return EmbeddingFactory._get_azure_openai_embeddings()
+                instance = EmbeddingFactory._get_azure_openai_embeddings()
+                EmbeddingFactory._embedding_instance = instance
+                EmbeddingFactory._embedding_source = "Azure OpenAI"
+                logger.info("[EmbeddingFactory] ✓ Cached Azure OpenAI embeddings instance")
+                return instance
             except Exception as exc:
                 logger.warning(f"[EmbeddingFactory] Azure OpenAI initialization failed: {exc}")
                 logger.info("[EmbeddingFactory] Falling back to HuggingFace")
 
         # Fall back to HuggingFace
         try:
-            return EmbeddingFactory._get_huggingface_embeddings()
+            instance = EmbeddingFactory._get_huggingface_embeddings()
+            EmbeddingFactory._embedding_instance = instance
+            EmbeddingFactory._embedding_source = "HuggingFace"
+            logger.info("[EmbeddingFactory] ✓ Cached HuggingFace embeddings instance")
+            return instance
         except Exception as exc:
             logger.exception(f"[EmbeddingFactory] ✗ FAILED to initialize any embedding model: {exc}")
             raise ValueError(
                 "No valid embedding service available. Configure Azure OpenAI or ensure HuggingFace is installed."
             ) from exc
+
+    @staticmethod
+    def clear_cache() -> None:
+        """Clear cached embedding instance (for testing/cleanup)."""
+        EmbeddingFactory._embedding_instance = None
+        EmbeddingFactory._embedding_source = ""
+        logger.info("[EmbeddingFactory] Cleared cached embedding instance")
 
     @staticmethod
     def _is_azure_configured() -> bool:

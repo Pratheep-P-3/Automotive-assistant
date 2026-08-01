@@ -4,10 +4,10 @@ from typing import Literal
 
 from langgraph.graph import END, START, StateGraph
 
-from backend.agents.code_agent import CodeAgent
-from backend.agents.maintenance_agent import MaintenanceAgent
+from backend.agents.code_agent_v2 import CodeAgent
+from backend.agents.maintenance_agent_v2 import MaintenanceAgent
 from backend.agents.report_agent import ReportAgent
-from backend.agents.symptom_agent import SymptomAgent
+from backend.agents.symptom_agent_v2 import SymptomAgent
 from backend.graph.state import WorkflowState
 
 code_agent = CodeAgent()
