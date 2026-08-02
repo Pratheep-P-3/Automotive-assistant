@@ -30,20 +30,20 @@ st.markdown(
     }
 
     .stApp {
-        background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f4c75 100%);
+        background: linear-gradient(135deg, #f0f4ff 0%, #e8eef9 50%, #f5f7ff 100%);
         min-height: 100vh;
-        color: #e2e8f0;
+        color: #1f2937;
     }
 
     /* ============= HEADER HERO CARD ============= */
     .hero-card {
-        background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #06b6d4 100%);
+        background: linear-gradient(135deg, #5b7cff 0%, #6b8fff 50%, #4c63e8 100%);
         padding: 2.5rem 2rem;
         border-radius: 24px;
         color: white;
-        box-shadow: 0 25px 50px rgba(3, 105, 161, 0.3), 0 0 1px rgba(255, 255, 255, 0.1);
+        box-shadow: 0 25px 50px rgba(91, 124, 255, 0.25), 0 0 1px rgba(255, 255, 255, 0.2);
         margin-bottom: 2.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.25);
         backdrop-filter: blur(10px);
         animation: slideDown 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
         position: relative;
@@ -83,20 +83,20 @@ st.markdown(
 
     /* ============= SIDEBAR STYLING ============= */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-        border-right: 1px solid rgba(148, 163, 184, 0.1);
+        background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
+        border-right: 1px solid #e5e7eb;
     }
 
     [data-testid="stSidebar"] [data-testid="stHeader"] {
         font-weight: 700;
         font-family: 'Poppins', sans-serif;
-        color: #06b6d4;
+        color: #5b7cff;
         font-size: 1.1rem;
         margin-bottom: 1.8rem !important;
         text-transform: uppercase;
         letter-spacing: 1px;
         padding: 1rem 0.5rem;
-        border-bottom: 2px solid rgba(6, 182, 212, 0.3);
+        border-bottom: 2px solid rgba(91, 124, 255, 0.25);
     }
 
     /* ============= INPUT FIELDS ============= */
@@ -104,29 +104,29 @@ st.markdown(
     .stNumberInput > div > div > input,
     .stTextArea > div > div > textarea,
     .stSelectbox > div > div > select {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
-        border: 2px solid #334155 !important;
+        background: white !important;
+        border: 2px solid #e5e7eb !important;
         border-radius: 14px !important;
         padding: 0.85rem 1rem !important;
         font-size: 0.95rem !important;
         transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
         font-weight: 500 !important;
-        color: #e2e8f0 !important;
+        color: #1f2937 !important;
     }
 
     .stTextInput > div > div > input::placeholder,
     .stNumberInput > div > div > input::placeholder,
     .stTextArea > div > div > textarea::placeholder {
-        color: #64748b !important;
+        color: #9ca3af !important;
     }
 
     .stTextInput > div > div > input:focus,
     .stNumberInput > div > div > input:focus,
     .stTextArea > div > div > textarea:focus,
     .stSelectbox > div > div > select:focus {
-        border-color: #06b6d4 !important;
-        box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.2), 0 0 20px rgba(6, 182, 212, 0.15) !important;
-        background: linear-gradient(135deg, #0f172a 0%, #001f3f 100%) !important;
+        border-color: #5b7cff !important;
+        box-shadow: 0 0 0 4px rgba(91, 124, 255, 0.15), 0 0 20px rgba(91, 124, 255, 0.2) !important;
+        background: #f8faff !important;
     }
 
     /* ============= LABELS ============= */
@@ -136,7 +136,7 @@ st.markdown(
     .stSelectbox > label {
         font-weight: 700 !important;
         font-family: 'Poppins', sans-serif;
-        color: #06b6d4 !important;
+        color: #5b7cff !important;
         font-size: 0.9rem !important;
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -145,7 +145,7 @@ st.markdown(
 
     /* ============= BUTTONS ============= */
     .stButton > button {
-        background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #06b6d4 100%) !important;
+        background: linear-gradient(135deg, #5b7cff 0%, #6b8fff 50%, #4c63e8 100%) !important;
         color: white !important;
         font-weight: 700 !important;
         font-family: 'Poppins', sans-serif;
@@ -157,7 +157,7 @@ st.markdown(
         transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
         letter-spacing: 0.8px;
         text-transform: uppercase;
-        box-shadow: 0 10px 25px rgba(3, 105, 161, 0.3) !important;
+        box-shadow: 0 10px 25px rgba(91, 124, 255, 0.3) !important;
         position: relative;
         overflow: hidden;
     }
@@ -175,7 +175,7 @@ st.markdown(
 
     .stButton > button:hover {
         transform: translateY(-4px) !important;
-        box-shadow: 0 15px 35px rgba(3, 105, 161, 0.4) !important;
+        box-shadow: 0 15px 35px rgba(91, 124, 255, 0.4) !important;
     }
 
     .stButton > button:hover::before {
@@ -188,14 +188,14 @@ st.markdown(
 
     /* ============= TYPOGRAPHY ============= */
     .stSubheader {
-        color: #06b6d4 !important;
+        color: #5b7cff !important;
         font-weight: 800 !important;
         font-family: 'Poppins', sans-serif;
         font-size: 1.5rem !important;
         margin-top: 2.5rem !important;
         margin-bottom: 1.8rem !important;
         padding-bottom: 1rem;
-        border-bottom: 3px solid #0369a1;
+        border-bottom: 3px solid #5b7cff;
         display: flex;
         align-items: center;
         gap: 0.8rem;
@@ -203,29 +203,29 @@ st.markdown(
 
     /* ============= RESULT CARDS ============= */
     .result-card {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        border: 1px solid rgba(6, 182, 212, 0.2);
-        border-left: 5px solid #06b6d4;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-left: 5px solid #5b7cff;
         border-radius: 18px;
         padding: 1.8rem;
-        box-shadow: 0 10px 30px rgba(6, 182, 212, 0.1);
+        box-shadow: 0 4px 15px rgba(91, 124, 255, 0.08);
         margin-bottom: 1.5rem;
         transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         animation: fadeInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .result-card:hover {
-        box-shadow: 0 15px 40px rgba(6, 182, 212, 0.2);
+        box-shadow: 0 8px 25px rgba(91, 124, 255, 0.15);
         transform: translateY(-4px);
-        border-left-color: #06b6d4;
-        border-color: rgba(6, 182, 212, 0.3);
+        border-left-color: #5b7cff;
+        border-color: #d1d5db;
     }
 
     /* ============= SECTION TITLES ============= */
     .section-title {
         font-weight: 800;
         font-family: 'Poppins', sans-serif;
-        color: #06b6d4;
+        color: #5b7cff;
         font-size: 1.15rem;
         margin-bottom: 1.2rem;
         display: flex;
@@ -242,57 +242,57 @@ st.markdown(
         left: 0;
         width: 4px;
         height: 24px;
-        background: linear-gradient(180deg, #06b6d4 0%, #0369a1 100%);
+        background: linear-gradient(180deg, #5b7cff 0%, #4c63e8 100%);
         border-radius: 2px;
     }
 
     /* ============= SEVERITY BADGES ============= */
     .severity-critical {
-        color: #fecaca;
+        color: #b91c1c;
         font-weight: 700;
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #7f1d1d 0%, #5f0f0f 100%);
+        background: #fee2e2;
         padding: 0.8rem 1.2rem;
         border-radius: 10px;
         display: inline-block;
-        border: 1px solid rgba(252, 165, 165, 0.3);
-        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        border: 1px solid #fecaca;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
     }
 
     .severity-high {
-        color: #fed7aa;
+        color: #c2410c;
         font-weight: 700;
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #7c2d12 0%, #5a1f0f 100%);
+        background: #fed7aa;
         padding: 0.8rem 1.2rem;
         border-radius: 10px;
         display: inline-block;
-        border: 1px solid rgba(253, 186, 116, 0.3);
-        box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+        border: 1px solid #fdba74;
+        box-shadow: 0 4px 12px rgba(249, 115, 22, 0.1);
     }
 
     .severity-medium {
-        color: #fef08a;
+        color: #a16207;
         font-weight: 700;
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #713f12 0%, #5a3400 100%);
+        background: #fef3c7;
         padding: 0.8rem 1.2rem;
         border-radius: 10px;
         display: inline-block;
-        border: 1px solid rgba(253, 224, 71, 0.3);
-        box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2);
+        border: 1px solid #fde68a;
+        box-shadow: 0 4px 12px rgba(217, 119, 6, 0.1);
     }
 
     .severity-low {
-        color: #bbf7d0;
+        color: #15803d;
         font-weight: 700;
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+        background: #dcfce7;
         padding: 0.8rem 1.2rem;
         border-radius: 10px;
         display: inline-block;
-        border: 1px solid rgba(167, 243, 208, 0.3);
-        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+        border: 1px solid #bbf7d0;
+        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.1);
     }
 
     /* ============= LISTS ============= */
@@ -304,20 +304,20 @@ st.markdown(
     .result-card ul li {
         margin-bottom: 1rem;
         line-height: 1.8;
-        color: #cbd5e1;
+        color: #374151;
         padding-left: 1.5rem;
         position: relative;
         transition: all 0.3s ease;
     }
 
     .result-card ul li:hover {
-        color: #06b6d4;
+        color: #5b7cff;
         padding-left: 2rem;
     }
 
     .result-card ul li::before {
         content: '→';
-        color: #06b6d4;
+        color: #5b7cff;
         font-weight: 800;
         margin-right: 0.8rem;
         position: absolute;
@@ -326,54 +326,54 @@ st.markdown(
 
     /* ============= PROGRESS BAR ============= */
     .stProgress > div > div > div {
-        background: linear-gradient(90deg, #0369a1 0%, #06b6d4 100%) !important;
+        background: linear-gradient(90deg, #5b7cff 0%, #6b8fff 100%) !important;
         border-radius: 12px !important;
-        box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        box-shadow: 0 0 10px rgba(91, 124, 255, 0.3);
     }
 
     /* ============= MESSAGES ============= */
     .stSuccess {
-        background: linear-gradient(135deg, #15803d 0%, #166534 100%) !important;
+        background: #dcfce7 !important;
         border-left: 5px solid #22c55e !important;
         border-radius: 14px !important;
-        color: #bbf7d0 !important;
+        color: #166534 !important;
         padding: 1rem !important;
     }
 
     .stError {
-        background: linear-gradient(135deg, #7f1d1d 0%, #5f0f0f 100%) !important;
+        background: #fee2e2 !important;
         border-left: 5px solid #ef4444 !important;
         border-radius: 14px !important;
-        color: #fecaca !important;
+        color: #991b1b !important;
         padding: 1rem !important;
     }
 
     .stInfo {
-        background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 100%) !important;
-        border-left: 5px solid #06b6d4 !important;
+        background: #eff6ff !important;
+        border-left: 5px solid #5b7cff !important;
         border-radius: 14px !important;
-        color: #a5f3fc !important;
+        color: #1e3a8a !important;
         padding: 1rem !important;
     }
 
     /* ============= METRICS ============= */
     .stMetric {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        border: 1px solid rgba(6, 182, 212, 0.2);
+        background: white;
+        border: 1px solid #e5e7eb;
         border-radius: 14px;
         padding: 1.2rem;
-        box-shadow: 0 4px 12px rgba(6, 182, 212, 0.1);
+        box-shadow: 0 2px 8px rgba(91, 124, 255, 0.05);
     }
 
     .stMetric [data-testid="stMetricValue"] {
-        color: #06b6d4 !important;
+        color: #5b7cff !important;
         font-family: 'Poppins', sans-serif;
         font-weight: 800 !important;
         font-size: 1.8rem !important;
     }
 
     .stMetric [data-testid="stMetricLabel"] {
-        color: #94a3b8 !important;
+        color: #6b7280 !important;
         font-weight: 600 !important;
     }
 
@@ -407,10 +407,10 @@ st.markdown(
 
     /* ============= SPINNER ============= */
     .stSpinner > div > div {
-        border-top-color: #06b6d4 !important;
-        border-right-color: rgba(6, 182, 212, 0.3) !important;
-        border-bottom-color: rgba(6, 182, 212, 0.3) !important;
-        border-left-color: rgba(6, 182, 212, 0.3) !important;
+        border-top-color: #5b7cff !important;
+        border-right-color: rgba(91, 124, 255, 0.3) !important;
+        border-bottom-color: rgba(91, 124, 255, 0.3) !important;
+        border-left-color: rgba(91, 124, 255, 0.3) !important;
     }
 
     /* ============= RESPONSIVE DESIGN ============= */
@@ -452,16 +452,43 @@ st.markdown(
     }
 
     ::-webkit-scrollbar-track {
-        background: #0f172a;
+        background: #f3f4f6;
     }
 
     ::-webkit-scrollbar-thumb {
-        background: #06b6d4;
+        background: #5b7cff;
         border-radius: 4px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: #0284c7;
+        background: #4c63e8;
+    }
+
+    /* ============= TAB STYLING ============= */
+    [data-testid="stTabs"] {
+        margin-top: 1.5rem;
+    }
+
+    [data-testid="stTabs"] [data-testid="stTab"] {
+        background: white !important;
+        border: 1px solid #e5e7eb !important;
+        border-radius: 14px 14px 0 0 !important;
+        color: #6b7280 !important;
+        font-weight: 600 !important;
+    }
+
+    [data-testid="stTabs"] [aria-selected="true"] {
+        color: #5b7cff !important;
+        border-bottom: 3px solid #5b7cff !important;
+    }
+
+    /* ============= CONTAINER STYLING ============= */
+    .stContainer {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 1.5rem;
+        margin: 1rem 0;
     }
 
     /* ============= TAB STYLING ============= */
@@ -525,39 +552,47 @@ with st.sidebar:
 st.subheader("🔍 Diagnostic Inputs")
 
 # Main diagnostic input area with better organization
-tab1, tab2 = st.tabs(["📋 OBD & Maintenance", "🔊 Symptoms"])
-
-with tab1:
-    col1, col2 = st.columns([1, 1], gap="medium")
-    with col1:
-        code = st.text_input(
-            "Diagnostic Code (DTC)", 
-            placeholder="e.g., P0171, P0300, B1234",
-            help="Enter OBD-II diagnostic trouble code"
-        )
-    with col2:
-        maintenance_query = st.text_input(
-            "Maintenance Query", 
-            placeholder="What should I service?",
-            help="Ask about maintenance based on mileage or time"
-        )
-
-with tab2:
-    symptoms = st.text_area(
-        "Describe Vehicle Symptoms",
-        placeholder="E.g., rough idle, check engine light, poor fuel economy, burning smell...",
-        height=140,
-        help="Be as detailed as possible for better diagnosis"
+col1, col2 = st.columns([1, 1], gap="medium")
+with col1:
+    code = st.text_input(
+        "Diagnostic Code (DTC)", 
+        placeholder="e.g., P0171, P0300, B1234",
+        help="Enter OBD-II diagnostic trouble code (optional)"
+    )
+with col2:
+    maintenance_query = st.text_input(
+        "Maintenance Query", 
+        placeholder="What should I service?",
+        help="Ask about maintenance based on mileage or time (optional)"
     )
 
+symptoms = st.text_area(
+    "Describe Vehicle Symptoms",
+    placeholder="E.g., rough idle, check engine light, poor fuel economy, burning smell...",
+    height=140,
+    help="Be as detailed as possible for better diagnosis (optional)"
+)
+
 def _format_source(source: Dict[str, Any]) -> str:
-    base = source.get("source", "unknown")
-    src_type = source.get("type", "")
-    page = source.get("page")
-    suffix = f" ({src_type})" if src_type else ""
-    if page is not None:
-        suffix += f" page={page}"
-    return f"- {base}{suffix}"
+    # Handle both old and new source formats
+    filename = source.get("source_filename") or source.get("source", "Unknown Source")
+    category = source.get("category", "")
+    chunk_type = source.get("chunk_type", "")
+    vector_score = source.get("vector_score", 0)
+    rerank_score = source.get("rerank_score", 0)
+    
+    # Build the display string
+    display = f"📄 {filename}"
+    if category:
+        display += f" | Category: {category}"
+    if chunk_type:
+        display += f" | Type: {chunk_type}"
+    if vector_score > 0:
+        display += f" | Similarity: {vector_score:.2%}"
+    if rerank_score > 0:
+        display += f" | Relevance: {rerank_score:.2f}"
+    
+    return display
 
 
 def _get_severity_color(severity: str) -> str:
@@ -629,70 +664,110 @@ if st.button("🚀 Run Full Diagnostics", type="primary", use_container_width=Tr
         try:
             result = diagnose()
             st.success("✅ Diagnostic report generated successfully!")
+            
+            st.markdown("---")
 
-            # Create tabs for results organization
-            result_tab1, result_tab2, result_tab3, result_tab4 = st.tabs(
-                ["📊 Summary", "🔧 Repairs", "🛠️ Maintenance", "📈 Analysis"]
-            )
-
-            with result_tab1:
-                # Diagnostic Summary
+            # SECTION 1: Diagnostic Summary & Severity
+            col1, col2 = st.columns([3, 1])
+            with col1:
                 st.markdown('<div class="section-title">📋 Diagnosis Summary</div>', unsafe_allow_html=True)
-                with st.container():
-                    st.markdown(result.get("diagnosis", "No diagnosis generated."))
-                
-                # Severity with color coding
+                st.markdown(result.get("diagnosis", "No diagnosis generated."))
+            
+            with col2:
                 severity = result.get("severity", "Unknown")
-                st.markdown('<div class="section-title">🚨 Severity Assessment</div>', unsafe_allow_html=True)
-                col1, col2 = st.columns([2, 1])
-                with col1:
-                    _render_severity_badge(severity)
+                st.markdown('<div class="section-title">🚨 Severity</div>', unsafe_allow_html=True)
+                _render_severity_badge(severity)
+            
+            st.markdown("---")
 
-            with result_tab2:
-                # Root Cause Analysis
-                st.markdown('<div class="section-title">🔍 Root Cause Analysis</div>', unsafe_allow_html=True)
-                with st.container():
-                    _render_list(result.get("possible_causes", []), "No specific causes identified.")
-                
-                # Repair Recommendations
-                st.markdown('<div class="section-title">🔧 Repair Steps</div>', unsafe_allow_html=True)
-                with st.container():
-                    _render_list(result.get("repair_steps", []), "No repair recommendations available.")
+            # SECTION 2: Root Cause Analysis
+            st.markdown('<div class="section-title">🔍 Root Cause Analysis</div>', unsafe_allow_html=True)
+            st.markdown("""
+            The following factors have been identified as potential causes for the vehicle's condition:
+            """)
+            causes = result.get("possible_causes", [])
+            if causes:
+                for i, cause in enumerate(causes, 1):
+                    st.markdown(f"**{i}. {cause}**")
+            else:
+                st.info("No specific causes identified.")
+            
+            st.markdown("---")
 
-            with result_tab3:
-                # Maintenance Recommendations
-                st.markdown('<div class="section-title">🛠️ Recommended Maintenance</div>', unsafe_allow_html=True)
-                with st.container():
-                    _render_list(
-                        result.get("maintenance_recommendations", []),
-                        "No maintenance recommendations available.",
-                    )
-
-            with result_tab4:
-                # Confidence Score with metrics
-                confidence = float(result.get("confidence_score", 0.0))
-                st.markdown('<div class="section-title">📊 Diagnosis Confidence</div>', unsafe_allow_html=True)
-                
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    st.progress(max(0.0, min(confidence, 1.0)))
-                with col2:
-                    st.metric(label="Confidence", value=f"{confidence:.0%}")
-                with col3:
-                    confidence_level = "High" if confidence >= 0.7 else "Medium" if confidence >= 0.5 else "Low"
-                    st.metric(label="Reliability", value=confidence_level)
-                
-                # Sources
-                st.markdown('<div class="section-title">📚 Knowledge Sources</div>', unsafe_allow_html=True)
-                sources = result.get("sources", [])
-                if sources:
+            # SECTION 3: Repair Recommendations (Enhanced)
+            st.markdown('<div class="section-title">🔧 Detailed Repair Steps</div>', unsafe_allow_html=True)
+            st.markdown("""
+            Follow these comprehensive repair steps to resolve the identified issues:
+            """)
+            repair_steps = result.get("repair_steps", [])
+            if repair_steps:
+                for i, step in enumerate(repair_steps, 1):
                     with st.container():
-                        st.markdown("<ul>", unsafe_allow_html=True)
-                        for source in sources:
-                            st.markdown(f"<li>{_format_source(source)}</li>", unsafe_allow_html=True)
-                        st.markdown("</ul>", unsafe_allow_html=True)
-                else:
-                    st.info("No sources available.")
+                        st.markdown(f"""
+                        <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%); 
+                                    border-left: 4px solid #5b7cff; border-radius: 8px; 
+                                    padding: 1.2rem; margin: 0.8rem 0; 
+                                    border: 1px solid #dbeafe;">
+                        <strong style="color: #5b7cff; font-size: 1.1rem;">Step {i}</strong>
+                        <p style="color: #374151; margin-top: 0.5rem; line-height: 1.8;">{step}</p>
+                        </div>
+                        """, unsafe_allow_html=True)
+            else:
+                st.info("No repair recommendations available.")
+            
+            st.markdown("---")
+
+            # SECTION 4: Maintenance Recommendations (Enhanced)
+            st.markdown('<div class="section-title">🛠️ Recommended Maintenance</div>', unsafe_allow_html=True)
+            st.markdown("""
+            Perform the following maintenance tasks to ensure optimal vehicle performance:
+            """)
+            maintenance = result.get("maintenance_recommendations", [])
+            if maintenance:
+                for i, item in enumerate(maintenance, 1):
+                    with st.container():
+                        st.markdown(f"""
+                        <div style="background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%); 
+                                    border-left: 4px solid #22c55e; border-radius: 8px; 
+                                    padding: 1.2rem; margin: 0.8rem 0; 
+                                    border: 1px solid #dcfce7;">
+                        <strong style="color: #22c55e; font-size: 1.1rem;">Maintenance Item {i}</strong>
+                        <p style="color: #374151; margin-top: 0.5rem; line-height: 1.8;">{item}</p>
+                        </div>
+                        """, unsafe_allow_html=True)
+            else:
+                st.info("No maintenance recommendations available.")
+            
+            st.markdown("---")
+
+            # SECTION 5: Confidence & Analysis
+            st.markdown('<div class="section-title">📊 Diagnosis Confidence & Analysis</div>', unsafe_allow_html=True)
+            
+            confidence = float(result.get("confidence_score", 0.0))
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric(label="Confidence Score", value=f"{confidence:.0%}")
+            with col2:
+                confidence_level = "High" if confidence >= 0.7 else "Medium" if confidence >= 0.5 else "Low"
+                st.metric(label="Reliability Level", value=confidence_level)
+            with col3:
+                st.metric(label="Data Quality", value="Verified" if confidence >= 0.6 else "Moderate")
+            
+            st.progress(max(0.0, min(confidence, 1.0)))
+            
+            st.markdown("---")
+
+            # SECTION 6: Knowledge Sources
+            st.markdown('<div class="section-title">📚 Knowledge Sources</div>', unsafe_allow_html=True)
+            st.markdown("This diagnosis was powered by the following sources from our knowledge base:")
+            
+            sources = result.get("sources", [])
+            if sources:
+                for i, source in enumerate(sources, 1):
+                    formatted_source = _format_source(source)
+                    st.markdown(f"**Source {i}:** {formatted_source}")
+            else:
+                st.info("ℹ️ No sources available for this diagnosis.")
 
         except requests.HTTPError as exc:
             st.error(f"❌ Backend Error: {exc}")
