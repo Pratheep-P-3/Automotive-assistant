@@ -43,11 +43,14 @@ st.markdown(
         color: white;
         box-shadow: 0 25px 50px rgba(91, 124, 255, 0.25), 0 0 1px rgba(255, 255, 255, 0.2);
         margin-bottom: 2.5rem;
+        margin-left: auto;
+        margin-right: auto;
         border: 1px solid rgba(255, 255, 255, 0.25);
         backdrop-filter: blur(10px);
         animation: slideDown 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
         position: relative;
         overflow: hidden;
+        max-width: 900px;
     }
 
     .hero-card::before {
