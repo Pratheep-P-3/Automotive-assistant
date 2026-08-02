@@ -1,8 +1,8 @@
 """
 Embedding Factory for Automotive Diagnostics RAG.
 
-Supports both Azure OpenAI and HuggingFace embeddings.
-Priority: Azure OpenAI (text-embedding-3-small) > HuggingFace fallback
+Azure OpenAI Only (text-embedding-3-small) - No fallback.
+Requires Azure deployment configured in environment.
 """
 
 from __future__ import annotations
@@ -15,97 +15,48 @@ logger = logging.getLogger(__name__)
 
 
 class EmbeddingFactory:
-    """Factory for creating embedding models with singleton caching."""
+    """Factory for creating Azure OpenAI embedding models with singleton caching."""
 
     AZURE_OPENAI_MODEL = "text-embedding-3-small"
-    HUGGINGFACE_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
     
     # Singleton cache - store embedding instance to avoid repeated initialization
     _embedding_instance: Any | None = None
-    _embedding_source: str = ""
 
     @staticmethod
     def get_embeddings() -> Any:
         """
-        Get embedding model (singleton-cached).
+        Get Azure OpenAI embedding model (singleton-cached).
 
-        Priority:
-        1. Return cached instance if available
-        2. Azure OpenAI (if configured)
-        3. HuggingFace (fallback)
-
-        Benefits:
-        - Faster startup on subsequent calls
-        - Lower Azure initialization overhead
-        - Cleaner resource management
+        Azure OpenAI is REQUIRED. No fallback models.
 
         Returns:
-            Embedding model instance (AzureOpenAIEmbeddings or HuggingFaceEmbeddings)
+            AzureOpenAIEmbeddings instance
 
         Raises:
-            ValueError: If no valid embedding service is available
+            ValueError: If Azure is not configured or initialization fails
         """
         # Return cached instance if available
         if EmbeddingFactory._embedding_instance is not None:
-            logger.debug(
-                f"[EmbeddingFactory] Returning cached embedding instance ({EmbeddingFactory._embedding_source})"
-            )
+            logger.debug("[EmbeddingFactory] Returning cached Azure OpenAI embeddings instance")
             return EmbeddingFactory._embedding_instance
 
-        # Try Azure OpenAI first
-        if EmbeddingFactory._is_azure_configured():
-            try:
-                instance = EmbeddingFactory._get_azure_openai_embeddings()
-                EmbeddingFactory._embedding_instance = instance
-                EmbeddingFactory._embedding_source = "Azure OpenAI"
-                logger.info("[EmbeddingFactory] ✓ Cached Azure OpenAI embeddings instance")
-                return instance
-            except Exception as exc:
-                logger.warning(f"[EmbeddingFactory] Azure OpenAI initialization failed: {exc}")
-                logger.info("[EmbeddingFactory] Falling back to HuggingFace")
-
-        # Fall back to HuggingFace
+        # Initialize Azure OpenAI (required, no fallback)
         try:
-            instance = EmbeddingFactory._get_huggingface_embeddings()
+            instance = EmbeddingFactory._get_azure_openai_embeddings()
             EmbeddingFactory._embedding_instance = instance
-            EmbeddingFactory._embedding_source = "HuggingFace"
-            logger.info("[EmbeddingFactory] ✓ Cached HuggingFace embeddings instance")
+            logger.info("[EmbeddingFactory] ✓ Cached Azure OpenAI embeddings instance")
             return instance
         except Exception as exc:
-            logger.exception(f"[EmbeddingFactory] ✗ FAILED to initialize any embedding model: {exc}")
+            logger.exception("[EmbeddingFactory] ✗ FAILED to initialize Azure OpenAI embeddings (no fallback available)")
             raise ValueError(
-                "No valid embedding service available. Configure Azure OpenAI or ensure HuggingFace is installed."
+                "Azure OpenAI embeddings configuration failed. Ensure AZURE_OPENAI_* environment variables are set correctly."
             ) from exc
 
     @staticmethod
     def clear_cache() -> None:
         """Clear cached embedding instance (for testing/cleanup)."""
         EmbeddingFactory._embedding_instance = None
-        EmbeddingFactory._embedding_source = ""
-        logger.info("[EmbeddingFactory] Cleared cached embedding instance")
-
-    @staticmethod
-    def _is_azure_configured() -> bool:
-        """
-        Check if Azure OpenAI is configured.
-
-        Required environment variables:
-        - AZURE_OPENAI_API_KEY
-        - AZURE_OPENAI_ENDPOINT
-        - AZURE_OPENAI_EMBEDDING_DEPLOYMENT
-
-        Returns:
-            True if all required Azure vars are present
-        """
-        required_vars = [
-            "AZURE_OPENAI_API_KEY",
-            "AZURE_OPENAI_ENDPOINT",
-            "AZURE_OPENAI_EMBEDDING_DEPLOYMENT",
-        ]
-        configured = all(os.getenv(var) for var in required_vars)
-        if configured:
-            logger.info("[EmbeddingFactory] Azure OpenAI is configured")
-        return configured
+        logger.info("[EmbeddingFactory] Cleared cached Azure OpenAI embeddings instance")
 
     @staticmethod
     def _get_azure_openai_embeddings() -> Any:
@@ -163,41 +114,5 @@ class EmbeddingFactory:
 
         except Exception as exc:
             logger.exception("[EmbeddingFactory] ✗ Failed to initialize Azure OpenAI embeddings")
-            raise
-
-    @staticmethod
-    def _get_huggingface_embeddings() -> Any:
-        """
-        Initialize HuggingFace Embeddings.
-
-        Environment variables:
-        - EMBEDDING_MODEL (default: sentence-transformers/all-MiniLM-L6-v2)
-
-        Returns:
-            HuggingFaceEmbeddings instance
-
-        Raises:
-            ImportError: If langchain-huggingface not installed
-            Exception: If model initialization fails
-        """
-        try:
-            from langchain_huggingface import HuggingFaceEmbeddings
-        except ImportError as exc:
-            raise ImportError(
-                "langchain-huggingface not installed. Install with: pip install langchain-huggingface"
-            ) from exc
-
-        try:
-            model_name = os.getenv("EMBEDDING_MODEL", EmbeddingFactory.HUGGINGFACE_MODEL)
-
-            logger.info(f"[EmbeddingFactory] Initializing HuggingFace embeddings (model={model_name})")
-
-            embeddings = HuggingFaceEmbeddings(model_name=model_name)
-
-            logger.info("[EmbeddingFactory] ✓ HuggingFace embeddings initialized successfully")
-            return embeddings
-
-        except Exception as exc:
-            logger.exception("[EmbeddingFactory] ✗ Failed to initialize HuggingFace embeddings")
             raise
 
