@@ -35,6 +35,34 @@ st.markdown(
         color: #1f2937;
     }
 
+    /* ============= MAIN CONTENT CONTAINER WIDTH ============= */
+    [data-testid="stAppViewContainer"] > section:first-child {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    [data-testid="stMainBlockContainer"] {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Constrain all main content sections */
+    .stApp > [data-testid="stAppViewContainer"] {
+        width: 100% !important;
+    }
+
+    .stApp > [data-testid="stAppViewContainer"] > section {
+        max-width: 1000px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+
     /* ============= HEADER HERO CARD ============= */
     .hero-card {
         background: linear-gradient(135deg, #5b7cff 0%, #6b8fff 50%, #4c63e8 100%);
@@ -43,14 +71,12 @@ st.markdown(
         color: white;
         box-shadow: 0 25px 50px rgba(91, 124, 255, 0.25), 0 0 1px rgba(255, 255, 255, 0.2);
         margin-bottom: 2.5rem;
-        margin-left: auto;
-        margin-right: auto;
         border: 1px solid rgba(255, 255, 255, 0.25);
         backdrop-filter: blur(10px);
         animation: slideDown 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
         position: relative;
         overflow: hidden;
-        max-width: 900px;
+        width: 100%;
     }
 
     .hero-card::before {
