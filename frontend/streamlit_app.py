@@ -463,6 +463,33 @@ st.markdown(
     ::-webkit-scrollbar-thumb:hover {
         background: #0284c7;
     }
+
+    /* ============= TAB STYLING ============= */
+    [data-testid="stTabs"] {
+        margin-top: 1.5rem;
+    }
+
+    [data-testid="stTabs"] [data-testid="stTab"] {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+        border: 1px solid rgba(6, 182, 212, 0.2) !important;
+        border-radius: 14px 14px 0 0 !important;
+        color: #94a3b8 !important;
+        font-weight: 600 !important;
+    }
+
+    [data-testid="stTabs"] [aria-selected="true"] {
+        color: #06b6d4 !important;
+        border-bottom: 3px solid #06b6d4 !important;
+    }
+
+    /* ============= CONTAINER STYLING ============= */
+    .stContainer {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        border: 1px solid rgba(6, 182, 212, 0.2);
+        border-radius: 14px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -610,68 +637,62 @@ if st.button("🚀 Run Full Diagnostics", type="primary", use_container_width=Tr
 
             with result_tab1:
                 # Diagnostic Summary
-                st.markdown('<div class="result-card">', unsafe_allow_html=True)
                 st.markdown('<div class="section-title">📋 Diagnosis Summary</div>', unsafe_allow_html=True)
-                st.markdown(result.get("diagnosis", "No diagnosis generated."))
+                with st.container():
+                    st.markdown(result.get("diagnosis", "No diagnosis generated."))
                 
                 # Severity with color coding
                 severity = result.get("severity", "Unknown")
                 st.markdown('<div class="section-title">🚨 Severity Assessment</div>', unsafe_allow_html=True)
-                _render_severity_badge(severity)
-                st.markdown("</div>", unsafe_allow_html=True)
+                col1, col2 = st.columns([2, 1])
+                with col1:
+                    _render_severity_badge(severity)
 
             with result_tab2:
                 # Root Cause Analysis
-                st.markdown('<div class="result-card">', unsafe_allow_html=True)
                 st.markdown('<div class="section-title">🔍 Root Cause Analysis</div>', unsafe_allow_html=True)
-                _render_list(result.get("possible_causes", []), "No specific causes identified.")
-                st.markdown("</div>", unsafe_allow_html=True)
-
+                with st.container():
+                    _render_list(result.get("possible_causes", []), "No specific causes identified.")
+                
                 # Repair Recommendations
-                st.markdown('<div class="result-card">', unsafe_allow_html=True)
                 st.markdown('<div class="section-title">🔧 Repair Steps</div>', unsafe_allow_html=True)
-                _render_list(result.get("repair_steps", []), "No repair recommendations available.")
-                st.markdown("</div>", unsafe_allow_html=True)
+                with st.container():
+                    _render_list(result.get("repair_steps", []), "No repair recommendations available.")
 
             with result_tab3:
                 # Maintenance Recommendations
-                st.markdown('<div class="result-card">', unsafe_allow_html=True)
                 st.markdown('<div class="section-title">🛠️ Recommended Maintenance</div>', unsafe_allow_html=True)
-                _render_list(
-                    result.get("maintenance_recommendations", []),
-                    "No maintenance recommendations available.",
-                )
-                st.markdown("</div>", unsafe_allow_html=True)
+                with st.container():
+                    _render_list(
+                        result.get("maintenance_recommendations", []),
+                        "No maintenance recommendations available.",
+                    )
 
             with result_tab4:
                 # Confidence Score with metrics
                 confidence = float(result.get("confidence_score", 0.0))
-                st.markdown('<div class="result-card">', unsafe_allow_html=True)
                 st.markdown('<div class="section-title">📊 Diagnosis Confidence</div>', unsafe_allow_html=True)
                 
                 col1, col2, col3 = st.columns(3)
                 with col1:
                     st.progress(max(0.0, min(confidence, 1.0)))
                 with col2:
-                    st.metric(label="Confidence Score", value=f"{confidence:.0%}")
+                    st.metric(label="Confidence", value=f"{confidence:.0%}")
                 with col3:
                     confidence_level = "High" if confidence >= 0.7 else "Medium" if confidence >= 0.5 else "Low"
                     st.metric(label="Reliability", value=confidence_level)
                 
-                st.markdown("</div>", unsafe_allow_html=True)
-
                 # Sources
-                st.markdown('<div class="result-card">', unsafe_allow_html=True)
                 st.markdown('<div class="section-title">📚 Knowledge Sources</div>', unsafe_allow_html=True)
                 sources = result.get("sources", [])
                 if sources:
-                    st.markdown("<ul>", unsafe_allow_html=True)
-                    for source in sources:
-                        st.markdown(f"<li>{_format_source(source)}</li>", unsafe_allow_html=True)
-                    st.markdown("</ul>", unsafe_allow_html=True)
+                    with st.container():
+                        st.markdown("<ul>", unsafe_allow_html=True)
+                        for source in sources:
+                            st.markdown(f"<li>{_format_source(source)}</li>", unsafe_allow_html=True)
+                        st.markdown("</ul>", unsafe_allow_html=True)
                 else:
                     st.info("No sources available.")
-                st.markdown("</div>", unsafe_allow_html=True)
 
         except requests.HTTPError as exc:
             st.error(f"❌ Backend Error: {exc}")
