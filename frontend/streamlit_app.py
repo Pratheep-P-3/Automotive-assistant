@@ -120,13 +120,19 @@ st.markdown(
         color: #9ca3af !important;
     }
 
+    /* OVERRIDE DEFAULT FOCUS STATES - BLUE ONLY */
+    .stTextInput > div:focus-within > div > input,
+    .stNumberInput > div:focus-within > div > input,
+    .stTextArea > div:focus-within > div > textarea,
+    .stSelectbox > div:focus-within > div > select,
     .stTextInput > div > div > input:focus,
     .stNumberInput > div > div > input:focus,
     .stTextArea > div > div > textarea:focus,
     .stSelectbox > div > div > select:focus {
-        border-color: #5b7cff !important;
+        border: 2px solid #5b7cff !important;
         box-shadow: 0 0 0 4px rgba(91, 124, 255, 0.15), 0 0 20px rgba(91, 124, 255, 0.2) !important;
         background: #f8faff !important;
+        outline: none !important;
     }
 
     /* ============= LABELS ============= */
@@ -475,11 +481,18 @@ st.markdown(
         border-radius: 14px 14px 0 0 !important;
         color: #6b7280 !important;
         font-weight: 600 !important;
+        transition: all 0.3s ease !important;
+    }
+
+    [data-testid="stTabs"] [data-testid="stTab"]:hover {
+        background: #f9fafb !important;
+        color: #5b7cff !important;
     }
 
     [data-testid="stTabs"] [aria-selected="true"] {
         color: #5b7cff !important;
         border-bottom: 3px solid #5b7cff !important;
+        background: #f0f4ff !important;
     }
 
     /* ============= CONTAINER STYLING ============= */
@@ -491,31 +504,16 @@ st.markdown(
         margin: 1rem 0;
     }
 
-    /* ============= TAB STYLING ============= */
-    [data-testid="stTabs"] {
-        margin-top: 1.5rem;
-    }
-
-    [data-testid="stTabs"] [data-testid="stTab"] {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
-        border: 1px solid rgba(6, 182, 212, 0.2) !important;
-        border-radius: 14px 14px 0 0 !important;
-        color: #94a3b8 !important;
-        font-weight: 600 !important;
-    }
-
-    [data-testid="stTabs"] [aria-selected="true"] {
-        color: #06b6d4 !important;
-        border-bottom: 3px solid #06b6d4 !important;
-    }
-
-    /* ============= CONTAINER STYLING ============= */
-    .stContainer {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        border: 1px solid rgba(6, 182, 212, 0.2);
-        border-radius: 14px;
-        padding: 1.5rem;
-        margin: 1rem 0;
+    /* ============= FOCUS/ACTIVE STATE FIXES ============= */
+    .stTextInput > div > div > input:active,
+    .stTextInput > div > div > input:focus-visible,
+    .stNumberInput > div > div > input:active,
+    .stNumberInput > div > div > input:focus-visible,
+    .stTextArea > div > div > textarea:active,
+    .stTextArea > div > div > textarea:focus-visible {
+        outline: none !important;
+        border-color: #5b7cff !important;
+        box-shadow: 0 0 0 4px rgba(91, 124, 255, 0.15), 0 0 20px rgba(91, 124, 255, 0.2) !important;
     }
     </style>
     """,
@@ -536,18 +534,11 @@ st.markdown(
 with st.sidebar:
     st.header("🚗 Vehicle Profile")
     
-    # Create columns for better layout
-    col1, col2 = st.columns(2)
-    with col1:
-        make = st.text_input("Make", placeholder="Toyota", label_visibility="collapsed")
-    with col2:
-        model = st.text_input("Model", placeholder="Corolla", label_visibility="collapsed")
-    
-    col3, col4 = st.columns(2)
-    with col3:
-        year_input = st.text_input("Year", placeholder="2020", label_visibility="collapsed")
-    with col4:
-        mileage_input = st.text_input("Mileage", placeholder="60000", label_visibility="collapsed")
+    # Stack inputs vertically for better use of space and clarity
+    make = st.text_input("Make", placeholder="Toyota", help="Vehicle manufacturer")
+    model = st.text_input("Model", placeholder="Corolla", help="Vehicle model name")
+    year_input = st.text_input("Year", placeholder="2020", help="Vehicle year of manufacture")
+    mileage_input = st.text_input("Mileage", placeholder="60000", help="Current vehicle mileage")
 
 st.subheader("🔍 Diagnostic Inputs")
 
