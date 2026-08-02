@@ -112,6 +112,8 @@ st.markdown(
         transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
         font-weight: 500 !important;
         color: #1f2937 !important;
+        outline: none !important;
+        box-shadow: none !important;
     }
 
     .stTextInput > div > div > input::placeholder,
@@ -120,19 +122,48 @@ st.markdown(
         color: #9ca3af !important;
     }
 
-    /* OVERRIDE DEFAULT FOCUS STATES - BLUE ONLY */
-    .stTextInput > div:focus-within > div > input,
-    .stNumberInput > div:focus-within > div > input,
-    .stTextArea > div:focus-within > div > textarea,
-    .stSelectbox > div:focus-within > div > select,
+    /* AGGRESSIVE FOCUS STATE OVERRIDES - BLUE ONLY */
     .stTextInput > div > div > input:focus,
     .stNumberInput > div > div > input:focus,
     .stTextArea > div > div > textarea:focus,
-    .stSelectbox > div > div > select:focus {
+    .stSelectbox > div > div > select:focus,
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    textarea:focus,
+    select:focus {
         border: 2px solid #5b7cff !important;
-        box-shadow: 0 0 0 4px rgba(91, 124, 255, 0.15), 0 0 20px rgba(91, 124, 255, 0.2) !important;
-        background: #f8faff !important;
+        box-shadow: 0 0 0 3px rgba(91, 124, 255, 0.1), inset 0 0 0 1px #5b7cff !important;
+        background: #fafbff !important;
         outline: none !important;
+    }
+
+    /* TARGET FOCUS-WITHIN ON PARENT CONTAINERS */
+    .stTextInput:focus-within > div > div > input,
+    .stNumberInput:focus-within > div > div > input,
+    .stTextArea:focus-within > div > div > textarea,
+    .stSelectbox:focus-within > div > div > select {
+        border: 2px solid #5b7cff !important;
+        box-shadow: 0 0 0 3px rgba(91, 124, 255, 0.1), inset 0 0 0 1px #5b7cff !important;
+        background: #fafbff !important;
+    }
+
+    /* REMOVE STREAMLIT'S DEFAULT BLUE/RED LINES */
+    .stTextInput > div:focus-within,
+    .stNumberInput > div:focus-within,
+    .stTextArea > div:focus-within,
+    .stSelectbox > div:focus-within {
+        border: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    /* DISABLE ANY PSEUDO-ELEMENT STYLING */
+    .stTextInput > div > div::after,
+    .stNumberInput > div > div::after,
+    .stTextArea > div > div::after,
+    .stSelectbox > div > div::after {
+        display: none !important;
+        border: none !important;
     }
 
     /* ============= LABELS ============= */
