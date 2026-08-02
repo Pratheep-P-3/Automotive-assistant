@@ -138,7 +138,7 @@ class CrossEncoderReranker:
         Calculate confidence level from re-ranking scores (multi-factor).
 
         Uses three factors:
-        1. Top reranker score (0-1 range)
+        1. Top reranker score (normalized to 0-1)
         2. Average score of Top 3 results (consistency indicator)
         3. Separation between Rank 1 and Rank 2 (confidence gap)
 
@@ -160,17 +160,28 @@ class CrossEncoderReranker:
             logger.info("[Reranker] No scores available, returning default confidence")
             return 50, "Low Confidence"
 
-        # Factor 1: Top score (0-1 range from cross-encoder)
-        top_score = scores[0]["score"]
+        # ===== NORMALIZE CROSS-ENCODER SCORES (not in 0-1 range) =====
+        # Cross-encoder scores are typically in range 0-10+, not 0-1
+        # Find min/max to normalize all scores to 0-1 range
+        all_scores = [s["score"] for s in scores]
+        min_score = min(all_scores)
+        max_score = max(all_scores)
+        score_range = max_score - min_score if max_score != min_score else 1.0
+
+        # Normalize all scores to 0-1 range
+        normalized_scores = [(s - min_score) / score_range for s in all_scores]
+        
+        # Factor 1: Top score (normalized to 0-1)
+        top_score = normalized_scores[0]
 
         # Factor 2: Average of top 3 results (consistency)
-        top_3_scores = [s["score"] for s in scores[:3]]
+        top_3_scores = normalized_scores[:3]
         avg_top_3 = sum(top_3_scores) / len(top_3_scores)
 
-        # Factor 3: Separation between Rank 1 and Rank 2
+        # Factor 3: Separation between Rank 1 and Rank 2 (normalized gap)
         score_gap = 0.0
-        if len(scores) > 1:
-            score_gap = top_score - scores[1]["score"]
+        if len(normalized_scores) > 1:
+            score_gap = normalized_scores[0] - normalized_scores[1]
         else:
             score_gap = top_score  # If only 1 result, gap is the score itself
 
@@ -190,8 +201,9 @@ class CrossEncoderReranker:
             level = "Low Confidence"
 
         logger.info(
-            f"[Reranker] Confidence calculation: "
-            f"top_score={top_score:.3f}, avg_top_3={avg_top_3:.3f}, gap={score_gap:.3f} -> "
+            f"[Reranker] Confidence calculation (NORMALIZED): "
+            f"raw_top={all_scores[0]:.3f}, norm_top={top_score:.3f}, "
+            f"norm_avg_top_3={avg_top_3:.3f}, gap={score_gap:.3f} -> "
             f"{confidence_pct}% ({level})"
         )
 
