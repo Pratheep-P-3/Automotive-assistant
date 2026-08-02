@@ -1,0 +1,237 @@
+HONDA VEHICLE TROUBLESHOOTING - BRAND SPECIFIC
+
+=== Honda Engine Misfire / Rough Idle ===
+Symptom: Engine shaking at idle, hesitation during acceleration, Check Engine Light
+Severity: Medium to High
+Honda-Specific Common Causes:
+- Honda spark plug issues (gap widening or electrode wear)
+- Honda ignition coil failure (coil-on-plug design failure common)
+- Carbon buildup on Honda VTEC/i-VTEC system (indirect injection models)
+- Honda fuel injector clogging (Honda fuel sensitivity)
+- Honda VVT-i system malfunction (see P0011)
+- Low or dirty engine oil (affects VVT-i operation)
+- Vacuum leak in Honda intake system
+
+Honda-Specific Diagnostic:
+1. Retrieve codes using Honda Diagnostic System (HDS)
+2. Check Honda VVT-i solenoid connector condition
+3. Inspect Honda spark plugs (look for black deposits)
+4. Test Honda ignition coil spark (minimum 8kV)
+5. Fuel trim analysis (Honda specific parameters)
+6. Monitor Honda fuel injector pulse width
+7. Check Honda manifold absolute pressure (MAP) sensor
+
+Honda-Specific Troubleshooting Steps:
+1. Replace Honda OEM spark plugs (use Honda specification gap: 0.040-0.050")
+2. Perform Honda fuel system cleaning (Civic/Accord recommend 60k interval)
+3. Clean or replace Honda fuel injectors
+4. Test Honda ignition coils individually
+5. Honda VVT-i system service if needed
+6. Check Honda oil condition (quality matters)
+
+Honda-Specific Solutions:
+- Honda spark plug replacement: $30-$80
+- Fuel system cleaning service: $150-$350
+- Honda ignition coil replacement: $150-$300 per coil
+- Honda fuel injector service: $200-$500
+- Honda VVT-i solenoid: $200-$400
+
+Estimated Cost: $300-$1,200
+Estimated Time: 1-6 hours
+
+Honda Models Most Affected:
+- Civic (all years, especially performance models)
+- Accord (high mileage units)
+- CR-V (commonly affected)
+- Fit (small engine sensitivity)
+
+
+=== Honda VTEC/i-VTEC System Warning ===
+Symptom: Check Engine Light, power loss, Honda VTEC not engaging
+Severity: Medium
+Honda-Specific Issue:
+- Honda VTEC or i-VTEC system malfunction
+- Affects Honda variable valve timing and performance
+- Common in Honda performance models
+- Separate from but related to VVT-i timing system
+
+Honda-Specific Causes:
+- Honda VVT-i solenoid sticking or electrical failure
+- Low engine oil or dirty oil (critical for VTEC operation)
+- Honda rocker arm wear
+- Faulty Honda crankshaft position sensor
+- Honda oil pressure switch fault
+- Spark plug issues affecting VTEC engagement
+
+Honda-Specific Diagnostic:
+1. Retrieve codes using Honda HDS
+2. Check oil level and condition (Honda 0W-20 required)
+3. Test Honda VVT-i solenoid resistance (6-12 ohms)
+4. Monitor oil pressure live data
+5. Check Honda spark plug condition
+6. Test Honda crankshaft sensor
+7. Inspect Honda rocker arm assembly
+
+Honda-Specific Solutions:
+1. Change engine oil to Honda 0W-20 (critical step)
+2. Replace Honda VVT-i solenoid if faulty
+3. Replace spark plugs (helps VTEC engagement)
+4. Replace faulty sensors
+5. Rocker arm inspection/replacement if needed
+
+Estimated Cost: $200-$1,200
+Estimated Time: 1-5 hours
+
+Honda Models Most Affected:
+- Civic Si (VTEC-dependent performance)
+- Civic Type-R (high-performance VTEC system)
+- Accord V6 models
+- Acura TSX
+- Acura TL
+
+
+=== Honda Transmission Shifting Problems ===
+Symptom: Hard shifts, delayed shifts, transmission slipping, flashing Check Engine Light
+Severity: Medium to High
+Honda-Specific Causes:
+- Low Honda transmission fluid (check every 30k)
+- Honda transmission fluid degradation (discolored or burned smell)
+- Faulty Honda transmission solenoid
+- Honda torque converter lockup issues
+- Worn Honda transmission bands or clutches
+- Engine performance problems affecting shifts
+- Honda transmission control module fault
+
+Honda-Specific Diagnostic:
+1. Retrieve codes using Honda HDS scanner
+2. Check Honda transmission fluid level and condition (red = good, brown = service)
+3. Test Honda transmission solenoid operation
+4. Perform Honda transmission shift point evaluation
+5. Monitor transmission temperature
+6. Check engine performance (misfires affect transmission)
+7. Scan Honda transmission module
+
+Honda-Specific Repair:
+1. Perform Honda transmission fluid and filter service (use Honda DW-1 only)
+2. Replace faulty Honda solenoids
+3. Repair wiring/connector issues
+4. If severe internal damage: transmission rebuild or replacement
+
+Honda-Specific Cost:
+- Transmission fluid service: $150-$300 (use only Honda DW-1 fluid)
+- Solenoid replacement: $200-$600
+- Major transmission repair: $1,500-$3,500+
+
+Estimated Time: 1-8 hours
+
+Honda Transmission Fluid Warning:
+- ONLY use Honda DW-1 transmission fluid
+- Non-OEM fluid can cause transmission damage
+- Service intervals are critical to longevity
+
+Honda Models with Known Issues:
+- 2003-2007 Accord 5-speed (shift shudder)
+- 2006-2008 Civic (hard shifts during warm up)
+- 2002-2006 CR-V (transmission lag)
+
+
+=== Honda Brake System Issues ===
+Symptom: Soft brake pedal, Honda Electronic Brake Distribution warning, ABS warning
+Severity: HIGH - Safety Critical
+Honda-Specific Concerns:
+- Honda ABS system integration (models 1995+)
+- Honda Electronic Brake Distribution (EBD) critical safety system
+- Honda brake fluid specification required
+
+Honda-Specific Causes:
+- Low brake fluid level
+- Brake fluid contamination (absorbs moisture over time)
+- Honda ABS module fault
+- Faulty Honda wheel speed sensor
+- Brake line leak
+- Master cylinder failure
+- Worn brake pads (can affect ABS operation)
+
+Honda-Specific Diagnostic:
+1. Check Honda brake fluid level and condition
+2. Scan for Honda ABS/EBD fault codes
+3. Test Honda wheel speed sensors (all 4)
+4. Check Honda ABS module operation
+5. Test brake fluid for moisture content
+6. Inspect Honda brake components
+7. Perform brake system pressure test
+
+Honda-Specific Actions:
+1. If brake pedal soft: DO NOT DRIVE - get professional service
+2. Bleed Honda brake system per OEM specifications
+3. Replace brake fluid (Honda recommends DOT 3 or 4)
+4. Wheel speed sensor replacement if faulty
+5. Professional brake service required
+
+Estimated Cost: $200-$1,500
+Estimated Time: 1-4 hours
+SAFETY WARNING: Critical system
+
+
+=== Honda Battery Drain / Dead Battery ===
+Symptom: Battery dies overnight, slow cranking, clicking noise on start
+Severity: Medium
+Honda-Specific Causes:
+- Aged Honda battery (typical lifespan 3-5 years)
+- Honda electrical system parasitic draw
+- Faulty Honda alternator
+- Corroded battery terminals (common in Honda)
+- Interior light left on (Honda doesn't always auto-off)
+- Honda battery drain from aftermarket electrical additions
+- Faulty Honda battery monitoring system
+
+Honda-Specific Diagnostic:
+1. Test Honda battery voltage (should be 12.6V at rest)
+2. Test Honda alternator output on running engine (13.5-15V)
+3. Check for parasitic electrical draw
+4. Inspect Honda battery terminals for corrosion
+5. Test Honda charging system
+6. Review recent Honda electrical modifications
+
+Honda-Specific Solutions:
+- Clean Honda battery terminals thoroughly
+- Tighten battery cable connections
+- Replace battery if aged (Honda OEM or equivalent recommended)
+- Test and replace faulty Honda alternator
+- Diagnose and fix parasitic draw issues
+- Check for aftermarket electrical equipment drain
+
+Estimated Cost: $100-$600
+Estimated Time: 0.5-2 hours
+
+
+=== Honda Check Engine Light ===
+Symptom: Yellow Check Engine Light on Honda dashboard
+Severity: Varies (Low to High depending on code)
+Common Honda Trouble Codes:
+- P0011: Honda VVT-i timing issue
+- P0300: Random cylinder misfire
+- P0420: Catalyst system efficiency
+- P0131: Honda oxygen sensor circuit
+- P0135: Honda oxygen sensor heater circuit
+- P0305: Cylinder 5 specific misfire (common in V6 Hondas)
+
+Honda-Specific Diagnostic:
+1. Retrieve Honda-specific codes using HDS scanner
+2. Note if multiple codes present (indicates broader issue)
+3. Perform visual inspection related to fault code
+4. Test Honda components indicated by diagnostic code
+5. Check recent driving history and recent vehicle work
+
+Honda-Specific Solutions:
+- Address specific Honda fault code
+- Clear codes after repair and verify fix
+- Don't ignore Check Engine Light - can lead to Honda emissions system damage
+
+Estimated Cost: $50-$2,000+ (varies by cause)
+Estimated Time: 0.5-8 hours
+
+Common Honda Check Engine Light Codes:
+- P0011: Honda VVT-i solenoid ($200-$400)
+- P0300: Spark plugs/fuel injectors ($300-$1,000)
+- P0420: Oxygen sensor/catalytic converter ($350-$1,400)

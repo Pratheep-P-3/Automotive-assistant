@@ -15,19 +15,71 @@ class ReportAgent:
 
     @staticmethod
     def _estimate_confidence(state: WorkflowState) -> float:
-        score = 0.2
+        """
+        Estimate confidence based on input quality and retrieval results.
+        
+        With brand-specific documents now available:
+        - Vehicle make/model DOES improve confidence if brand-specific docs retrieved
+        - Generic docs: lower confidence (applies to any vehicle)
+        - Brand-specific docs: higher confidence (tailored to user's vehicle)
+        """
+        score = 0.2  # Base confidence
+        
+        # Core inputs that affect retrieval quality
         if state.get("code"):
-            score += 0.25
+            score += 0.25  # Direct OBD lookup
         if state.get("symptoms"):
-            score += 0.2
-        if state.get("make") and state.get("model"):
-            score += 0.15
-        if state.get("mileage") is not None:
-            score += 0.1
+            score += 0.25  # Semantic symptom search
         if state.get("code_result"):
-            score += 0.05
+            score += 0.15  # Successful code retrieval
         if state.get("symptom_result", {}).get("context"):
-            score += 0.05
+            score += 0.1   # Symptom context found
+        if state.get("maintenance_result"):
+            score += 0.1   # Maintenance data found
+        
+        # Vehicle-specific document boost
+        # If user provided make AND retrieved docs are from that make, boost confidence
+        user_make = state.get("make")
+        if user_make:
+            user_make_lower = user_make.lower().strip()
+            
+            # Check if any retrieved docs are brand-specific matches
+            is_brand_match = False
+            matched_make = None
+            
+            # Check all result types for brand-specific documents
+            results_to_check = [
+                state.get("code_result", {}),
+                state.get("symptom_result", {}),
+                state.get("maintenance_result", {}),
+            ]
+            
+            for result in results_to_check:
+                if not result or not result.get("sources"):
+                    continue
+                
+                for source in result.get("sources", []):
+                    if not source or not isinstance(source, dict):
+                        continue
+                    
+                    doc_make = source.get("make")
+                    if doc_make:
+                        doc_make_lower = str(doc_make).lower().strip()
+                        if doc_make_lower == user_make_lower:
+                            is_brand_match = True
+                            matched_make = doc_make_lower
+                            break
+                
+                if is_brand_match:
+                    break
+            
+            # Boost confidence if brand-specific docs were used
+            if is_brand_match:
+                score += 0.15  # +15% for brand-specific match
+                logger.info(
+                    f"[ReportAgent] Brand-specific document match ({matched_make}) - confidence boosted by +15%"
+                )
+            
         return max(0.0, min(score, 0.95))
 
     def run(self, state: WorkflowState) -> WorkflowState:

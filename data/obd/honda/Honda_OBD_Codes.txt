@@ -1,0 +1,152 @@
+HONDA VEHICLE OBD CODES - BRAND SPECIFIC DIAGNOSTICS
+
+=== P0011 HONDA ===
+Code: P0011
+Honda Model Years: 2003-2023 (Civic, Accord, CR-V, Pilot, Fit)
+Description: Camshaft Position "A" - Timing Over-Advanced (VVT-i System)
+Severity: Medium
+System Affected: Honda Variable Valve Timing (VVT-i) System
+Honda-Specific Common Causes:
+- Worn Honda VVT-i solenoid (VTEC solenoid malfunction)
+- VVT-i system timing belt wear (Honda models particularly sensitive)
+- Low engine oil (Honda engines require quality oil for VVT operation)
+- Oil sludge buildup (common if oil changes neglected)
+- Faulty Honda crankshaft position sensor
+- VVT-i filter clogged (Honda oil filter affects VVT performance)
+- Honda rocker arm wear (leads to VVT timing issues)
+
+Honda-Specific Diagnostic Procedure:
+1. Retrieve DTCs using Honda HDS (Honda Diagnostic Scanner)
+2. Check Honda VVT-i solenoid connector condition
+3. Test VVT-i solenoid resistance (Honda spec: 6.0-12.0 ohms)
+4. Monitor VVT-i cam angle live data (Honda spec: 25-35 degrees)
+5. Perform Honda VTEC check (separate system from VVT-i)
+6. Inspect oil condition - Honda recommends 0W-20 synthetic
+7. Check Honda timing belt condition if high mileage
+
+Honda-Specific Repair Steps:
+- Change engine oil to Honda Genuine Oil (critical for VVT operation)
+- Replace Honda VVT-i solenoid (Honda part numbers specific to model)
+- For Honda K-series engines: Check rocker arm assembly
+- For Honda Civic/Accord: Timing belt inspection at 105k miles (Honda recommendation)
+- For Honda CR-V: Additional spark plug inspection (related to VVT issues)
+- Check Honda oil cooler circuit if equipped
+
+Honda-Specific Estimated Cost: $200-$1,000
+- Honda VVT-i solenoid (OEM): $100-$250
+- Labor: 0.5-3 hours (Honda procedures well-documented)
+- Oil service: $40-$80
+
+Estimated Time: 1-4 hours
+
+Honda-Specific Safety Notes:
+- Honda engine management may trigger "MIL" (Malfunction Indicator Light)
+- Do not rely on limp mode - performance degradation occurs
+- Honda models may need drive cycle to clear code
+
+Honda Models Most Affected:
+- Civic (2006-2023, especially Si and type-R models)
+- Accord (2008-2023)
+- CR-V (2007-2023)
+- Fit (2007-2023)
+- Pilot (2009-2023)
+
+
+=== P0300 HONDA ===
+Code: P0300
+Honda Model Years: 2000-2023
+Description: Random/Multiple Cylinder Misfire (Honda-Specific)
+Severity: High
+System Affected: Honda Ignition System, VTEC System
+Honda-Specific Common Causes (In Frequency Order):
+1. Honda spark plug electrode gap increase (Honda plugs gap spec: 0.040-0.050")
+2. Honda coil-on-plug ignition coil failure
+3. Carbon buildup in Honda i-VTEC system
+4. Honda fuel injector clogging (injector cleaner service needed)
+5. VTEC solenoid sticking (affects cylinder performance)
+6. Honda oxygen sensor aging
+7. Faulty Honda MAF sensor (air intake sensitivity)
+8. Low transmission fluid affecting engine load
+
+Honda-Specific Diagnostic Procedure:
+1. Use Honda HDS scanner for detailed VTEC status
+2. Check Honda i-VTEC solenoid operation
+3. Retrieve Honda-specific DTC codes from ECU memory
+4. Perform cylinder compression test (all 4 cylinders for Civic/Accord)
+5. Test Honda ignition coil spark output (minimum 8kV)
+6. Inspect Honda fuel injector electrical resistance
+7. Check Honda fuel pressure (spec: 50-60 PSI for most models)
+8. Monitor engine load and fuel trim in live data
+
+Honda-Specific Repair Steps:
+- Replace Honda OEM spark plugs (plug gap critical, use Honda spec)
+- Fuel system cleaning service (Honda fuel injector cleaning)
+- Replace faulty Honda ignition coil(s)
+- VTEC solenoid service (cleaning or replacement)
+- Inspect and clean Honda fuel filter
+- Check transmission fluid level (affects engine operation)
+- For Civic Si/Type-R: VTEC system diagnostic critical
+
+Honda-Specific Estimated Cost: $300-$1,600
+- Spark plug set: $30-$60
+- Fuel system cleaning: $150-$350
+- Ignition coils (if needed): $150-$500
+- Labor: 1-6 hours
+
+Estimated Time: 1-6 hours
+
+Honda-Specific Reference:
+- 2006-2011 Civic: Common ignition coil failures
+- 2008-2012 Accord: Carbon cleaning service recommended every 60k miles
+- 2012-2015 Civic Type-R: VTEC system highly sensitive to maintenance
+- 2010-2016 CR-V: Known ignition coil issues
+- Fit models: Prone to fuel injector deposits
+
+Honda Models Most Affected:
+- Civic (all years, especially performance variants)
+- Accord (high mileage units)
+- CR-V (commonly affected)
+- Type-R variants (VTEC-intensive engines)
+
+
+=== P0420 HONDA ===
+Code: P0420
+Honda Model Years: 2000-2023
+Description: Catalyst System Efficiency Below Threshold (Honda Emissions)
+Severity: Medium
+System Affected: Honda Catalytic Converter, Oxygen Sensors
+Honda-Specific Common Causes:
+- Honda oxygen sensor degradation (average lifespan: 80-100k miles)
+- Catalytic converter efficiency loss from carbon
+- Honda MAF sensor contamination (affects fuel trim)
+- Fuel system carbon accumulation
+- Honda three-way catalyst failure
+- Oxygen sensor heater element failure
+
+Honda-Specific Diagnostic:
+1. Test Honda oxygen sensor heater circuit resistance
+2. Monitor oxygen sensor voltage pattern (Honda spec: 0.4-0.6V nominal)
+3. Check fuel trim adaption (Honda short/long-term fuel trim)
+4. Inspect catalytic converter for physical damage
+5. Verify Honda three-way catalyst function
+6. Check for Honda TSB updates for model year
+
+Honda-Specific Repair:
+- Replace Honda oxygen sensor (OEM sensor recommended)
+- Fuel system cleaning service (Honda-specific protocol)
+- Catalytic converter inspection/replacement
+- MAF sensor cleaning or replacement
+- Check EGR system function (Honda models prone to EGR issues)
+
+Honda-Specific Estimated Cost: $350-$1,400
+- Honda oxygen sensor (OEM): $100-$200
+- Catalytic converter (OEM Honda): $600-$1,200
+- Labor: 1-4 hours
+
+Estimated Time: 1-4 hours
+
+Honda Models Most Affected:
+- 2001-2005 Civic (oxygen sensor issues common)
+- 2003-2007 Accord
+- 2002-2006 CR-V
+- 2006-2012 Civic (high mileage units)

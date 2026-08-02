@@ -66,12 +66,18 @@ automotive-assistant/
   frontend/
     streamlit_app.py            # Streamlit UI (port 8501)
   data/
-    manuals/                    # PDF manuals (for RAG ingestion)
-    troubleshooting/            # Troubleshooting PDFs (for RAG)
-    maintenance/
-      maintenance.csv           # Make/Model/Mileage → Recommendations
     obd/
-      obd_codes.csv             # DTC Code → Description/Severity/Causes
+      generic/                  # Generic OBD codes (all vehicles)
+      toyota/                   # Toyota-specific OBD codes
+      honda/                    # Honda-specific OBD codes
+    maintenance/
+      generic/                  # Generic maintenance schedules
+      toyota/                   # Toyota-specific maintenance
+      honda/                    # Honda-specific maintenance
+    troubleshooting/
+      generic/                  # Generic troubleshooting guides
+      toyota/                   # Toyota-specific troubleshooting
+      honda/                    # Honda-specific troubleshooting
   tests/
     test_api.py                 # FastAPI endpoint tests
     test_retrieval.py           # RAG retrieval tests
@@ -91,9 +97,13 @@ automotive-assistant/
    - `cp .env.example .env` (Linux/macOS)
    - `copy .env.example .env` (Windows CMD)
 3. Fill Azure OpenAI credentials in `.env`.
-4. Add PDF manuals and troubleshooting documents under:
-   - `data/manuals/`
-   - `data/troubleshooting/`
+4. Add TXT files to knowledge base:
+   - `data/obd/generic/` - Generic OBD diagnostic codes
+   - `data/obd/toyota/`, `data/obd/honda/` - Brand-specific OBD codes
+   - `data/maintenance/generic/` - Generic maintenance schedules
+   - `data/maintenance/toyota/`, `data/maintenance/honda/` - Brand-specific maintenance
+   - `data/troubleshooting/generic/` - Generic troubleshooting guides
+   - `data/troubleshooting/toyota/`, `data/troubleshooting/honda/` - Brand-specific troubleshooting
 
 ## Installation
 
@@ -117,12 +127,9 @@ pip install -r requirements.txt
 - `BACKEND_URL`: Backend URL for frontend (default: `http://localhost:8000`)
 - `CHROMA_PERSIST_DIR`: ChromaDB storage directory (default: `./data/chroma`)
 - `CHROMA_COLLECTION_NAME`: Collection name (default: `automotive_docs`)
-- `EMBEDDING_MODEL`: HuggingFace model for embeddings (default: `sentence-transformers/all-MiniLM-L6-v2`)
-- `OBD_DATA_PATH`: Path to OBD codes CSV (default: `./data/obd/obd_codes.csv`)
-- `MAINTENANCE_DATA_PATH`: Path to maintenance CSV (default: `./data/maintenance/maintenance.csv`)
 - `LOG_LEVEL`: Logging level (default: `INFO`)
 
-**Note**: Azure Foundry requires OpenAI-compatible format. The backend auto-detects `/openai/v1` in the endpoint and uses `ChatOpenAI` client instead of `AzureChatOpenAI`.
+**Note**: All embeddings use Azure OpenAI only. HuggingFace fallback has been completely removed for production deployment.
 
 ## Running Locally
 
@@ -263,12 +270,12 @@ Content-Type: application/json
   "confidence_score": 0.87,
   "sources": [
     {
-      "source": "data/obd/obd_codes.csv",
+      "source": "data/obd/toyota/Toyota_OBD_Codes.txt",
       "type": "obd_dataset",
       "code": "P0171"
     },
     {
-      "source": "data/maintenance/maintenance.csv",
+      "source": "data/maintenance/toyota/Toyota_Maintenance_Schedules.txt",
       "type": "maintenance_dataset",
       "make": "Toyota",
       "model": "Corolla"
@@ -322,7 +329,7 @@ pytest --cov=backend tests/
 ### Before Deploying
 
 - [ ] Configure secret management for Azure Foundry credentials
-- [ ] Add validated OEM manuals to `data/manuals/` for improved RAG quality
+- [ ] Add additional brand-specific documents to `data/*/toyota/`, `data/*/honda/`, etc.
 - [ ] Ingest troubleshooting PDFs to `data/troubleshooting/`
 - [ ] Test with production vehicle data (various make/model/year combinations)
 - [ ] Configure monitoring for low-confidence responses
@@ -338,9 +345,9 @@ pytest --cov=backend tests/
 
 ## Known Limitations
 
-- RAG quality depends on PDF ingestion quality (manuals/troubleshooting docs)
-- Maintenance data limited to provided CSV (easily expandable)
-- OBD code coverage depends on CSV dataset
+- RAG quality depends on TXT ingestion quality and metadata accuracy
+- System automatically extracts make/model from directory structure
+- Brand-specific documents boost confidence when user vehicle info matches
 - Corporate networks may block ChromaDB HuggingFace model downloads (fallback mode handles this)
 
 ## Troubleshooting

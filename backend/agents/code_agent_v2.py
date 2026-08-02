@@ -51,14 +51,14 @@ class CodeAgent:
         Pipeline:
         1. Extract code from state
         2. Classify query category
-        3. Retrieve documents with metadata filter (top 10)
+        3. Retrieve documents with metadata filter (top 10) + vehicle prioritization
         4. Re-rank to top 3
         5. Extract structured information
         6. Calculate confidence
         7. Attach sources
 
         Args:
-            state: WorkflowState containing code
+            state: WorkflowState containing code and optional vehicle info
 
         Returns:
             Updated state with code_result
@@ -84,12 +84,20 @@ class CodeAgent:
         metadata_filter = self.classifier.get_metadata_filter(category)
         logger.debug(f"[CodeAgent] Metadata filter: {metadata_filter}")
 
-        # ===== STEP 3: Retrieve Top K =====
+        # ===== STEP 3: Retrieve Top K with Vehicle Prioritization =====
+        vehicle_make = (state.get("make") or "").strip().lower() if state.get("make") else None
+        vehicle_model = (state.get("model") or "").strip().lower() if state.get("model") else None
+        
         logger.info(f"[CodeAgent] Retrieving documents for {code}...")
+        if vehicle_make:
+            logger.info(f"[CodeAgent] Prioritizing {vehicle_make.capitalize()} documents")
+        
         docs = self.rag_retriever.retrieve(
             query=code,
             k=None,  # Use default retrieval_k from environment (default: 5)
             metadata_filter=metadata_filter,
+            make=vehicle_make,
+            model=vehicle_model,
         )
 
         if not docs:
@@ -141,6 +149,8 @@ class CodeAgent:
                 "category": doc.metadata.get("category", "unknown"),
                 "chunk_type": doc.metadata.get("chunk_type", "unknown"),
                 "code": code,
+                "make": doc.metadata.get("make"),  # Include brand metadata for confidence boost
+                "model": doc.metadata.get("model"),
                 "vector_score": doc.metadata.get("vector_score", 0),
                 "vector_distance": doc.metadata.get("vector_distance", 0),
                 "rerank_score": rerank_scores[i].get("score", 0) if i < len(rerank_scores) else 0,

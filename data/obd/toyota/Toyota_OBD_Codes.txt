@@ -1,0 +1,145 @@
+TOYOTA VEHICLE OBD CODES - BRAND SPECIFIC DIAGNOSTICS
+
+=== P0011 TOYOTA ===
+Code: P0011
+Toyota Model Years: 2005-2023 (Camry, Corolla, RAV4, Highlander, 4Runner)
+Description: Camshaft Timing Over-Advanced - Bank 1 (Very Common in Toyota)
+Severity: Medium
+System Affected: Toyota Variable Valve Timing (VVT) System
+Toyota-Specific Common Causes:
+- Worn VVT solenoid (common failure in Toyota models)
+- VVT filter restriction (Toyota recommends regular cleaning)
+- Timing chain stretch (Toyota models prone after 100k+ miles)
+- Low or dirty engine oil (Toyota engines sensitive to oil quality)
+- Faulty Toyota VVT solenoid connector
+- Timing mark misalignment (requires Toyota diagnostic scanner)
+
+Toyota-Specific Diagnostic Procedure:
+1. Scan with Toyota diagnostic scanner (not all generic scanners read Toyota VVT data)
+2. Check Toyota VVT system status (Access Toyota Technical Service Bulletins)
+3. Monitor VVT angle in live data (Toyota spec: 0-30 degrees variation)
+4. Check oil condition - Toyota requires Genuine Toyota Oil (0W-20 or 5W-30 depending on model)
+5. Inspect VVT solenoid connector for corrosion (common in Toyota)
+6. Test VVT solenoid resistance: Toyota spec 6-9 ohms
+7. Check timing chain routing (Toyota-specific service requirement)
+
+Toyota-Specific Repair Steps:
+- Change engine oil to Toyota Genuine Oil specification
+- Clean or replace VVT solenoid (Toyota part numbers vary by model year)
+- Check timing chain tensioner (Toyota technical bulletin recommend inspection at 100k miles)
+- For Corolla/Matrix: VVT solenoid replacement procedure documented in Toyota FSM
+- For RAV4/Highlander: Additional fuel pump check recommended (common related issue)
+- For 4Runner: Timing chain inspection critical (known durability issue in older models)
+
+Toyota-Specific Estimated Cost: $250-$1,200
+- OEM Toyota VVT solenoid: $120-$300
+- Labor: 1-4 hours depending on model
+- Oil change (if needed): $50-$80
+
+Estimated Time: 1-5 hours (Toyota procedures well-documented, faster than average)
+
+Toyota-Specific Safety Notes:
+- Do not operate vehicle with CHECK ENGINE light for extended periods
+- Toyota engine management may trigger limp mode
+- Potential catalytic converter damage if condition persists
+
+Toyota Models Most Affected: 
+- Corolla (2005-2023)
+- Matrix (2005-2013)
+- Camry (2006-2023)
+- RAV4 (2006-2023)
+- Highlander (2008-2023)
+
+
+=== P0300 TOYOTA ===
+Code: P0300
+Toyota Model Years: 2000-2023
+Description: Random/Multiple Cylinder Misfire (Toyota-Specific Analysis)
+Severity: High
+System Affected: Toyota Ignition, Fuel System
+Toyota-Specific Common Causes (In Frequency Order):
+1. Carbon buildup on intake valves (very common in Toyota direct injection engines)
+2. Toyota OEM spark plug failure (especially in Corolla, Prius hybrid models)
+3. Ignition coil failure (Toyota uses individual coil-on-plug design)
+4. Fuel injector clogging (Toyota fuel is prone to carbon deposit accumulation)
+5. Timing chain noise (Toyota models 100k+ miles)
+6. Faulty Toyota MAF sensor
+7. Toyota EGR system issues (known problem in 2009-2014 models)
+
+Toyota-Specific Diagnostic Procedure:
+1. Check Toyota technical service bulletins (TSB) for model year - many have known issues
+2. Pull live data with Toyota scanner (Techstream or equivalent)
+3. Note cylinder misfire pattern (single cylinder vs. random distribution)
+4. Check Toyota spark plug condition (Gap spec: 1.1mm for most models)
+5. Test Toyota ignition coil output voltage (minimum 5V)
+6. Inspect Toyota fuel injector spray pattern
+7. Carbon deposit inspection (fuel system scope camera recommended for direct injection)
+8. For hybrid models: Check hybrid battery/inverter status
+
+Toyota-Specific Repair Steps:
+- Replace Toyota OEM spark plugs (Part numbers specific to model year)
+- Fuel system cleaning service (recommended every 60k miles for Toyota)
+- Intake valve cleaning (direct injection cleanup service)
+- Replace faulty Toyota ignition coils (usually $50-150 per coil)
+- For high-mileage models: Consider timing chain inspection
+- For Prius/Hybrid: Check hybrid battery and power electronics
+
+Toyota-Specific Estimated Cost: $300-$1,800
+- Spark plugs (set of 4): $40-$80
+- Fuel system cleaning: $200-$400
+- Ignition coils (if needed): $200-$600
+- Intake valve cleaning: $200-$500
+- Labor: 1-6 hours
+
+Estimated Time: 1-7 hours
+
+Toyota-Specific Reference Data:
+- 2009-2014 Corolla: Known TSB for intake valve deposits
+- 2010-2015 Prius: Special fuel injector cleaning procedure
+- 2007-2012 Camry: Timing chain noise common above 100k miles
+- RAV4 models: Usually less prone than Corolla/Camry variants
+
+Toyota Models Most Affected:
+- Corolla (all years, especially hybrid models)
+- Prius (hybrid-specific issues)
+- Camry (high mileage vehicles)
+- Yaris (small engine carbon sensitivity)
+
+
+=== P0420 TOYOTA ===
+Code: P0420
+Toyota Model Years: 2000-2023
+Description: Catalyst System Efficiency Below Threshold - Toyota Specific
+Severity: Medium
+System Affected: Toyota Emissions Control, Catalytic Converter
+Toyota-Specific Common Causes:
+- Toyota oxygen sensor aging (typical lifespan: 80-100k miles)
+- Catalytic converter degradation from fuel system contamination
+- Toyota EGR issues (known problem in 2008-2014 models)
+- Fuel trim issues related to Toyota MAF sensor
+- Bank 2 oxygen sensor common failure point
+- Catalytic converter thermal damage (from prolonged misfires)
+
+Toyota-Specific Diagnostic:
+1. Check oxygen sensor heater circuit voltage (Toyota spec: 12-14V during operation)
+2. Monitor O2 sensor response time with Toyota scanner
+3. Check fuel trim adaption values
+4. Inspect catalytic converter temperature sensor
+5. Verify Toyota OBD monitor status (Readiness monitors)
+6. Check for other Toyota TSB issues related to emissions
+
+Toyota-Specific Repair:
+- Replace Toyota OEM oxygen sensor (Part numbers specific to position)
+- For Toyota models: Consider fuel system decarbonization service
+- Inspect catalytic converter (replacement if converter efficiency <80%)
+- Check EGR valve operation (Toyota models prone to valve sticking)
+
+Toyota-Specific Estimated Cost: $400-$1,500
+- Oxygen sensor (OEM Toyota): $150-$300
+- Catalytic converter (OEM Toyota): $800-$1,500
+- Labor: 1-4 hours
+
+Toyota Models Most Affected:
+- Camry (2002-2010 especially)
+- Corolla (aging units)
+- RAV4 (high mileage)

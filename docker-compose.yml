@@ -11,8 +11,6 @@ services:
       - .env
     environment:
       - CHROMA_PERSIST_DIR=/app/data/chroma
-      - OBD_DATA_PATH=/app/data/obd/obd_codes.csv
-      - MAINTENANCE_DATA_PATH=/app/data/maintenance/maintenance.csv
     volumes:
       - ./data:/app/data
 

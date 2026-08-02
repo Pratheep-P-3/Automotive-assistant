@@ -590,17 +590,33 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Enhanced sidebar with better organization
+# Sidebar - Vehicle Profile (OPTIONAL, for brand-specific prioritization)
 with st.sidebar:
     st.header("Vehicle Profile")
-    
-    # Stack inputs vertically for better use of space and clarity
-    make = st.text_input("Make", placeholder="Toyota", help="Vehicle manufacturer")
-    model = st.text_input("Model", placeholder="Corolla", help="Vehicle model name")
-    year_input = st.text_input("Year", placeholder="2020", help="Vehicle year of manufacture")
-    mileage_input = st.text_input("Mileage", placeholder="60000", help="Current vehicle mileage")
+    st.caption("Optional - Prioritizes brand-specific diagnostic information")
+    make = st.text_input(
+        "Make",
+        placeholder="e.g., Toyota",
+        help="Vehicle manufacturer - helps prioritize brand-specific documents"
+    )
+    model = st.text_input(
+        "Model",
+        placeholder="e.g., Corolla",
+        help="Vehicle model (optional)"
+    )
+    year_input = st.text_input(
+        "Year",
+        placeholder="e.g., 2020",
+        help="Vehicle year (optional)"
+    )
+    mileage_input = st.text_input(
+        "Mileage",
+        placeholder="e.g., 60000",
+        help="Current vehicle mileage (optional)"
+    )
 
 st.subheader("Diagnostic Inputs")
+st.caption("Enter at least one: OBD Code, Symptoms, or Maintenance Query")
 
 # Main diagnostic input area with better organization
 col1, col2 = st.columns([1, 1], gap="medium")
@@ -613,7 +629,7 @@ with col1:
 with col2:
     maintenance_query = st.text_input(
         "Maintenance Query", 
-        placeholder="What should I service?",
+        placeholder="e.g., What should I service?",
         help="Ask about maintenance based on mileage or time (optional)"
     )
 
@@ -681,6 +697,7 @@ def _render_list(items: List[str], empty_text: str) -> None:
 
 
 def diagnose() -> Dict[str, Any]:
+    """Send diagnostic query to backend API with vehicle prioritization."""
     # Convert year and mileage from text input to int if provided
     try:
         year_val = int(year_input) if year_input.strip() else None

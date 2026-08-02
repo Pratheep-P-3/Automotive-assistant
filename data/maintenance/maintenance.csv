@@ -1,8 +1,0 @@
-make,model,mileage,maintenance_recommendation
-Toyota,Corolla,30000,"Replace engine oil and filter, rotate tires, inspect brake system"
-Toyota,Corolla,60000,"Replace spark plugs (if applicable), inspect belts, flush brake fluid"
-Toyota,Corolla,90000,"Replace transmission fluid, inspect suspension components, coolant service"
-Honda,Civic,30000,"Replace engine oil and filter, rotate tires, inspect cabin and air filters"
-Honda,Civic,60000,"Brake fluid service, inspect ignition components, battery load test"
-Ford,F-150,50000,"Transmission service, differential inspection, cooling system inspection"
-Ford,F-150,100000,"Spark plug replacement, coolant flush, serpentine belt replacement"

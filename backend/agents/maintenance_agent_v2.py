@@ -46,7 +46,7 @@ class MaintenanceAgent:
         Pipeline:
         1. Extract maintenance query from state
         2. Classify query category (should be maintenance)
-        3. Retrieve maintenance documents (top 10)
+        3. Retrieve maintenance documents (top 10) + vehicle prioritization
         4. Re-rank to top 3
         5. Extract maintenance procedures
         6. Filter by vehicle mileage if provided
@@ -54,7 +54,7 @@ class MaintenanceAgent:
         8. Attach sources
 
         Args:
-            state: WorkflowState containing maintenance_query and optionally mileage
+            state: WorkflowState containing maintenance_query and optional vehicle info
 
         Returns:
             Updated state with maintenance_result
@@ -76,12 +76,20 @@ class MaintenanceAgent:
         metadata_filter = self.classifier.get_metadata_filter(QueryCategory.MAINTENANCE)
         logger.debug(f"[MaintenanceAgent] Metadata filter: {metadata_filter}")
 
-        # ===== STEP 3: Retrieve Top 10 =====
+        # ===== STEP 3: Retrieve Top 10 with Vehicle Prioritization =====
+        vehicle_make = (state.get("make") or "").strip().lower() if state.get("make") else None
+        vehicle_model = (state.get("model") or "").strip().lower() if state.get("model") else None
+        
         logger.info("[MaintenanceAgent] Retrieving maintenance documents...")
+        if vehicle_make:
+            logger.info(f"[MaintenanceAgent] Prioritizing {vehicle_make.capitalize()} documents")
+        
         docs = self.rag_retriever.retrieve(
             query=query,
             k=10,
             metadata_filter=metadata_filter,
+            make=vehicle_make,
+            model=vehicle_model,
         )
 
         if not docs:
@@ -122,13 +130,17 @@ class MaintenanceAgent:
         result["source"] = "rag_txt"
         result["sources"] = [
             {
-                "source": doc.metadata.get("source", "unknown"),
-                "type": "maintenance",
-                "query": query[:50],
+                "source_filename": doc.metadata.get("source", "unknown"),
+                "category": doc.metadata.get("category", "unknown"),
                 "chunk_type": doc.metadata.get("chunk_type", "unknown"),
+                "query": query[:50],
+                "make": doc.metadata.get("make"),  # Include brand metadata for confidence boost
+                "model": doc.metadata.get("model"),
                 "procedure": doc.metadata.get("procedure", "unknown"),
+                "vector_score": doc.metadata.get("vector_score", 0),
+                "rerank_score": rerank_scores[i].get("score", 0) if i < len(rerank_scores) else 0,
             }
-            for doc in top_docs
+            for i, doc in enumerate(top_docs)
         ]
 
         logger.info(

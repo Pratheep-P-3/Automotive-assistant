@@ -1,0 +1,144 @@
+GENERIC AUTOMOTIVE MAINTENANCE SCHEDULE
+
+=== 15,000 Miles Service ===
+Service Interval: 15,000 Miles (or 6 months, whichever comes first)
+Typical Duration: 45 minutes to 1 hour
+Estimated Cost: $50-$150
+
+Recommended Maintenance Items:
+- Rotate all tires (left front → left rear, etc.)
+- Visual inspection of suspension components
+- Check all fluid levels (oil, coolant, transmission, brake, power steering)
+- Inspect brake pads and rotors for wear
+- Visual engine inspection for leaks
+- Check battery voltage and terminal condition
+- Inspect wiper blades for wear
+- Check tire pressure and alignment
+
+Optional Items:
+- Windshield washer fluid top-up
+- Cabin air filter inspection
+
+
+=== 30,000 Miles Service ===
+Service Interval: 30,000 Miles (or 12 months)
+Typical Duration: 1-1.5 hours
+Estimated Cost: $150-$400
+
+Required Maintenance Items:
+- Replace engine air filter
+- Replace cabin air filter
+- Rotate tires
+- Inspect brake pads and rotors
+- Check all fluid levels
+- Visual suspension and steering inspection
+- Check battery and electrical system
+
+Optional Items:
+- Engine transmission fluid level check
+- Coolant condition assessment
+- Drive belt inspection
+
+
+=== 60,000 Miles Service ===
+Service Interval: 60,000 Miles
+Typical Duration: 2-4 hours
+Estimated Cost: $300-$1,000
+
+Important Maintenance Items:
+- Engine oil and filter change (this should be done at every service)
+- Transmission fluid level check
+- Replace engine air filter (if not done at 30k)
+- Replace cabin air filter (if not done at 30k)
+- Tire rotation and balance
+- Brake inspection (pads, rotors, fluid condition)
+- Coolant hose inspection
+- Battery inspection and testing
+- Suspension component inspection
+- Steering system inspection
+
+Recommended Items (depending on manufacturer):
+- Brake fluid replacement (recommended every 2 years)
+- Engine coolant flush (typically 50,000-60,000 miles)
+- Transmission fluid flush (automatic transmissions)
+- Differential fluid service (rear-wheel drive vehicles)
+- Drive belt replacement or inspection
+
+
+=== 100,000 Miles Service ===
+Service Interval: 100,000 Miles
+Typical Duration: 4-8 hours
+Estimated Cost: $1,000-$3,000+
+
+Major Maintenance Items:
+- Engine oil and filter change
+- Transmission fluid and filter replacement
+- Engine coolant flush and refill
+- Brake fluid replacement
+- Spark plug replacement (varies by manufacturer)
+- Timing belt inspection or replacement (critical item - may be $500-$2,000)
+- Suspension component inspection and replacement if worn
+- Catalytic converter inspection
+- Oxygen sensor inspection
+- Brake pad replacement (if worn)
+- Wheel alignment check
+
+Critical Items:
+- Timing belt - If not replaced, failure can cause engine damage
+- Transmission fluid - Critical for automatic transmissions
+- Coolant - Old coolant loses effectiveness
+- Brake fluid - Absorbs moisture, can cause brake failure if not replaced
+
+
+=== Oil Change Service ===
+Service Interval: Every 3,000-10,000 miles (depends on vehicle)
+Typical Duration: 30-45 minutes
+Estimated Cost: $40-$150
+
+Basic Oil Change Includes:
+- Drain old engine oil
+- Replace oil filter
+- Fill with new oil to manufacturer specification
+- Check oil level
+- Inspect for leaks
+
+Important: Use correct oil grade for your vehicle (0W-20, 5W-30, etc.)
+
+
+=== Tire Rotation Service ===
+Service Interval: Every 5,000-7,000 miles
+Typical Duration: 30-45 minutes
+Estimated Cost: $20-$60
+
+Standard Rotation Pattern (Most vehicles):
+- Left Front → Right Rear
+- Right Front → Left Rear
+- Left Rear → Right Front
+- Right Rear → Left Front
+
+Benefits:
+- Even tire wear
+- Extended tire life
+- Improved traction and safety
+- Better fuel economy
+
+
+=== Brake Inspection Service ===
+Service Interval: Every 15,000-30,000 miles (or annually)
+Typical Duration: 30-60 minutes
+Estimated Cost: $50-$150
+
+Inspection Includes:
+- Check brake pad thickness
+- Inspect rotor condition
+- Test brake fluid condition
+- Check brake line integrity
+- Listen for unusual noises
+- Feel for spongy brake pedal
+
+Red Flags Requiring Immediate Service:
+- Brake warning light illuminated
+- Pulsating brake pedal
+- Metal-on-metal grinding noise
+- Soft or spongy brake pedal
+- Brake fluid leaks

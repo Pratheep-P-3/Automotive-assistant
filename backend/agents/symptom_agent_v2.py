@@ -46,7 +46,7 @@ class SymptomAgent:
         Pipeline:
         1. Extract symptoms from state
         2. Classify query category (should be symptom)
-        3. Retrieve troubleshooting documents (top 10)
+        3. Retrieve troubleshooting documents (top 10) + vehicle prioritization
         4. Re-rank to top 3
         5. Extract troubleshooting workflow
         6. Link to OBD codes if present
@@ -54,7 +54,7 @@ class SymptomAgent:
         8. Attach sources
 
         Args:
-            state: WorkflowState containing symptoms
+            state: WorkflowState containing symptoms and optional vehicle info
 
         Returns:
             Updated state with symptom_result
@@ -81,12 +81,20 @@ class SymptomAgent:
 
         logger.debug(f"[SymptomAgent] Metadata filter: {metadata_filter}")
 
-        # ===== STEP 3: Retrieve Top 10 =====
+        # ===== STEP 3: Retrieve Top 10 with Vehicle Prioritization =====
+        vehicle_make = (state.get("make") or "").strip().lower() if state.get("make") else None
+        vehicle_model = (state.get("model") or "").strip().lower() if state.get("model") else None
+        
         logger.info("[SymptomAgent] Retrieving troubleshooting documents...")
+        if vehicle_make:
+            logger.info(f"[SymptomAgent] Prioritizing {vehicle_make.capitalize()} documents")
+        
         docs = self.rag_retriever.retrieve(
             query=symptoms,
             k=10,
             metadata_filter=metadata_filter,
+            make=vehicle_make,
+            model=vehicle_model,
         )
 
         if not docs:
@@ -128,12 +136,16 @@ class SymptomAgent:
         result["source"] = "rag_txt"
         result["sources"] = [
             {
-                "source": doc.metadata.get("source", "unknown"),
-                "type": "troubleshooting",
-                "symptoms": symptoms[:50],
+                "source_filename": doc.metadata.get("source", "unknown"),
+                "category": doc.metadata.get("category", "unknown"),
                 "chunk_type": doc.metadata.get("chunk_type", "unknown"),
+                "symptom": symptoms[:50],
+                "make": doc.metadata.get("make"),  # Include brand metadata for confidence boost
+                "model": doc.metadata.get("model"),
+                "vector_score": doc.metadata.get("vector_score", 0),
+                "rerank_score": rerank_scores[i].get("score", 0) if i < len(rerank_scores) else 0,
             }
-            for doc in top_docs
+            for i, doc in enumerate(top_docs)
         ]
 
         logger.info(

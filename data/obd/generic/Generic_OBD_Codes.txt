@@ -1,0 +1,206 @@
+GENERIC AUTOMOTIVE OBD CODES REFERENCE
+
+=== P0011 ===
+Code: P0011
+Description: Camshaft Position "A" - Timing Over-Advanced or System Performance Bank 1
+Severity: Medium
+System Affected: Engine Management, Valve Timing
+Common Causes:
+- Worn timing chain or belt
+- Faulty camshaft position sensor
+- Incorrect valve timing
+- Variable Valve Timing (VVT) solenoid malfunction
+- Low engine oil level or quality
+- Timing mark misalignment
+
+Diagnostic Steps:
+1. Scan vehicle for additional codes
+2. Check engine oil level and condition
+3. Verify battery voltage (minimum 12V)
+4. Perform live data monitoring of camshaft position
+5. Check timing chain/belt wear
+6. Test VVT solenoid operation
+7. Inspect camshaft position sensor connector and wiring
+
+Repair Recommendation:
+- Replace engine oil and filter if overdue
+- Inspect timing components for wear
+- Replace faulty sensors or solenoids
+- In extreme cases, engine overhaul may be necessary
+
+Estimated Cost: $150-$1,500 depending on root cause
+Estimated Time: 1-6 hours
+Safety Warnings: Avoid extended driving, engine damage may worsen
+
+
+=== P0101 ===
+Code: P0101
+Description: Mass Airflow Sensor (MAF) - Range/Performance Problem
+Severity: Medium
+System Affected: Engine Fuel System, Air Intake
+Common Causes:
+- Dirty or contaminated MAF sensor
+- Faulty MAF sensor
+- Air intake leak
+- Worn air filter
+- Damaged MAF sensor wiring
+- Engine vacuum leak
+
+Diagnostic Steps:
+1. Visually inspect MAF sensor for contamination
+2. Check for air intake leaks
+3. Inspect air filter condition
+4. Monitor MAF sensor readings in live data
+5. Check engine vacuum with gauge
+6. Perform fuel trim analysis
+7. Test MAF sensor resistance if applicable
+
+Repair Recommendation:
+- Clean MAF sensor with specialized cleaner
+- Replace air filter if dirty
+- Seal any air intake leaks
+- Replace faulty MAF sensor if cleaning doesn't resolve
+- Check fuel injector operation
+
+Estimated Cost: $100-$600
+Estimated Time: 0.5-3 hours
+Safety Warnings: None specific, but extended driving may reduce fuel economy
+
+
+=== P0300 ===
+Code: P0300
+Description: Random/Multiple Cylinder Misfire
+Severity: High
+System Affected: Engine Ignition, Fuel Delivery
+Common Causes:
+- Spark plug fouling or failure
+- Ignition coil failure
+- Fuel injector malfunction
+- Low fuel pressure
+- Vacuum leak
+- Worn piston rings or valve seats
+- Carbon buildup on valves
+
+Diagnostic Steps:
+1. Perform comprehensive engine scan
+2. Check and replace spark plugs if needed
+3. Test ignition coil resistance and output
+4. Measure fuel pressure (should be within manufacturer specs)
+5. Inspect fuel injectors for blockage
+6. Check for engine vacuum leaks
+7. Perform cylinder compression test
+8. Analyze fuel trim values
+
+Repair Recommendation:
+- Replace spark plugs at recommended interval
+- Test and replace faulty ignition coils
+- Clean fuel injectors or replace if necessary
+- Verify fuel pump and fuel pressure regulator
+- Address vacuum leaks
+- Consider fuel system cleaning
+
+Estimated Cost: $200-$2,000
+Estimated Time: 1-8 hours
+Safety Warnings: HIGH - Do not continue driving if misfires are severe, engine damage possible
+
+
+=== P0420 ===
+Code: P0420
+Description: Catalyst System Efficiency Below Threshold - Bank 1
+Severity: Medium
+System Affected: Emissions Control, Catalytic Converter
+Common Causes:
+- Faulty oxygen sensor
+- Failed catalytic converter
+- Engine running lean or rich
+- Exhaust leak before catalytic converter
+- MAF sensor contamination
+- Damaged oxygen sensor wiring
+
+Diagnostic Steps:
+1. Check oxygen sensor voltage patterns
+2. Inspect catalytic converter for physical damage
+3. Look for exhaust leaks
+4. Check fuel trim values
+5. Monitor O2 sensor response time
+6. Perform catalytic converter efficiency test
+7. Check for other active DTC codes
+
+Repair Recommendation:
+- Replace oxygen sensor if faulty
+- Repair exhaust leaks
+- Clean fuel system if running rich/lean
+- Replace catalytic converter if failed
+- Verify fuel pressure and fuel injector operation
+
+Estimated Cost: $300-$1,500
+Estimated Time: 1-4 hours
+Safety Warnings: EMISSIONS - Vehicle may fail emission tests
+
+
+=== P0505 ===
+Code: P0505
+Description: Idle Air Control System Malfunction
+Severity: Low to Medium
+System Affected: Engine Idle Control, Air Management
+Common Causes:
+- Vacuum leak
+- Dirty throttle body or IAC valve
+- Faulty Mass Airflow sensor
+- Ignition timing issues
+- EGR system problems
+- Faulty idle control solenoid
+
+Diagnostic Steps:
+1. Check for vacuum leaks using smoke test or audio detection
+2. Inspect throttle body for carbon buildup
+3. Test IAC valve operation
+4. Monitor engine idle speed in live data
+5. Check fuel trim values
+6. Inspect EGR system function
+7. Test ignition timing advance
+
+Repair Recommendation:
+- Clean throttle body and IAC valve
+- Repair any vacuum leaks
+- Replace faulty sensors or solenoids
+- Clean fuel injectors
+- Address EGR system issues if present
+
+Estimated Cost: $100-$800
+Estimated Time: 0.5-3 hours
+Safety Warnings: Vehicle may stall unexpectedly, use caution
+
+
+=== P0700 ===
+Code: P0700
+Description: Transmission Control System Malfunction
+Severity: Medium to High
+System Affected: Transmission, Engine Control Module
+Common Causes:
+- Transmission fluid low or contaminated
+- Faulty transmission solenoid
+- Wiring problems in transmission control circuit
+- Engine control module malfunction
+- Torque converter issues
+- Sensor malfunction (temperature, pressure, speed)
+
+Diagnostic Steps:
+1. Check transmission fluid level and condition
+2. Scan for transmission-specific DTC codes
+3. Test transmission solenoid resistance
+4. Inspect wiring and connectors in transmission circuit
+5. Test transmission input/output speed sensors
+6. Monitor transmission temperature
+7. Perform transmission stall test if safe
+
+Repair Recommendation:
+- Change transmission fluid and filter if due
+- Replace faulty solenoids or sensors
+- Repair wiring and connector issues
+- Address engine control issues if detected
+- In severe cases, transmission may require rebuild/replacement
+
+Estimated Cost: $200-$3,000+
+Estimated Time: 1-8 hours
+Safety Warnings: HIGH - Transmission failure risk, avoid aggressive driving

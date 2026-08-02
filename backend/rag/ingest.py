@@ -27,12 +27,17 @@ def _load_txt_documents(data_dirs: dict[str, Path]) -> list[Document]:
     """
     Load TXT documents with metadata from categorized directories.
 
+    Supports both flat structure (data/obd/*.txt) and brand-specific structure:
+    - data/obd/generic/*.txt → make=None, model=None
+    - data/obd/toyota/*.txt → make=toyota, model=None
+    - data/obd/honda/*.txt → make=honda, model=None
+
     Args:
         data_dirs: Dict of {category: directory_path}
                   e.g., {"obd": Path("data/obd"), "maintenance": Path("data/maintenance")}
 
     Returns:
-        List of Document objects with metadata
+        List of Document objects with metadata including make/model
     """
     documents: list[Document] = []
     total_files = 0
@@ -42,25 +47,62 @@ def _load_txt_documents(data_dirs: dict[str, Path]) -> list[Document]:
             logger.warning(f"[INGESTION] Directory not found: {directory}")
             continue
 
-        # Load TXT files
-        txt_files = sorted(directory.glob("*.txt"))
-        if txt_files:
-            for txt_path in txt_files:
+        # Check for brand-specific subdirectories first
+        subdirs = list(directory.iterdir())
+        
+        # Try to load from subdirectories (brand-specific structure)
+        brand_dirs = [d for d in subdirs if d.is_dir() and d.name not in ["__pycache__", ".git"]]
+        txt_in_root = list(directory.glob("*.txt"))
+        
+        if brand_dirs:
+            # Brand-specific structure exists
+            for brand_dir in sorted(brand_dirs):
+                make = brand_dir.name.lower() if brand_dir.name != "generic" else None
+                txt_files = sorted(brand_dir.glob("*.txt"))
+                
+                for txt_path in txt_files:
+                    try:
+                        loader = TextLoader(str(txt_path), encoding="utf-8")
+                        docs = loader.load()
+
+                        # Add metadata including make/model
+                        for doc in docs:
+                            doc.metadata = {
+                                "source": txt_path.name,
+                                "category": category,
+                                "file_path": str(txt_path),
+                                "make": make,
+                                "model": None,  # Can be extended for model-specific docs later
+                            }
+                            documents.append(doc)
+
+                        total_files += 1
+                        make_label = f" (make: {make})" if make else " (generic)"
+                        logger.info(f"[INGESTION] ✓ Loaded {txt_path.name} (category: {category}){make_label}")
+                    except Exception as exc:
+                        logger.exception(f"[INGESTION] ✗ FAILED to load {txt_path}: {exc}")
+        
+        elif txt_in_root:
+            # Flat structure (backward compatibility)
+            logger.info(f"[INGESTION] Using flat structure for {category} (no brand subdirs detected)")
+            for txt_path in txt_in_root:
                 try:
                     loader = TextLoader(str(txt_path), encoding="utf-8")
                     docs = loader.load()
 
-                    # Add metadata to each document
+                    # Add metadata without make/model (generic)
                     for doc in docs:
                         doc.metadata = {
                             "source": txt_path.name,
                             "category": category,
                             "file_path": str(txt_path),
+                            "make": None,
+                            "model": None,
                         }
                         documents.append(doc)
 
                     total_files += 1
-                    logger.info(f"[INGESTION] ✓ Loaded {txt_path.name} (category: {category})")
+                    logger.info(f"[INGESTION] ✓ Loaded {txt_path.name} (category: {category}, generic)")
                 except Exception as exc:
                     logger.exception(f"[INGESTION] ✗ FAILED to load {txt_path}: {exc}")
         else:

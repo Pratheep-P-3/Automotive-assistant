@@ -29,19 +29,18 @@ class DiagnoseRequest(BaseModel):
 
     @model_validator(mode="after")
     def validate_at_least_one_input(self) -> "DiagnoseRequest":
-        has_any_input = any(
+        """Validate that at least one diagnostic input is provided."""
+        has_diagnostic_input = any(
             [
                 self.code,
                 self.symptoms,
                 self.maintenance_query,
-                self.mileage is not None,
-                self.make,
-                self.model,
             ]
         )
-        if not has_any_input:
+        if not has_diagnostic_input:
             raise ValueError(
-                "At least one of code, symptoms, vehicle fields, mileage, or maintenance_query is required."
+                "At least one of the following is required: code, symptoms, or maintenance_query. "
+                "Vehicle info (make/model/year/mileage) is optional and used to prioritize brand-specific results."
             )
         return self
 

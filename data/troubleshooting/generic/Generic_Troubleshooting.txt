@@ -1,0 +1,201 @@
+GENERIC AUTOMOTIVE TROUBLESHOOTING GUIDE
+
+=== Engine Misfire / Rough Idle ===
+Symptom Description: Engine runs unevenly, shaking felt through steering wheel or seat
+Severity: Medium to High
+Common Causes:
+- Worn or fouled spark plugs
+- Faulty ignition coil
+- Clogged fuel injector
+- Vacuum leak
+- Worn fuel pump or filter
+- Ignition timing issues
+
+Initial Diagnostic Steps:
+1. Check for Check Engine Light and retrieve fault codes
+2. Inspect spark plugs visually (look for black deposits or damage)
+3. Test ignition coil output
+4. Perform vacuum leak test using carburetor cleaner
+5. Monitor engine vacuum with gauge (should be 15-20 inches Hg at idle)
+6. Perform fuel pressure test
+7. Check fuel trim values
+
+Recommended Actions:
+- Replace spark plugs if worn or black
+- Clean or replace fuel injectors
+- Repair vacuum leaks
+- Test and replace faulty ignition coils
+- Service fuel pump if pressure is low
+
+Estimated Cost: $150-$1,200
+Estimated Time: 1-6 hours
+
+
+=== Engine Overheating ===
+Symptom Description: Temperature gauge reading high, steam visible from engine, sweet smell
+Severity: CRITICAL - DO NOT CONTINUE DRIVING
+Causes:
+- Low coolant level
+- Thermostat failure
+- Water pump failure
+- Cooling fan malfunction
+- Blocked radiator
+- Blown head gasket
+- Radiator leak
+
+Immediate Actions:
+1. STOP THE VEHICLE IMMEDIATELY
+2. Turn off air conditioning
+3. Turn on heater to maximum (helps cool engine)
+4. Allow engine to cool (15-30 minutes minimum)
+5. DO NOT open radiator cap while hot (danger of burns)
+6. Check coolant level when cool
+7. Add coolant if low
+
+Professional Diagnostic:
+1. Check for visible leaks
+2. Perform coolant system pressure test
+3. Test thermostat operation
+4. Check water pump operation
+5. Inspect radiator for blockage
+6. Perform compression test (check for head gasket breach)
+
+Recommended Actions:
+- Top off coolant if low
+- Replace thermostat if stuck closed
+- Repair coolant leaks
+- Replace water pump if failing
+- Clean or replace radiator if blocked
+- Professional engine work if head gasket suspected
+
+Estimated Cost: $200-$2,000+
+Estimated Time: 1-8 hours
+
+
+=== Brake Pedal Issues ===
+Symptom Description: Soft/spongy brake pedal, goes to floor, or hard to apply
+Severity: HIGH - Safety Critical
+Causes:
+- Low brake fluid level
+- Brake fluid leak
+- Brake line air bubbles
+- Master cylinder failure
+- Brake caliper/wheel cylinder failure
+- Brake pad wear
+
+Immediate Diagnostic:
+1. Check brake fluid level in reservoir
+2. Pump brake pedal several times
+3. Feel brake response (should be firm)
+4. Check for visible leaks under vehicle
+5. Inspect brake pads visually if possible
+
+If Brake Pedal Goes to Floor:
+1. DO NOT DRIVE VEHICLE
+2. Check for brake fluid leaks
+3. This indicates master cylinder or complete system failure
+4. Requires professional brake service immediately
+
+Recommended Actions:
+- Top off brake fluid if low
+- Bleed brake system if air bubbles present
+- Replace brake pads if worn
+- Repair brake line leaks
+- Replace master cylinder if leaking
+- Professional service required
+
+Estimated Cost: $200-$1,500
+Estimated Time: 1-4 hours
+SAFETY WARNING: Never ignore brake issues - safety critical system
+
+
+=== Transmission Shifting Problems ===
+Symptom Description: Hard shifts, delayed shifts, slipping, or refused to engage
+Severity: Medium to High
+Causes:
+- Low transmission fluid level
+- Dirty or burned transmission fluid
+- Faulty transmission solenoid
+- Torque converter problems
+- Worn transmission bands or clutches
+- Engine performance issues affecting transmission
+
+Diagnostic Steps:
+1. Check transmission fluid level and condition (should be red, not brown)
+2. Scan for transmission-specific DTC codes
+3. Test transmission solenoid resistance
+4. Perform transmission shift point evaluation
+5. Check engine performance (affects transmission operation)
+6. Monitor transmission temperature
+7. Perform stall test if safe
+
+Recommended Actions:
+- Perform transmission fluid and filter service
+- Replace faulty solenoids
+- Repair wiring and connector issues
+- If internal damage suspected, transmission may need rebuilding
+
+Estimated Cost: $300-$3,000+
+Estimated Time: 1-8 hours or longer
+
+
+=== Battery Dead or Weak ===
+Symptom Description: Dim headlights, slow engine cranking, or complete no-start
+Severity: Medium
+Causes:
+- Battery age (typical lifespan 3-5 years)
+- Parasitic draw (electrical system draining battery)
+- Faulty alternator (not charging)
+- Corroded battery terminals
+- Broken battery cable
+- Extreme cold temperatures
+
+Diagnostic Steps:
+1. Check battery voltage with multimeter (should be 12.6V at rest)
+2. Start engine and recheck voltage (should be 13.5-15V)
+3. Test alternator output
+4. Check for corrosion on battery terminals
+5. Inspect battery cables for damage
+6. Check for parasitic electrical draw
+
+Immediate Actions:
+- Clean battery terminal corrosion
+- Tighten battery cable connections
+- Have battery tested for capacity
+
+Recommended Actions:
+- Replace battery if aged or failing
+- Replace alternator if not charging properly
+- Repair wiring issues
+- Diagnose and fix parasitic power drain
+
+Estimated Cost: $100-$600
+Estimated Time: 0.5-2 hours
+
+
+=== Check Engine Light ===
+Symptom Description: Yellow engine warning light illuminated on dashboard
+Severity: Varies (Low to High depending on code)
+Causes: Many (over 400 possible fault codes)
+Common Causes:
+- Oxygen sensor failure
+- Catalytic converter issue
+- Loose gas cap
+- Evaporative emission system leak
+- Engine misfire
+- Transmission problem
+
+Diagnostic Steps:
+1. Retrieve OBD fault codes using scanner
+2. Check for multiple codes (indicates broader issue)
+3. Perform visual inspection related to fault code
+4. Test components indicated by diagnostic code
+5. Check recent vehicle history (any work done, issues noticed)
+
+Recommended Actions:
+- Address the specific fault code indicated
+- Clear codes after repair and verify fix
+- Do not ignore Check Engine Light - can lead to damage
+
+Estimated Cost: $50-$2,000+ (varies by cause)
+Estimated Time: 0.5-8 hours (varies by cause)

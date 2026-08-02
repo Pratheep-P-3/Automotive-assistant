@@ -1,8 +1,0 @@
-code,description,severity,common_causes
-P0112,Fuel delivery and mixture control synthetic monitor condition 5,Urgent,"sensor drift; loose connector; mechanical wear"
-P0120,Ignition and misfire detection synthetic monitor condition 6,Moderate,"Engine control module software adaptation;Fuel system calibration issue;Ignition timing sensor fault;Spark plug degradation"
-P0171,System Too Lean (Bank 1),High,"Vacuum leak;Dirty MAF sensor;Low fuel pressure;Exhaust leak upstream O2 sensor"
-P0300,Random/Multiple Cylinder Misfire Detected,Critical,"Worn spark plugs;Ignition coil failure;Fuel injector issue;Low compression"
-P0420,Catalyst System Efficiency Below Threshold (Bank 1),Medium,"Aging catalytic converter;Faulty oxygen sensors;Engine misfire;Exhaust leaks"
-P0128,Coolant Thermostat (Coolant Temperature Below Thermostat Regulating Temperature),Medium,"Stuck-open thermostat;Low coolant level;Faulty coolant temperature sensor"
-P0455,Evaporative Emission System Leak Detected (gross leak),Low,"Loose fuel cap;Cracked EVAP hose;Faulty purge valve;Damaged charcoal canister"

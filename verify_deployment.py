@@ -233,9 +233,9 @@ def check_data_files() -> bool:
     print("\nData Files:")
     
     directories = [
-        ("data/chroma", "ChromaDB persistence"),
-        ("data/manuals", "OBD reference files"),
-        ("data/maintenance", "Maintenance procedures"),
+        ("data/obd", "OBD codes (brand-aware)"),
+        ("data/maintenance", "Maintenance procedures (brand-aware)"),
+        ("data/troubleshooting", "Troubleshooting guides (brand-aware)"),
     ]
 
     all_ok = True
