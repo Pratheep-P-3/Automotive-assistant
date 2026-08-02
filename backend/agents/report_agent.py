@@ -60,7 +60,8 @@ class ReportAgent:
         state["maintenance_recommendations"] = api_response.get(
             "maintenance_recommendations", []
         )
-        state["confidence_score"] = float(api_response.get("confidence_score", 0.5))
+        # USE RAG CONFIDENCE, NOT LLM'S INFLATED SCORE
+        state["confidence_score"] = float(api_response.get("confidence_percentage", 50)) / 100.0
 
         source_objects = state.get("sources", [])
         state["sources"] = source_objects

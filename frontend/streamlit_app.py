@@ -10,7 +10,7 @@ BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
 st.set_page_config(
     page_title="Automotive Diagnostics Assistant",
-    page_icon="🚗",
+    page_icon="⚙️",
     layout="wide",
 )
 
@@ -554,7 +554,7 @@ st.markdown(
 st.markdown(
     """
     <div class="hero-card">
-      <h2 style="margin:0;">⚡ Vehicle Diagnostics Assistant</h2>
+      <h2 style="margin:0;">Vehicle Diagnostics Assistant</h2>
       <p style="margin:0.4rem 0 0 0;">Advanced AI-powered diagnostic system. Enter vehicle details, OBD codes, and symptoms for comprehensive analysis and repair recommendations.</p>
     </div>
     """,
@@ -563,7 +563,7 @@ st.markdown(
 
 # Enhanced sidebar with better organization
 with st.sidebar:
-    st.header("🚗 Vehicle Profile")
+    st.header("Vehicle Profile")
     
     # Stack inputs vertically for better use of space and clarity
     make = st.text_input("Make", placeholder="Toyota", help="Vehicle manufacturer")
@@ -571,7 +571,7 @@ with st.sidebar:
     year_input = st.text_input("Year", placeholder="2020", help="Vehicle year of manufacture")
     mileage_input = st.text_input("Mileage", placeholder="60000", help="Current vehicle mileage")
 
-st.subheader("🔍 Diagnostic Inputs")
+st.subheader("Diagnostic Inputs")
 
 # Main diagnostic input area with better organization
 col1, col2 = st.columns([1, 1], gap="medium")
@@ -635,7 +635,7 @@ def _render_severity_badge(severity: str) -> None:
     """Render a color-coded severity badge."""
     css_class = _get_severity_color(severity)
     st.markdown(
-        f'<div class="{css_class}">⚠️ {severity.upper()}</div>',
+        f'<div class="{css_class}">{severity.upper()}</div>',
         unsafe_allow_html=True
     )
 
@@ -681,11 +681,11 @@ def diagnose() -> Dict[str, Any]:
     return response.json()
 
 
-if st.button("🚀 Run Full Diagnostics", type="primary", use_container_width=True):
-    with st.spinner("⏳ Running advanced diagnostic workflow..."):
+if st.button("Run Full Diagnostics", type="primary", use_container_width=True):
+    with st.spinner("Running advanced diagnostic workflow..."):
         try:
             result = diagnose()
-            st.success("✅ Diagnostic report generated successfully!")
+            st.success("Diagnostic report generated successfully")
             
             st.markdown("---")
 
@@ -703,7 +703,7 @@ if st.button("🚀 Run Full Diagnostics", type="primary", use_container_width=Tr
             st.markdown("---")
 
             # SECTION 2: Root Cause Analysis
-            st.markdown('<div class="section-title">🔍 Root Cause Analysis</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-title">Root Cause Analysis</div>', unsafe_allow_html=True)
             st.markdown("""
             The following factors have been identified as potential causes for the vehicle's condition:
             """)
@@ -717,7 +717,7 @@ if st.button("🚀 Run Full Diagnostics", type="primary", use_container_width=Tr
             st.markdown("---")
 
             # SECTION 3: Repair Recommendations (Enhanced)
-            st.markdown('<div class="section-title">🔧 Detailed Repair Steps</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-title">Detailed Repair Steps</div>', unsafe_allow_html=True)
             st.markdown("""
             Follow these comprehensive repair steps to resolve the identified issues:
             """)
@@ -740,7 +740,7 @@ if st.button("🚀 Run Full Diagnostics", type="primary", use_container_width=Tr
             st.markdown("---")
 
             # SECTION 4: Maintenance Recommendations (Enhanced)
-            st.markdown('<div class="section-title">🛠️ Recommended Maintenance</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-title">Recommended Maintenance</div>', unsafe_allow_html=True)
             st.markdown("""
             Perform the following maintenance tasks to ensure optimal vehicle performance:
             """)
@@ -763,7 +763,7 @@ if st.button("🚀 Run Full Diagnostics", type="primary", use_container_width=Tr
             st.markdown("---")
 
             # SECTION 5: Confidence & Analysis
-            st.markdown('<div class="section-title">📊 Diagnosis Confidence & Analysis</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-title">Diagnosis Confidence & Analysis</div>', unsafe_allow_html=True)
             
             confidence = float(result.get("confidence_score", 0.0))
             col1, col2, col3 = st.columns(3)
@@ -780,7 +780,7 @@ if st.button("🚀 Run Full Diagnostics", type="primary", use_container_width=Tr
             st.markdown("---")
 
             # SECTION 6: Knowledge Sources
-            st.markdown('<div class="section-title">📚 Knowledge Sources</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-title">Knowledge Sources</div>', unsafe_allow_html=True)
             st.markdown("This diagnosis was powered by the following sources from our knowledge base:")
             
             sources = result.get("sources", [])
@@ -789,9 +789,9 @@ if st.button("🚀 Run Full Diagnostics", type="primary", use_container_width=Tr
                     formatted_source = _format_source(source)
                     st.markdown(f"**Source {i}:** {formatted_source}")
             else:
-                st.info("ℹ️ No sources available for this diagnosis.")
+                st.info("No sources available for this diagnosis.")
 
         except requests.HTTPError as exc:
-            st.error(f"❌ Backend Error: {exc}")
+            st.error(f"Backend Error: {exc}")
         except Exception as exc:
-            st.error(f"❌ Diagnosis Failed: {exc}")
+            st.error(f"Diagnosis Failed: {exc}")

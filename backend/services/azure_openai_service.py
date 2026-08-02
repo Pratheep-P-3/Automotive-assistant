@@ -251,22 +251,22 @@ class AzureOpenAIService:
         if severity in ["Critical", "Urgent", "High"]:
             if "brake" in str(code_result).lower():
                 safety_warnings.append(
-                    "⚠️ SAFETY CRITICAL: Brake system failure - Do not drive, arrange towing."
+                    "SAFETY CRITICAL: Brake system failure - Do not drive, arrange towing."
                 )
             elif "steering" in str(code_result).lower():
                 safety_warnings.append(
-                    "⚠️ SAFETY CRITICAL: Steering system issue - Do not drive, arrange towing."
+                    "SAFETY CRITICAL: Steering system issue - Do not drive, arrange towing."
                 )
             elif "overheating" in str(code_result).lower():
                 safety_warnings.append(
-                    "⚠️ ENGINE OVERHEATING: Stop immediately, turn off engine, check coolant after cooling."
+                    "ENGINE OVERHEATING: Stop immediately, turn off engine, check coolant after cooling."
                 )
 
         # Add confidence disclaimer if low
         if confidence_pct < 60:
             safety_warnings.insert(
                 0,
-                f"⚠️ LOW CONFIDENCE ({confidence_pct}%): Knowledge base has limited information. "
+                f"LOW CONFIDENCE ({confidence_pct}%): Knowledge base has limited information. "
                 "Professional verification strongly recommended.",
             )
 
@@ -377,11 +377,9 @@ class AzureOpenAIService:
             raw = response.content if isinstance(response.content, str) else str(response.content)
             parsed = json.loads(self._strip_fences(raw))
 
-            # ===== Inject RAG Confidence Scores into Response =====
-            # Ensure confidence is properly formatted
-            if "confidence_score" not in parsed or not parsed["confidence_score"]:
-                parsed["confidence_score"] = confidence_pct / 100.0  # Convert % to 0-1 scale
-
+            # ===== OVERRIDE WITH RAG Confidence Scores (NOT LLM-generated) =====
+            # Use the reranker's actual confidence, not the LLM's inflated scores
+            parsed["confidence_score"] = confidence_pct / 100.0  # Convert % to 0-1 scale
             parsed["confidence_percentage"] = confidence_pct
             parsed["confidence_level"] = confidence_level
 
@@ -415,7 +413,7 @@ class AzureOpenAIService:
                     "maintenance_recommendations": parsed.get(
                         "maintenance_recommendations", []
                     ),
-                    "confidence_score": parsed.get("confidence_score", confidence_pct / 100.0),
+                    "confidence_score": confidence_pct / 100.0,  # Use RAG score, not LLM
                     "confidence_percentage": confidence_pct,
                     "confidence_level": confidence_level,
                     "sources": parsed.get("references", []),
