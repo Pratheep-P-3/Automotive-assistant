@@ -66,17 +66,20 @@ st.markdown(
     /* ============= HEADER HERO CARD ============= */
     .hero-card {
         background: linear-gradient(135deg, #5b7cff 0%, #6b8fff 50%, #4c63e8 100%);
-        padding: 2.5rem 2rem;
-        border-radius: 24px;
+        padding: 1rem 1.5rem;
+        border-radius: 16px;
         color: white;
-        box-shadow: 0 25px 50px rgba(91, 124, 255, 0.25), 0 0 1px rgba(255, 255, 255, 0.2);
-        margin-bottom: 2.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.25);
+        box-shadow: 0 8px 20px rgba(91, 124, 255, 0.15);
+        margin-bottom: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(10px);
         animation: slideDown 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
         position: relative;
         overflow: hidden;
         width: 100%;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .hero-card::before {
@@ -86,28 +89,30 @@ st.markdown(
         right: -50%;
         width: 300px;
         height: 300px;
-        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
         border-radius: 50%;
         pointer-events: none;
     }
 
     .hero-card h2 {
-        font-size: 2.2rem;
-        font-weight: 800;
+        font-size: 1.3rem;
+        font-weight: 700;
         font-family: 'Poppins', sans-serif;
-        letter-spacing: -1px;
-        margin-bottom: 0.8rem !important;
+        letter-spacing: -0.5px;
+        margin: 0 !important;
         position: relative;
         z-index: 1;
     }
 
     .hero-card p {
-        font-size: 1rem;
-        opacity: 0.95;
-        line-height: 1.7;
+        font-size: 0.85rem;
+        opacity: 0.9;
+        line-height: 1.4;
         font-weight: 400;
         position: relative;
         z-index: 1;
+        margin: 0 !important;
+        display: none;
     }
 
     /* ============= SIDEBAR STYLING ============= */
@@ -482,15 +487,16 @@ st.markdown(
     /* ============= RESPONSIVE DESIGN ============= */
     @media (max-width: 768px) {
         .hero-card {
-            padding: 2rem 1.5rem;
+            padding: 0.9rem 1.2rem;
+            max-width: 90%;
         }
 
         .hero-card h2 {
-            font-size: 1.8rem;
+            font-size: 1.2rem;
         }
 
         .hero-card p {
-            font-size: 0.95rem;
+            font-size: 0.8rem;
         }
 
         .result-card {
