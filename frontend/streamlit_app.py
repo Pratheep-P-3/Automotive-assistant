@@ -71,15 +71,14 @@ st.markdown(
         color: white;
         box-shadow: 0 8px 20px rgba(91, 124, 255, 0.15);
         margin-bottom: 1.5rem;
+        margin-left: -1.5rem;
+        margin-right: -1.5rem;
         border: 1px solid rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(10px);
         animation: slideDown 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
         position: relative;
         overflow: hidden;
-        width: 100%;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
+        width: calc(100% + 3rem);
     }
 
     .hero-card::before {
@@ -95,7 +94,7 @@ st.markdown(
     }
 
     .hero-card h2 {
-        font-size: 1.3rem;
+        font-size: 1.8rem;
         font-weight: 700;
         font-family: 'Poppins', sans-serif;
         letter-spacing: -0.5px;
@@ -488,11 +487,13 @@ st.markdown(
     @media (max-width: 768px) {
         .hero-card {
             padding: 0.9rem 1.2rem;
-            max-width: 90%;
+            width: calc(100% + 2.4rem);
+            margin-left: -1.2rem;
+            margin-right: -1.2rem;
         }
 
         .hero-card h2 {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
         }
 
         .hero-card p {
