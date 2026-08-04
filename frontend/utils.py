@@ -1,21 +1,66 @@
-from __future__ import annotations
-
-import os
+"""Shared utilities for all pages."""
 from typing import Any, Dict, List
 
-import requests
-import streamlit as st
+def format_source(source: Dict[str, Any]) -> str:
+    """Format source metadata for display."""
+    filename = source.get("source_filename") or source.get("source", "Unknown Source")
+    category = source.get("category", "")
+    chunk_type = source.get("chunk_type", "")
+    vector_score = source.get("vector_score", 0)
+    rerank_score = source.get("rerank_score", 0)
+    
+    display = f"📄 {filename}"
+    if category:
+        display += f" | Category: {category}"
+    if chunk_type:
+        display += f" | Type: {chunk_type}"
+    if vector_score > 0:
+        display += f" | Similarity: {vector_score:.2%}"
+    if rerank_score > 0:
+        display += f" | Relevance: {rerank_score:.2f}"
+    
+    return display
 
-BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
-st.set_page_config(
-    page_title="Automotive Diagnostics Assistant",
-    page_icon="⚙️",
-    layout="wide",
-)
+def get_severity_color(severity: str) -> str:
+    """Return CSS class for severity level."""
+    severity_lower = severity.lower() if severity else "unknown"
+    if "critical" in severity_lower or "urgent" in severity_lower:
+        return "severity-critical"
+    elif "high" in severity_lower:
+        return "severity-high"
+    elif "medium" in severity_lower:
+        return "severity-medium"
+    elif "low" in severity_lower:
+        return "severity-low"
+    return "severity-medium"
 
-st.markdown(
-    """
+
+def render_severity_badge(severity: str) -> str:
+    """Return HTML for severity badge."""
+    import streamlit as st
+    css_class = get_severity_color(severity)
+    st.markdown(
+        f'<div class="{css_class}">{severity.upper()}</div>',
+        unsafe_allow_html=True
+    )
+
+
+def render_list(items: List[str], empty_text: str) -> None:
+    """Render a formatted list."""
+    import streamlit as st
+    if not items:
+        st.info(empty_text)
+        return
+    st.markdown("<ul>", unsafe_allow_html=True)
+    for item in items:
+        st.markdown(f"<li>{item}</li>", unsafe_allow_html=True)
+    st.markdown("</ul>", unsafe_allow_html=True)
+
+
+def get_shared_css() -> str:
+    """Return shared CSS for all pages."""
+    return """
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap');
     
@@ -35,7 +80,6 @@ st.markdown(
         color: #0f172a;
     }
 
-    /* ============= MAIN CONTENT CONTAINER WIDTH ============= */
     [data-testid="stAppViewContainer"] > section:first-child {
         max-width: 1000px;
         margin-left: auto;
@@ -50,7 +94,6 @@ st.markdown(
         margin-right: auto;
     }
 
-    /* Constrain all main content sections */
     .stApp > [data-testid="stAppViewContainer"] {
         width: 100% !important;
     }
@@ -63,7 +106,6 @@ st.markdown(
         padding-right: 1.5rem !important;
     }
 
-    /* ============= HEADER HERO CARD ============= */
     .hero-card {
         background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%);
         padding: 1.2rem 2rem;
@@ -104,18 +146,15 @@ st.markdown(
         text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .hero-card p {
-        font-size: 0.85rem;
-        opacity: 0.9;
-        line-height: 1.4;
-        font-weight: 400;
+    .hero-card h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+        margin: 0 !important;
         position: relative;
         z-index: 1;
-        margin: 0 !important;
-        display: none;
     }
 
-    /* ============= SIDEBAR STYLING ============= */
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
         border-right: 1px solid #e2e8f0;
@@ -133,7 +172,6 @@ st.markdown(
         border-bottom: 2px solid #0ea5e9;
     }
 
-    /* ============= INPUT FIELDS ============= */
     .stTextInput > div > div > input,
     .stNumberInput > div > div > input,
     .stTextArea > div > div > textarea,
@@ -150,57 +188,16 @@ st.markdown(
         box-shadow: none !important;
     }
 
-    .stTextInput > div > div > input::placeholder,
-    .stNumberInput > div > div > input::placeholder,
-    .stTextArea > div > div > textarea::placeholder {
-        color: #9ca3af !important;
-    }
-
-    /* AGGRESSIVE FOCUS STATE OVERRIDES - BLUE ONLY */
     .stTextInput > div > div > input:focus,
     .stNumberInput > div > div > input:focus,
     .stTextArea > div > div > textarea:focus,
-    .stSelectbox > div > div > select:focus,
-    input[type="text"]:focus,
-    input[type="number"]:focus,
-    textarea:focus,
-    select:focus {
+    .stSelectbox > div > div > select:focus {
         border: 2px solid #0ea5e9 !important;
         box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1), inset 0 0 0 1px #0ea5e9 !important;
         background: #f0f9fc !important;
         outline: none !important;
     }
 
-    /* TARGET FOCUS-WITHIN ON PARENT CONTAINERS */
-    .stTextInput:focus-within > div > div > input,
-    .stNumberInput:focus-within > div > div > input,
-    .stTextArea:focus-within > div > div > textarea,
-    .stSelectbox:focus-within > div > div > select {
-        border: 2px solid #0ea5e9 !important;
-        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1), inset 0 0 0 1px #0ea5e9 !important;
-        background: #fafbff !important;
-    }
-
-    /* REMOVE STREAMLIT'S DEFAULT BLUE/RED LINES */
-    .stTextInput > div:focus-within,
-    .stNumberInput > div:focus-within,
-    .stTextArea > div:focus-within,
-    .stSelectbox > div:focus-within {
-        border: none !important;
-        box-shadow: none !important;
-        outline: none !important;
-    }
-
-    /* DISABLE ANY PSEUDO-ELEMENT STYLING */
-    .stTextInput > div > div::after,
-    .stNumberInput > div > div::after,
-    .stTextArea > div > div::after,
-    .stSelectbox > div > div::after {
-        display: none !important;
-        border: none !important;
-    }
-
-    /* ============= LABELS ============= */
     .stTextInput > label,
     .stNumberInput > label,
     .stTextArea > label,
@@ -214,7 +211,6 @@ st.markdown(
         margin-bottom: 0.7rem !important;
     }
 
-    /* ============= BUTTONS ============= */
     .stButton > button {
         background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%) !important;
         color: white !important;
@@ -233,31 +229,11 @@ st.markdown(
         overflow: hidden;
     }
 
-    .stButton > button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.2);
-        transition: left 0.5s ease;
-    }
-
     .stButton > button:hover {
         transform: translateY(-4px) !important;
         box-shadow: 0 15px 35px rgba(30, 64, 175, 0.3) !important;
     }
 
-    .stButton > button:hover::before {
-        left: 100%;
-    }
-
-    .stButton > button:active {
-        transform: translateY(-1px) !important;
-    }
-
-    /* ============= TYPOGRAPHY ============= */
     .stSubheader {
         color: #1e40af !important;
         font-weight: 800 !important;
@@ -272,7 +248,6 @@ st.markdown(
         gap: 0.8rem;
     }
 
-    /* ============= RESULT CARDS ============= */
     .result-card {
         background: white;
         border: 1px solid #e2e8f0;
@@ -292,7 +267,6 @@ st.markdown(
         border-color: #cbd5e1;
     }
 
-    /* ============= SECTION TITLES ============= */
     .section-title {
         font-weight: 800;
         font-family: 'Poppins', sans-serif;
@@ -317,7 +291,6 @@ st.markdown(
         border-radius: 2px;
     }
 
-    /* ============= SEVERITY BADGES ============= */
     .severity-critical {
         color: #b91c1c;
         font-weight: 700;
@@ -366,7 +339,6 @@ st.markdown(
         box-shadow: 0 4px 12px rgba(34, 197, 94, 0.1);
     }
 
-    /* ============= LISTS ============= */
     .result-card ul {
         list-style: none;
         padding: 0;
@@ -395,14 +367,12 @@ st.markdown(
         left: 0;
     }
 
-    /* ============= PROGRESS BAR ============= */
     .stProgress > div > div > div {
         background: linear-gradient(90deg, #0ea5e9 0%, #1e40af 100%) !important;
         border-radius: 12px !important;
         box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
     }
 
-    /* ============= MESSAGES ============= */
     .stSuccess {
         background: #dcfce7 !important;
         border-left: 5px solid #22c55e !important;
@@ -427,7 +397,6 @@ st.markdown(
         padding: 1rem !important;
     }
 
-    /* ============= METRICS ============= */
     .stMetric {
         background: white;
         border: 1px solid #e2e8f0;
@@ -448,7 +417,6 @@ st.markdown(
         font-weight: 600 !important;
     }
 
-    /* ============= ANIMATIONS ============= */
     @keyframes slideDown {
         from {
             opacity: 0;
@@ -471,12 +439,6 @@ st.markdown(
         }
     }
 
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-    }
-
-    /* ============= SPINNER ============= */
     .stSpinner > div > div {
         border-top-color: #0ea5e9 !important;
         border-right-color: rgba(14, 165, 233, 0.3) !important;
@@ -484,7 +446,31 @@ st.markdown(
         border-left-color: rgba(14, 165, 233, 0.3) !important;
     }
 
-    /* ============= RESPONSIVE DESIGN ============= */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f3f4f6;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #0ea5e9;
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #1e40af;
+    }
+
+    .nav-buttons {
+        display: flex;
+        gap: 1rem;
+        margin: 2rem 0;
+        justify-content: center;
+    }
+
     @media (max-width: 768px) {
         .hero-card {
             padding: 0.9rem 1.2rem;
@@ -495,10 +481,6 @@ st.markdown(
 
         .hero-card h2 {
             font-size: 1.5rem;
-        }
-
-        .hero-card p {
-            font-size: 0.8rem;
         }
 
         .result-card {
@@ -518,234 +500,5 @@ st.markdown(
             font-size: 1.3rem !important;
         }
     }
-
-    /* ============= SCROLLBAR STYLING ============= */
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background: #f3f4f6;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: #0ea5e9;
-        border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: #1e40af;
-    }
-
-    /* ============= TAB STYLING ============= */
-    [data-testid="stTabs"] {
-        margin-top: 1.5rem;
-    }
-
-    [data-testid="stTabs"] [data-testid="stTab"] {
-        background: white !important;
-        border: 1px solid #e5e7eb !important;
-        border-radius: 14px 14px 0 0 !important;
-        color: #6b7280 !important;
-        font-weight: 600 !important;
-        transition: all 0.3s ease !important;
-    }
-
-    [data-testid="stTabs"] [data-testid="stTab"]:hover {
-        background: #f9fafb !important;
-        color: #0ea5e9 !important;
-    }
-
-    [data-testid="stTabs"] [aria-selected="true"] {
-        color: #1e40af !important;
-        border-bottom: 3px solid #0ea5e9 !important;
-        background: #f0f4f8 !important;
-    }
-
-    /* ============= CONTAINER STYLING ============= */
-    .stContainer {
-        background: white;
-        border: 1px solid #e2e8f0;
-        border-radius: 10px;
-        padding: 1.5rem;
-        margin: 1rem 0;
-    }
-
-    /* ============= FOCUS/ACTIVE STATE FIXES ============= */
-    .stTextInput > div > div > input:active,
-    .stTextInput > div > div > input:focus-visible,
-    .stNumberInput > div > div > input:active,
-    .stNumberInput > div > div > input:focus-visible,
-    .stTextArea > div > div > textarea:active,
-    .stTextArea > div > div > textarea:focus-visible {
-        outline: none !important;
-        border-color: #0ea5e9 !important;
-        box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15), 0 0 20px rgba(14, 165, 233, 0.2) !important;
-    }
     </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-st.markdown(
     """
-    <div class="hero-card">
-      <h2 style="margin:0;">Vehicle Diagnostics Assistant</h2>
-      <p style="margin:0.4rem 0 0 0;">Advanced AI-powered diagnostic system. Enter vehicle details, OBD codes, and symptoms for comprehensive analysis and repair recommendations.</p>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-# Sidebar - Vehicle Profile (OPTIONAL, for brand-specific prioritization)
-with st.sidebar:
-    st.header("Vehicle Profile")
-    st.caption("Optional - Prioritizes brand-specific diagnostic information")
-    make = st.text_input(
-        "Make",
-        placeholder="e.g., Toyota",
-        help="Vehicle manufacturer - helps prioritize brand-specific documents"
-    )
-    model = st.text_input(
-        "Model",
-        placeholder="e.g., Corolla",
-        help="Vehicle model (optional)"
-    )
-    year_input = st.text_input(
-        "Year",
-        placeholder="e.g., 2020",
-        help="Vehicle year (optional)"
-    )
-    mileage_input = st.text_input(
-        "Mileage",
-        placeholder="e.g., 60000",
-        help="Current vehicle mileage (optional)"
-    )
-
-st.subheader("Diagnostic Inputs")
-st.caption("Enter at least one: OBD Code, Symptoms, or Maintenance Query")
-
-# Main diagnostic input area with better organization
-col1, col2 = st.columns([1, 1], gap="medium")
-with col1:
-    code = st.text_input(
-        "Diagnostic Code (DTC)", 
-        placeholder="e.g., P0171, P0300, B1234",
-        help="Enter OBD-II diagnostic trouble code (optional)"
-    )
-with col2:
-    maintenance_query = st.text_input(
-        "Maintenance Query", 
-        placeholder="e.g., What should I service?",
-        help="Ask about maintenance based on mileage or time (optional)"
-    )
-
-symptoms = st.text_area(
-    "Describe Vehicle Symptoms",
-    placeholder="E.g., rough idle, check engine light, poor fuel economy, burning smell...",
-    height=140,
-    help="Be as detailed as possible for better diagnosis (optional)"
-)
-
-def _format_source(source: Dict[str, Any]) -> str:
-    # Handle both old and new source formats
-    filename = source.get("source_filename") or source.get("source", "Unknown Source")
-    category = source.get("category", "")
-    chunk_type = source.get("chunk_type", "")
-    vector_score = source.get("vector_score", 0)
-    rerank_score = source.get("rerank_score", 0)
-    
-    # Build the display string
-    display = f"📄 {filename}"
-    if category:
-        display += f" | Category: {category}"
-    if chunk_type:
-        display += f" | Type: {chunk_type}"
-    if vector_score > 0:
-        display += f" | Similarity: {vector_score:.2%}"
-    if rerank_score > 0:
-        display += f" | Relevance: {rerank_score:.2f}"
-    
-    return display
-
-
-def _get_severity_color(severity: str) -> str:
-    """Return CSS class for severity level."""
-    severity_lower = severity.lower() if severity else "unknown"
-    if "critical" in severity_lower or "urgent" in severity_lower:
-        return "severity-critical"
-    elif "high" in severity_lower:
-        return "severity-high"
-    elif "medium" in severity_lower:
-        return "severity-medium"
-    elif "low" in severity_lower:
-        return "severity-low"
-    return "severity-medium"
-
-
-def _render_severity_badge(severity: str) -> None:
-    """Render a color-coded severity badge."""
-    css_class = _get_severity_color(severity)
-    st.markdown(
-        f'<div class="{css_class}">{severity.upper()}</div>',
-        unsafe_allow_html=True
-    )
-
-
-def _render_list(items: List[str], empty_text: str) -> None:
-    """Render a formatted list with better styling."""
-    if not items:
-        st.info(empty_text)
-        return
-    st.markdown("<ul>", unsafe_allow_html=True)
-    for item in items:
-        st.markdown(f"<li>{item}</li>", unsafe_allow_html=True)
-    st.markdown("</ul>", unsafe_allow_html=True)
-
-
-def diagnose() -> Dict[str, Any]:
-    """Send diagnostic query to backend API with vehicle prioritization."""
-    # Convert year and mileage from text input to int if provided
-    try:
-        year_val = int(year_input) if year_input.strip() else None
-    except ValueError:
-        year_val = None
-    
-    try:
-        mileage_val = int(mileage_input) if mileage_input.strip() else None
-    except ValueError:
-        mileage_val = None
-    
-    payload = {
-        "make": make or None,
-        "model": model or None,
-        "year": year_val,
-        "mileage": mileage_val,
-        "code": code or None,
-        "symptoms": symptoms or None,
-        "maintenance_query": maintenance_query or None,
-    }
-    response = requests.post(
-        f"{BACKEND_URL}/diagnose",
-        json=payload,
-        timeout=90,
-    )
-    response.raise_for_status()
-    return response.json()
-
-
-if st.button("Run Full Diagnostics", type="primary", use_container_width=True):
-    with st.spinner("Running advanced diagnostic workflow..."):
-        try:
-            result = diagnose()
-            
-            # Store result in session state and navigate to diagnosis page
-            st.session_state.diagnostic_result = result
-            st.success("Diagnostic report generated! Navigating to results...")
-            st.switch_page("pages/1_🔍_Diagnosis.py")
-            
-        except requests.HTTPError as exc:
-            st.error(f"Backend Error: {exc}")
-        except Exception as exc:
-            st.error(f"Diagnosis Failed: {exc}")
