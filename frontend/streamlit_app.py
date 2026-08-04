@@ -30,9 +30,9 @@ st.markdown(
     }
 
     .stApp {
-        background: linear-gradient(135deg, #f0f4ff 0%, #e8eef9 50%, #f5f7ff 100%);
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #f0f4f8 100%);
         min-height: 100vh;
-        color: #1f2937;
+        color: #0f172a;
     }
 
     /* ============= MAIN CONTENT CONTAINER WIDTH ============= */
@@ -65,15 +65,15 @@ st.markdown(
 
     /* ============= HEADER HERO CARD ============= */
     .hero-card {
-        background: linear-gradient(135deg, #5b7cff 0%, #6b8fff 50%, #4c63e8 100%);
-        padding: 1rem 1.5rem;
-        border-radius: 16px;
+        background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%);
+        padding: 1.2rem 2rem;
+        border-radius: 12px;
         color: white;
-        box-shadow: 0 8px 20px rgba(91, 124, 255, 0.15);
-        margin-bottom: 1.5rem;
+        box-shadow: 0 12px 32px rgba(30, 64, 175, 0.25);
+        margin-bottom: 2rem;
         margin-left: -1.5rem;
         margin-right: -1.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: none;
         backdrop-filter: blur(10px);
         animation: slideDown 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
         position: relative;
@@ -94,13 +94,14 @@ st.markdown(
     }
 
     .hero-card h2 {
-        font-size: 1.8rem;
-        font-weight: 700;
+        font-size: 2rem;
+        font-weight: 800;
         font-family: 'Poppins', sans-serif;
-        letter-spacing: -0.5px;
+        letter-spacing: -0.8px;
         margin: 0 !important;
         position: relative;
         z-index: 1;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .hero-card p {
@@ -116,20 +117,20 @@ st.markdown(
 
     /* ============= SIDEBAR STYLING ============= */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
-        border-right: 1px solid #e5e7eb;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        border-right: 1px solid #e2e8f0;
     }
 
     [data-testid="stSidebar"] [data-testid="stHeader"] {
         font-weight: 700;
         font-family: 'Poppins', sans-serif;
-        color: #5b7cff;
+        color: #1e40af;
         font-size: 1.1rem;
         margin-bottom: 1.8rem !important;
         text-transform: uppercase;
         letter-spacing: 1px;
         padding: 1rem 0.5rem;
-        border-bottom: 2px solid rgba(91, 124, 255, 0.25);
+        border-bottom: 2px solid #0ea5e9;
     }
 
     /* ============= INPUT FIELDS ============= */
@@ -138,13 +139,13 @@ st.markdown(
     .stTextArea > div > div > textarea,
     .stSelectbox > div > div > select {
         background: white !important;
-        border: 2px solid #e5e7eb !important;
-        border-radius: 14px !important;
+        border: 2px solid #e2e8f0 !important;
+        border-radius: 10px !important;
         padding: 0.85rem 1rem !important;
         font-size: 0.95rem !important;
         transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
         font-weight: 500 !important;
-        color: #1f2937 !important;
+        color: #0f172a !important;
         outline: none !important;
         box-shadow: none !important;
     }
@@ -164,9 +165,9 @@ st.markdown(
     input[type="number"]:focus,
     textarea:focus,
     select:focus {
-        border: 2px solid #5b7cff !important;
-        box-shadow: 0 0 0 3px rgba(91, 124, 255, 0.1), inset 0 0 0 1px #5b7cff !important;
-        background: #fafbff !important;
+        border: 2px solid #0ea5e9 !important;
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1), inset 0 0 0 1px #0ea5e9 !important;
+        background: #f0f9fc !important;
         outline: none !important;
     }
 
@@ -175,8 +176,8 @@ st.markdown(
     .stNumberInput:focus-within > div > div > input,
     .stTextArea:focus-within > div > div > textarea,
     .stSelectbox:focus-within > div > div > select {
-        border: 2px solid #5b7cff !important;
-        box-shadow: 0 0 0 3px rgba(91, 124, 255, 0.1), inset 0 0 0 1px #5b7cff !important;
+        border: 2px solid #0ea5e9 !important;
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1), inset 0 0 0 1px #0ea5e9 !important;
         background: #fafbff !important;
     }
 
@@ -206,7 +207,7 @@ st.markdown(
     .stSelectbox > label {
         font-weight: 700 !important;
         font-family: 'Poppins', sans-serif;
-        color: #5b7cff !important;
+        color: #1e40af !important;
         font-size: 0.9rem !important;
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -215,19 +216,19 @@ st.markdown(
 
     /* ============= BUTTONS ============= */
     .stButton > button {
-        background: linear-gradient(135deg, #5b7cff 0%, #6b8fff 50%, #4c63e8 100%) !important;
+        background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%) !important;
         color: white !important;
         font-weight: 700 !important;
         font-family: 'Poppins', sans-serif;
         font-size: 1.05rem !important;
         padding: 1rem 2.5rem !important;
         border: none !important;
-        border-radius: 14px !important;
+        border-radius: 10px !important;
         cursor: pointer !important;
         transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
         letter-spacing: 0.8px;
         text-transform: uppercase;
-        box-shadow: 0 10px 25px rgba(91, 124, 255, 0.3) !important;
+        box-shadow: 0 10px 25px rgba(30, 64, 175, 0.3) !important;
         position: relative;
         overflow: hidden;
     }
@@ -245,7 +246,7 @@ st.markdown(
 
     .stButton > button:hover {
         transform: translateY(-4px) !important;
-        box-shadow: 0 15px 35px rgba(91, 124, 255, 0.4) !important;
+        box-shadow: 0 15px 35px rgba(30, 64, 175, 0.3) !important;
     }
 
     .stButton > button:hover::before {
@@ -258,14 +259,14 @@ st.markdown(
 
     /* ============= TYPOGRAPHY ============= */
     .stSubheader {
-        color: #5b7cff !important;
+        color: #1e40af !important;
         font-weight: 800 !important;
         font-family: 'Poppins', sans-serif;
-        font-size: 1.5rem !important;
-        margin-top: 2.5rem !important;
-        margin-bottom: 1.8rem !important;
-        padding-bottom: 1rem;
-        border-bottom: 3px solid #5b7cff;
+        font-size: 1.4rem !important;
+        margin-top: 2rem !important;
+        margin-bottom: 1.5rem !important;
+        padding-bottom: 0.8rem;
+        border-bottom: 3px solid #0ea5e9;
         display: flex;
         align-items: center;
         gap: 0.8rem;
@@ -274,29 +275,29 @@ st.markdown(
     /* ============= RESULT CARDS ============= */
     .result-card {
         background: white;
-        border: 1px solid #e5e7eb;
-        border-left: 5px solid #5b7cff;
-        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        border-left: 5px solid #0ea5e9;
+        border-radius: 12px;
         padding: 1.8rem;
-        box-shadow: 0 4px 15px rgba(91, 124, 255, 0.08);
+        box-shadow: 0 4px 15px rgba(30, 64, 175, 0.06);
         margin-bottom: 1.5rem;
         transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         animation: fadeInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .result-card:hover {
-        box-shadow: 0 8px 25px rgba(91, 124, 255, 0.15);
+        box-shadow: 0 8px 25px rgba(30, 64, 175, 0.12);
         transform: translateY(-4px);
-        border-left-color: #5b7cff;
-        border-color: #d1d5db;
+        border-left-color: #0ea5e9;
+        border-color: #cbd5e1;
     }
 
     /* ============= SECTION TITLES ============= */
     .section-title {
         font-weight: 800;
         font-family: 'Poppins', sans-serif;
-        color: #5b7cff;
-        font-size: 1.15rem;
+        color: #1e40af;
+        font-size: 1.1rem;
         margin-bottom: 1.2rem;
         display: flex;
         align-items: center;
@@ -312,7 +313,7 @@ st.markdown(
         left: 0;
         width: 4px;
         height: 24px;
-        background: linear-gradient(180deg, #5b7cff 0%, #4c63e8 100%);
+        background: linear-gradient(180deg, #0ea5e9 0%, #1e40af 100%);
         border-radius: 2px;
     }
 
@@ -381,13 +382,13 @@ st.markdown(
     }
 
     .result-card ul li:hover {
-        color: #5b7cff;
+        color: #0ea5e9;
         padding-left: 2rem;
     }
 
     .result-card ul li::before {
         content: '→';
-        color: #5b7cff;
+        color: #0ea5e9;
         font-weight: 800;
         margin-right: 0.8rem;
         position: absolute;
@@ -396,9 +397,9 @@ st.markdown(
 
     /* ============= PROGRESS BAR ============= */
     .stProgress > div > div > div {
-        background: linear-gradient(90deg, #5b7cff 0%, #6b8fff 100%) !important;
+        background: linear-gradient(90deg, #0ea5e9 0%, #1e40af 100%) !important;
         border-radius: 12px !important;
-        box-shadow: 0 0 10px rgba(91, 124, 255, 0.3);
+        box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
     }
 
     /* ============= MESSAGES ============= */
@@ -420,23 +421,23 @@ st.markdown(
 
     .stInfo {
         background: #eff6ff !important;
-        border-left: 5px solid #5b7cff !important;
+        border-left: 5px solid #0ea5e9 !important;
         border-radius: 14px !important;
-        color: #1e3a8a !important;
+        color: #082f49 !important;
         padding: 1rem !important;
     }
 
     /* ============= METRICS ============= */
     .stMetric {
         background: white;
-        border: 1px solid #e5e7eb;
-        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
         padding: 1.2rem;
-        box-shadow: 0 2px 8px rgba(91, 124, 255, 0.05);
+        box-shadow: 0 2px 8px rgba(30, 64, 175, 0.04);
     }
 
     .stMetric [data-testid="stMetricValue"] {
-        color: #5b7cff !important;
+        color: #1e40af !important;
         font-family: 'Poppins', sans-serif;
         font-weight: 800 !important;
         font-size: 1.8rem !important;
@@ -477,10 +478,10 @@ st.markdown(
 
     /* ============= SPINNER ============= */
     .stSpinner > div > div {
-        border-top-color: #5b7cff !important;
-        border-right-color: rgba(91, 124, 255, 0.3) !important;
-        border-bottom-color: rgba(91, 124, 255, 0.3) !important;
-        border-left-color: rgba(91, 124, 255, 0.3) !important;
+        border-top-color: #0ea5e9 !important;
+        border-right-color: rgba(14, 165, 233, 0.3) !important;
+        border-bottom-color: rgba(14, 165, 233, 0.3) !important;
+        border-left-color: rgba(14, 165, 233, 0.3) !important;
     }
 
     /* ============= RESPONSIVE DESIGN ============= */
@@ -529,12 +530,12 @@ st.markdown(
     }
 
     ::-webkit-scrollbar-thumb {
-        background: #5b7cff;
+        background: #0ea5e9;
         border-radius: 4px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: #4c63e8;
+        background: #1e40af;
     }
 
     /* ============= TAB STYLING ============= */
@@ -553,20 +554,20 @@ st.markdown(
 
     [data-testid="stTabs"] [data-testid="stTab"]:hover {
         background: #f9fafb !important;
-        color: #5b7cff !important;
+        color: #0ea5e9 !important;
     }
 
     [data-testid="stTabs"] [aria-selected="true"] {
-        color: #5b7cff !important;
-        border-bottom: 3px solid #5b7cff !important;
-        background: #f0f4ff !important;
+        color: #1e40af !important;
+        border-bottom: 3px solid #0ea5e9 !important;
+        background: #f0f4f8 !important;
     }
 
     /* ============= CONTAINER STYLING ============= */
     .stContainer {
         background: white;
-        border: 1px solid #e5e7eb;
-        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
         padding: 1.5rem;
         margin: 1rem 0;
     }
@@ -579,8 +580,8 @@ st.markdown(
     .stTextArea > div > div > textarea:active,
     .stTextArea > div > div > textarea:focus-visible {
         outline: none !important;
-        border-color: #5b7cff !important;
-        box-shadow: 0 0 0 4px rgba(91, 124, 255, 0.15), 0 0 20px rgba(91, 124, 255, 0.2) !important;
+        border-color: #0ea5e9 !important;
+        box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15), 0 0 20px rgba(14, 165, 233, 0.2) !important;
     }
     </style>
     """,
@@ -780,10 +781,10 @@ if st.button("Run Full Diagnostics", type="primary", use_container_width=True):
                     with st.container():
                         st.markdown(f"""
                         <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%); 
-                                    border-left: 4px solid #5b7cff; border-radius: 8px; 
+                                    border-left: 4px solid #0ea5e9; border-radius: 8px; 
                                     padding: 1.2rem; margin: 0.8rem 0; 
-                                    border: 1px solid #dbeafe;">
-                        <strong style="color: #5b7cff; font-size: 1.1rem;">Step {i}</strong>
+                                    border: 1px solid #cffafe;">
+                        <strong style="color: #0ea5e9; font-size: 1.1rem;">Step {i}</strong>
                         <p style="color: #374151; margin-top: 0.5rem; line-height: 1.8;">{step}</p>
                         </div>
                         """, unsafe_allow_html=True)
