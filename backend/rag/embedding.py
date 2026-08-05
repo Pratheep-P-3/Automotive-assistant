@@ -1,8 +1,8 @@
 """
 Embedding Factory for Automotive Diagnostics RAG.
 
-Azure OpenAI Only (text-embedding-3-small) - No fallback.
-Requires Azure deployment configured in environment.
+Primary: Azure OpenAI (text-embedding-3-small)
+Fallback: AllMiniLM-L6-v2 (local, no API key needed)
 """
 
 from __future__ import annotations
@@ -25,32 +25,45 @@ class EmbeddingFactory:
     @staticmethod
     def get_embeddings() -> Any:
         """
-        Get Azure OpenAI embedding model (singleton-cached).
+        Get embedding model (singleton-cached).
 
-        Azure OpenAI is REQUIRED. No fallback models.
+        Primary: Azure OpenAI (text-embedding-3-small)
+        Fallback: AllMiniLM-L6-v2 if Azure unavailable
 
         Returns:
-            AzureOpenAIEmbeddings instance
+            Embeddings instance (Azure or AllMiniLM)
 
         Raises:
-            ValueError: If Azure is not configured or initialization fails
+            ValueError: If both Azure and AllMiniLM fail
         """
         # Return cached instance if available
         if EmbeddingFactory._embedding_instance is not None:
-            logger.debug("[EmbeddingFactory] Returning cached Azure OpenAI embeddings instance")
+            logger.debug("[EmbeddingFactory] Returning cached embeddings instance")
             return EmbeddingFactory._embedding_instance
 
-        # Initialize Azure OpenAI (required, no fallback)
+        # Try Azure first
         try:
             instance = EmbeddingFactory._get_azure_openai_embeddings()
             EmbeddingFactory._embedding_instance = instance
             logger.info("[EmbeddingFactory] ✓ Cached Azure OpenAI embeddings instance")
             return instance
-        except Exception as exc:
-            logger.exception("[EmbeddingFactory] ✗ FAILED to initialize Azure OpenAI embeddings (no fallback available)")
-            raise ValueError(
-                "Azure OpenAI embeddings configuration failed. Ensure AZURE_OPENAI_* environment variables are set correctly."
-            ) from exc
+        except Exception as azure_exc:
+            logger.warning(f"[EmbeddingFactory] Azure OpenAI failed: {azure_exc}")
+            logger.info("[EmbeddingFactory] Attempting AllMiniLM-L6-v2 fallback...")
+            
+            # Fallback to AllMiniLM
+            try:
+                instance = EmbeddingFactory._get_allminilm_embeddings()
+                EmbeddingFactory._embedding_instance = instance
+                logger.info("[EmbeddingFactory] ✓ Cached AllMiniLM-L6-v2 fallback embeddings instance")
+                return instance
+            except Exception as fallback_exc:
+                logger.exception("[EmbeddingFactory] ✗ FAILED - Both Azure and AllMiniLM failed")
+                raise ValueError(
+                    f"Embedding initialization failed:\n"
+                    f"  Azure error: {azure_exc}\n"
+                    f"  AllMiniLM fallback error: {fallback_exc}"
+                ) from fallback_exc
 
     @staticmethod
     def clear_cache() -> None:
@@ -115,4 +128,45 @@ class EmbeddingFactory:
         except Exception as exc:
             logger.exception("[EmbeddingFactory] ✗ Failed to initialize Azure OpenAI embeddings")
             raise
+
+    @staticmethod
+    def _get_allminilm_embeddings() -> Any:
+        """
+        Initialize AllMiniLM-L6-v2 embeddings (fallback).
+
+        Uses local sentence-transformers model.
+        No API key required. Downloads model on first use (~27MB).
+
+        Returns:
+            HuggingFaceEmbeddings instance
+
+        Raises:
+            ImportError: If sentence-transformers not installed
+            Exception: If model initialization fails
+        """
+        try:
+            from langchain_community.embeddings import HuggingFaceEmbeddings
+        except ImportError as exc:
+            raise ImportError(
+                "sentence-transformers not installed. Install with: pip install sentence-transformers"
+            ) from exc
+
+        try:
+            logger.info(
+                "[EmbeddingFactory] Initializing AllMiniLM-L6-v2 fallback embeddings "
+                "(local, no API key required)"
+            )
+
+            embeddings = HuggingFaceEmbeddings(
+                model_name="sentence-transformers/all-MiniLM-L6-v2",
+                model_kwargs={"device": "cpu"}
+            )
+
+            logger.info("[EmbeddingFactory] ✓ AllMiniLM-L6-v2 embeddings initialized successfully (fallback mode)")
+            return embeddings
+
+        except Exception as exc:
+            logger.exception("[EmbeddingFactory] ✗ Failed to initialize AllMiniLM embeddings")
+            raise
+
 
