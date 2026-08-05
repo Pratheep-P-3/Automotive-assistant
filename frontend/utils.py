@@ -62,7 +62,7 @@ def get_shared_css() -> str:
     """Return shared CSS for all pages."""
     return """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
     
     * {
         margin: 0;
@@ -75,21 +75,21 @@ def get_shared_css() -> str:
     }
 
     .stApp {
-        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #f0f4f8 100%);
+        background: #0f172a;
         min-height: 100vh;
-        color: #0f172a;
+        color: #e2e8f0;
     }
 
     [data-testid="stAppViewContainer"] > section:first-child {
-        max-width: 1000px;
+        max-width: 900px;
         margin-left: auto;
         margin-right: auto;
-        padding-left: 2rem;
-        padding-right: 2rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
     }
 
     [data-testid="stMainBlockContainer"] {
-        max-width: 1000px;
+        max-width: 900px;
         margin-left: auto;
         margin-right: auto;
     }
@@ -99,7 +99,7 @@ def get_shared_css() -> str:
     }
 
     .stApp > [data-testid="stAppViewContainer"] > section {
-        max-width: 1000px !important;
+        max-width: 900px !important;
         margin-left: auto !important;
         margin-right: auto !important;
         padding-left: 1.5rem !important;
@@ -107,94 +107,78 @@ def get_shared_css() -> str:
     }
 
     .hero-card {
-        background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%);
-        padding: 1.2rem 2rem;
-        border-radius: 12px;
+        background: linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%);
+        padding: 1.5rem;
+        border-radius: 10px;
         color: white;
-        box-shadow: 0 12px 32px rgba(30, 64, 175, 0.25);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         margin-bottom: 2rem;
         margin-left: -1.5rem;
         margin-right: -1.5rem;
-        border: none;
-        backdrop-filter: blur(10px);
-        animation: slideDown 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        border: 1px solid #1e40af30;
+        animation: slideDown 0.6s ease-out;
         position: relative;
         overflow: hidden;
         width: calc(100% + 3rem);
     }
 
-    .hero-card::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 300px;
-        height: 300px;
-        background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-        border-radius: 50%;
-        pointer-events: none;
-    }
-
     .hero-card h2 {
-        font-size: 2rem;
-        font-weight: 800;
-        font-family: 'Poppins', sans-serif;
-        letter-spacing: -0.8px;
+        font-size: 1.8rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
         margin: 0 !important;
-        position: relative;
-        z-index: 1;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .hero-card h3 {
         font-size: 1.3rem;
         font-weight: 600;
-        font-family: 'Poppins', sans-serif;
         margin: 0 !important;
-        position: relative;
-        z-index: 1;
     }
 
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-        border-right: 1px solid #e2e8f0;
+        background: #1a2332;
+        border-right: 1px solid #2d3e52;
     }
 
     [data-testid="stSidebar"] [data-testid="stHeader"] {
         font-weight: 700;
-        font-family: 'Poppins', sans-serif;
-        color: #1e40af;
-        font-size: 1.1rem;
-        margin-bottom: 1.8rem !important;
+        color: #06b6d4;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem !important;
         text-transform: uppercase;
-        letter-spacing: 1px;
-        padding: 1rem 0.5rem;
-        border-bottom: 2px solid #0ea5e9;
+        letter-spacing: 0.8px;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid #2d3e52;
     }
 
     .stTextInput > div > div > input,
     .stNumberInput > div > div > input,
     .stTextArea > div > div > textarea,
     .stSelectbox > div > div > select {
-        background: white !important;
-        border: 2px solid #e2e8f0 !important;
-        border-radius: 10px !important;
-        padding: 0.85rem 1rem !important;
+        background: #1a2332 !important;
+        border: 1px solid #2d3e52 !important;
+        border-radius: 8px !important;
+        padding: 0.75rem 1rem !important;
         font-size: 0.95rem !important;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-        font-weight: 500 !important;
-        color: #0f172a !important;
+        transition: all 0.2s ease !important;
+        color: #e2e8f0 !important;
         outline: none !important;
         box-shadow: none !important;
+    }
+
+    .stTextInput > div > div > input::placeholder,
+    .stNumberInput > div > div > input::placeholder,
+    .stTextArea > div > div > textarea::placeholder {
+        color: #64748b !important;
     }
 
     .stTextInput > div > div > input:focus,
     .stNumberInput > div > div > input:focus,
     .stTextArea > div > div > textarea:focus,
     .stSelectbox > div > div > select:focus {
-        border: 2px solid #0ea5e9 !important;
-        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1), inset 0 0 0 1px #0ea5e9 !important;
-        background: #f0f9fc !important;
+        border: 1px solid #06b6d4 !important;
+        box-shadow: 0 0 0 2px #0369a130 !important;
+        background: #0f172a !important;
         outline: none !important;
     }
 
@@ -202,141 +186,138 @@ def get_shared_css() -> str:
     .stNumberInput > label,
     .stTextArea > label,
     .stSelectbox > label {
-        font-weight: 700 !important;
-        font-family: 'Poppins', sans-serif;
-        color: #1e40af !important;
-        font-size: 0.9rem !important;
+        font-weight: 600 !important;
+        color: #cbd5e1 !important;
+        font-size: 0.85rem !important;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 0.7rem !important;
+        letter-spacing: 0.3px;
+        margin-bottom: 0.5rem !important;
     }
 
     .stButton > button {
-        background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%) !important;
+        background: linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%) !important;
         color: white !important;
-        font-weight: 700 !important;
-        font-family: 'Poppins', sans-serif;
-        font-size: 1.05rem !important;
-        padding: 1rem 2.5rem !important;
-        border: none !important;
-        border-radius: 10px !important;
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        padding: 0.8rem 2rem !important;
+        border: 1px solid #0369a180 !important;
+        border-radius: 8px !important;
         cursor: pointer !important;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-        letter-spacing: 0.8px;
+        transition: all 0.2s ease !important;
+        letter-spacing: 0.5px;
         text-transform: uppercase;
-        box-shadow: 0 10px 25px rgba(30, 64, 175, 0.3) !important;
-        position: relative;
-        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(3, 105, 161, 0.2) !important;
     }
 
     .stButton > button:hover {
-        transform: translateY(-4px) !important;
-        box-shadow: 0 15px 35px rgba(30, 64, 175, 0.3) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 16px rgba(3, 105, 161, 0.3) !important;
+    }
+
+    .stButton > button:active {
+        transform: translateY(0) !important;
     }
 
     .stSubheader {
-        color: #1e40af !important;
-        font-weight: 800 !important;
-        font-family: 'Poppins', sans-serif;
-        font-size: 1.4rem !important;
-        margin-top: 2rem !important;
-        margin-bottom: 1.5rem !important;
-        padding-bottom: 0.8rem;
-        border-bottom: 3px solid #0ea5e9;
+        color: #06b6d4 !important;
+        font-weight: 700 !important;
+        font-size: 1.2rem !important;
+        margin-top: 1.5rem !important;
+        margin-bottom: 1rem !important;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #2d3e52;
         display: flex;
         align-items: center;
         gap: 0.8rem;
     }
 
     .result-card {
-        background: white;
-        border: 1px solid #e2e8f0;
-        border-left: 5px solid #0ea5e9;
-        border-radius: 12px;
-        padding: 1.8rem;
-        box-shadow: 0 4px 15px rgba(30, 64, 175, 0.06);
-        margin-bottom: 1.5rem;
-        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        animation: fadeInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        background: #1a2332;
+        border: 1px solid #2d3e52;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        margin-bottom: 1.2rem;
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.6s ease-out;
     }
 
     .result-card:hover {
-        box-shadow: 0 8px 25px rgba(30, 64, 175, 0.12);
-        transform: translateY(-4px);
-        border-left-color: #0ea5e9;
-        border-color: #cbd5e1;
+        border-color: #06b6d4;
+        box-shadow: 0 6px 16px rgba(6, 182, 212, 0.15);
     }
 
     .section-title {
-        font-weight: 800;
-        font-family: 'Poppins', sans-serif;
-        color: #1e40af;
-        font-size: 1.1rem;
-        margin-bottom: 1.2rem;
+        font-weight: 700;
+        color: #06b6d4;
+        font-size: 1rem;
+        margin-bottom: 1rem;
         display: flex;
         align-items: center;
         text-transform: uppercase;
-        letter-spacing: 0.6px;
+        letter-spacing: 0.5px;
         position: relative;
-        padding-left: 1rem;
+        padding-left: 0;
     }
 
     .section-title::before {
         content: '';
         position: absolute;
         left: 0;
-        width: 4px;
-        height: 24px;
-        background: linear-gradient(180deg, #0ea5e9 0%, #1e40af 100%);
+        width: 3px;
+        height: 20px;
+        background: linear-gradient(180deg, #06b6d4 0%, #0369a1 100%);
         border-radius: 2px;
+        margin-right: 0.8rem;
+        display: none;
     }
 
     .severity-critical {
-        color: #b91c1c;
-        font-weight: 700;
-        font-family: 'Poppins', sans-serif;
-        background: #fee2e2;
-        padding: 0.8rem 1.2rem;
-        border-radius: 10px;
+        color: #fca5a5;
+        font-weight: 600;
+        font-size: 0.9rem;
+        background: #7f1d1d;
+        padding: 0.6rem 1rem;
+        border-radius: 6px;
         display: inline-block;
-        border: 1px solid #fecaca;
-        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+        border: 1px solid #ef444480;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     .severity-high {
-        color: #c2410c;
-        font-weight: 700;
-        font-family: 'Poppins', sans-serif;
-        background: #fed7aa;
-        padding: 0.8rem 1.2rem;
-        border-radius: 10px;
+        color: #fdba74;
+        font-weight: 600;
+        font-size: 0.9rem;
+        background: #7c2d12;
+        padding: 0.6rem 1rem;
+        border-radius: 6px;
         display: inline-block;
-        border: 1px solid #fdba74;
-        box-shadow: 0 4px 12px rgba(249, 115, 22, 0.1);
+        border: 1px solid #f9732280;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     .severity-medium {
-        color: #a16207;
-        font-weight: 700;
-        font-family: 'Poppins', sans-serif;
-        background: #fef3c7;
-        padding: 0.8rem 1.2rem;
-        border-radius: 10px;
+        color: #fcd34d;
+        font-weight: 600;
+        font-size: 0.9rem;
+        background: #78350f;
+        padding: 0.6rem 1rem;
+        border-radius: 6px;
         display: inline-block;
-        border: 1px solid #fde68a;
-        box-shadow: 0 4px 12px rgba(217, 119, 6, 0.1);
+        border: 1px solid #f59e0b80;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     .severity-low {
-        color: #15803d;
-        font-weight: 700;
-        font-family: 'Poppins', sans-serif;
-        background: #dcfce7;
-        padding: 0.8rem 1.2rem;
-        border-radius: 10px;
+        color: #86efac;
+        font-weight: 600;
+        font-size: 0.9rem;
+        background: #166534;
+        padding: 0.6rem 1rem;
+        border-radius: 6px;
         display: inline-block;
-        border: 1px solid #bbf7d0;
-        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.1);
+        border: 1px solid #22c55e80;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     .result-card ul {
@@ -345,82 +326,82 @@ def get_shared_css() -> str:
     }
 
     .result-card ul li {
-        margin-bottom: 1rem;
-        line-height: 1.8;
-        color: #374151;
-        padding-left: 1.5rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.6;
+        color: #cbd5e1;
+        padding-left: 1.2rem;
         position: relative;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
     }
 
     .result-card ul li:hover {
-        color: #0ea5e9;
-        padding-left: 2rem;
+        color: #06b6d4;
+        padding-left: 1.5rem;
     }
 
     .result-card ul li::before {
         content: '→';
-        color: #0ea5e9;
-        font-weight: 800;
-        margin-right: 0.8rem;
+        color: #06b6d4;
+        font-weight: 600;
+        margin-right: 0.6rem;
         position: absolute;
         left: 0;
     }
 
     .stProgress > div > div > div {
-        background: linear-gradient(90deg, #0ea5e9 0%, #1e40af 100%) !important;
-        border-radius: 12px !important;
-        box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
+        background: linear-gradient(90deg, #06b6d4 0%, #0369a1 100%) !important;
+        border-radius: 8px !important;
+        box-shadow: 0 0 8px rgba(6, 182, 212, 0.2);
     }
 
     .stSuccess {
-        background: #dcfce7 !important;
-        border-left: 5px solid #22c55e !important;
-        border-radius: 14px !important;
-        color: #166534 !important;
+        background: #0f392f !important;
+        border-left: 3px solid #10b981 !important;
+        border-radius: 8px !important;
+        color: #86efac !important;
         padding: 1rem !important;
     }
 
     .stError {
-        background: #fee2e2 !important;
-        border-left: 5px solid #ef4444 !important;
-        border-radius: 14px !important;
-        color: #991b1b !important;
+        background: #3f0f0f !important;
+        border-left: 3px solid #ef4444 !important;
+        border-radius: 8px !important;
+        color: #fca5a5 !important;
         padding: 1rem !important;
     }
 
     .stInfo {
-        background: #eff6ff !important;
-        border-left: 5px solid #0ea5e9 !important;
-        border-radius: 14px !important;
-        color: #082f49 !important;
+        background: #082f49 !important;
+        border-left: 3px solid #06b6d4 !important;
+        border-radius: 8px !important;
+        color: #cffafe !important;
         padding: 1rem !important;
     }
 
     .stMetric {
-        background: white;
-        border: 1px solid #e2e8f0;
-        border-radius: 10px;
-        padding: 1.2rem;
-        box-shadow: 0 2px 8px rgba(30, 64, 175, 0.04);
+        background: #1a2332;
+        border: 1px solid #2d3e52;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     .stMetric [data-testid="stMetricValue"] {
-        color: #1e40af !important;
-        font-family: 'Poppins', sans-serif;
-        font-weight: 800 !important;
-        font-size: 1.8rem !important;
+        color: #06b6d4 !important;
+        font-weight: 700 !important;
+        font-size: 1.6rem !important;
     }
 
     .stMetric [data-testid="stMetricLabel"] {
-        color: #6b7280 !important;
-        font-weight: 600 !important;
+        color: #94a3b8 !important;
+        font-weight: 500 !important;
+        font-size: 0.85rem !important;
     }
 
     @keyframes slideDown {
         from {
             opacity: 0;
-            transform: translateY(-30px);
+            transform: translateY(-15px);
         }
         to {
             opacity: 1;
@@ -431,7 +412,7 @@ def get_shared_css() -> str:
     @keyframes fadeInUp {
         from {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(10px);
         }
         to {
             opacity: 1;
@@ -440,28 +421,27 @@ def get_shared_css() -> str:
     }
 
     .stSpinner > div > div {
-        border-top-color: #0ea5e9 !important;
-        border-right-color: rgba(14, 165, 233, 0.3) !important;
-        border-bottom-color: rgba(14, 165, 233, 0.3) !important;
-        border-left-color: rgba(14, 165, 233, 0.3) !important;
+        border-top-color: #06b6d4 !important;
+        border-right-color: #06b6d430 !important;
+        border-bottom-color: #06b6d430 !important;
+        border-left-color: #06b6d430 !important;
     }
 
     ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 6px;
     }
 
     ::-webkit-scrollbar-track {
-        background: #f3f4f6;
+        background: #1a2332;
     }
 
     ::-webkit-scrollbar-thumb {
-        background: #0ea5e9;
-        border-radius: 4px;
+        background: #3b82f6;
+        border-radius: 3px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: #1e40af;
+        background: #06b6d4;
     }
 
     .nav-buttons {
@@ -473,31 +453,31 @@ def get_shared_css() -> str:
 
     @media (max-width: 768px) {
         .hero-card {
-            padding: 0.9rem 1.2rem;
+            padding: 1rem;
             width: calc(100% + 2.4rem);
             margin-left: -1.2rem;
             margin-right: -1.2rem;
         }
 
         .hero-card h2 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
         }
 
         .result-card {
-            padding: 1.5rem 1rem;
+            padding: 1.2rem 1rem;
         }
 
         .section-title {
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .stButton > button {
-            padding: 0.9rem 2rem !important;
-            font-size: 0.95rem !important;
+            padding: 0.7rem 1.5rem !important;
+            font-size: 0.9rem !important;
         }
 
         .stSubheader {
-            font-size: 1.3rem !important;
+            font-size: 1.1rem !important;
         }
     }
     </style>

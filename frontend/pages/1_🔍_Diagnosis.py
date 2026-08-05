@@ -13,7 +13,7 @@ st.markdown(get_shared_css(), unsafe_allow_html=True)
 if "diagnostic_result" not in st.session_state:
     st.error("No diagnostic results found. Please run diagnostics from the home page.")
     if st.button("← Back to Home"):
-        st.switch_page("pages/streamlit_app.py")
+        st.switch_page("streamlit_app.py")
     st.stop()
 
 result = st.session_state.diagnostic_result
@@ -78,7 +78,7 @@ st.markdown("---")
 col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
     if st.button("← Back to Home", use_container_width=True):
-        st.switch_page("pages/streamlit_app.py")
+        st.switch_page("streamlit_app.py")
 
 with col3:
     if st.button("View Repair & Maintenance →", use_container_width=True):
