@@ -122,6 +122,13 @@ class EmbeddingFactory:
                 model=EmbeddingFactory.AZURE_OPENAI_MODEL,
             )
 
+            # Test the embeddings with a simple call to validate API key
+            logger.info("[EmbeddingFactory] Testing Azure OpenAI API credentials...")
+            test_embedding = embeddings.embed_query("test")
+            if not test_embedding or len(test_embedding) == 0:
+                raise ValueError("Azure embedding test returned empty result")
+            logger.info(f"[EmbeddingFactory] ✓ Azure OpenAI API test successful (embedding dimension: {len(test_embedding)})")
+
             logger.info("[EmbeddingFactory] ✓ Azure OpenAI embeddings initialized successfully")
             return embeddings
 
